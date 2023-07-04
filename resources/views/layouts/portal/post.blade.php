@@ -3,7 +3,7 @@
       <div class="row">
         <div class="col-lg-4 offset-lg-4  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.3s">
           <div class="section-heading">
-            <h6>reviza lo nuevo</h6>
+            <h6>revisa lo nuevo</h6>
             <h4>Nuevos Empleos</h4>
             <div class="line-dec"></div>
           </div>

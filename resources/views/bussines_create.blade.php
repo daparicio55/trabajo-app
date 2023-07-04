@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <p>si ya tienes cuenta inicia sesion <a href="{{ route('dashboard.index') }}">aca</a></p>
+                            <p>si ya tienes cuenta inicia sesion <a href="{{ route('dashboard.index') }}">Aquí</a></p>
                         </div>
                         </div>
                     </div>

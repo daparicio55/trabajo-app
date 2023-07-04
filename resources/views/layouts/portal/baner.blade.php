@@ -21,7 +21,7 @@
             </div>
             <div class="col-lg-6">
               <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                <img src="{{ asset('assets/images/slider01.png') }}" alt="">
+                <img src="{{ asset('assets/images/slider-02.png') }}" alt="">
               </div>
             </div>
           </div>
