@@ -66,18 +66,50 @@
                     {!! Form::label('contacto2', "Contacto 2", [null]) !!}
                     {!! Form::text('contacto2', null, ['class'=>'form-control']) !!}
                     {{-- rubros y sector --}}
-                    {!! Form::label('rubro', "Rubro", [null]) !!}
-                    <select name="rubro" class="form-control ">
+                    {!! Form::label('rubro', "Rubro", ['class'=>'mt-3']) !!}
+                    <a class="btn btn-info" id="btn_rubro">+</a>
+                    <div class="row mt-2" style="display: none" id="card_rubro">
+                        <div class="col-sm-12 col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <input type="text" id="txt_rubro" class="form-control">
+                                </div>
+                                <div class="card-footer">
+                                    <a class="btn btn-primary" id="send_rubro">
+                                        <i class="far fa-save"></i> Guardar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <select name="rubro" id="rubro" class="form-control mt-2">
                         <option value="0" >Seleccione</option>
                         @foreach ($rubros as $rubro)
                             <option value="{{ $rubro->id }}">{{ $rubro->nombre }}</option>            
                         @endforeach
                     </select>
+                    
                     @error('rubro')
                         <small class="text-danger d-block"><i class="fas fa-exclamation-circle"></i> {{ $message }}</small>
                     @enderror
-                    {!! Form::label('sector', "Sector", [null]) !!}
-                    <select name="sector" class="form-control ">
+                    <!--- sectores -->
+                    {!! Form::label('sectores', "Sector", ['class'=>'mt-3']) !!}
+                    <a class="btn btn-info" id="btn_sectore">+</a>
+                    <div class="row mt-2" style="display: none" id="card_sectore">
+                        <div class="col-sm-12 col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <input type="text" id="txt_sectore" class="form-control">
+                                </div>
+                                <div class="card-footer">
+                                    <a class="btn btn-primary" id="send_sectore">
+                                        <i class="far fa-save"></i> Guardar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <select name="sector" id="sector" class="form-control mt-2">
                         <option value="0" >Seleccione</option>
                         @foreach ($sectores as $sectore)
                             <option value="{{ $sectore->id }}">{{ $sectore->nombre }}</option>            
@@ -137,6 +169,127 @@
             }else{
                 alert('tiene que tener 11 numeros')
             }
-        });   
+        });
+        //mostramos y ocultamos el card para agregar rubro;
+        let btn_rubro = document.getElementById("btn_rubro");
+        btn_rubro.addEventListener("click", function(){
+            let card = document.getElementById("card_rubro");
+            if (card.style.display === 'none'){
+                card.style.display = 'block';
+            }else{
+                card.style.display = 'none';
+            }
+        });
+        //guardamos el rubro
+        let send_rubro = document.getElementById("send_rubro");
+        send_rubro.addEventListener("click",function(){
+            let txt_rubro = document.getElementById("txt_rubro");
+            if (txt_rubro.value.length === 0 ){
+                console.log('vacio');
+            }else{
+                console.log('lleno');
+                //enviamos el store
+                let token = '{{ csrf_token() }}';
+                let nombre = txt_rubro.value;
+                let url = "{{ asset('/dashboard/administrador/rubros') }}";
+                
+                fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nombre: nombre, _token: token })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Aquí puedes manejar la respuesta recibida desde Laravel
+                    //var objeto = JSON.parse(data);
+                    console.log(data.id);
+                    let selectrubro = document.getElementById('rubro');
+                    let row = document.createElement("option");
+                    row.value = data.id;
+                    row.innerHTML= data.nombre;
+                    console.log(row);
+                    selectrubro.appendChild(row);
+                    //ocultar el 
+                    let card = document.getElementById("card_rubro");
+                    card.style.display = "none";
+                })
+                .catch(error => {
+                    // Aquí puedes manejar cualquier error que ocurra durante la petición
+                    console.log(error);
+                    //console.error(error);
+                });
+            }
+        });
+
+
+
+
+
+        //mostramos y ocultamos el card para agregar rubro;
+        let btn_sectore = document.getElementById("btn_sectore");
+        btn_sectore.addEventListener("click", function(){
+            let card = document.getElementById("card_sectore");
+            if (card.style.display === 'none'){
+                card.style.display = 'block';
+            }else{
+                card.style.display = 'none';
+            }
+        });
+        
+
+        //guardamos el sector
+        let send_sectore = document.getElementById("send_sectore");
+        send_sectore.addEventListener("click",function(){
+            let txt_sectore = document.getElementById("txt_sectore");
+            if (txt_sectore.value.length === 0 ){
+                console.log('vacio');
+            }else{
+                console.log('lleno');
+                //enviamos el store
+                let token = '{{ csrf_token() }}';
+                let nombre = txt_sectore.value;
+                let url = "{{ asset('/dashboard/administrador/sectores') }}";
+                
+                fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nombre: nombre, _token: token })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Aquí puedes manejar la respuesta recibida desde Laravel
+                    //var objeto = JSON.parse(data);
+                    console.log(data.id);
+                    let selectsectore = document.getElementById('sector');
+                    let row = document.createElement("option");
+                    row.value = data.id;
+                    row.innerHTML= data.nombre;
+                    console.log(row);
+                    selectsectore.appendChild(row);
+                    //ocultar el 
+                    let card = document.getElementById("card_sectore");
+                    card.style.display = "none";
+                })
+                .catch(error => {
+                    // Aquí puedes manejar cualquier error que ocurra durante la petición
+                    console.log(error);
+                    //console.error(error);
+                });
+            }
+        });
+
+
+
+
+
+
+
+
+
+
     </script>  
 @stop

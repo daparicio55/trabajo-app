@@ -7,6 +7,8 @@ use App\Http\Controllers\EmpleoController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostulacioneController;
+use App\Http\Controllers\RubroController;
+use App\Http\Controllers\SectoreController;
 use App\Http\Controllers\UsersettingController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +59,8 @@ Route::get('/dashboard/administrador/empresas/showwaitings',[EmpresaController::
 Route::post('/dashboard/administrador/empresas/storewaiting',[EmpresaController::class,'storewaiting'])->name('dashboard.administrador.empresas.storewaiting');
 Route::delete('/dashboard/administrador/empresas/destroywaiting/{id}',[EmpresaController::class,'deletewaitings'])->name('dashboard.administrador.empresas.destroywaitings');
 Route::resource('/dashboard/administrador/empresas',EmpresaController::class)->names('dashboard.administrador.empresas');
+Route::resource('/dashboard/administrador/rubros',RubroController::class)->names('dashboard.administrador.rubros');
+Route::resource('/dashboard/administrador/sectores',SectoreController::class)->names('dashboard.administrador.sectores');
 //Bolsa EMPRESA
 Route::resource('/dashboard/empleos', EmpleoController::class)->names('dashboard.empleos');
 Route::resource('/dashboard',DashboardController::class)->names('dashboard');
