@@ -61,12 +61,11 @@
         <div class="card-content">
           <h2 class="card-title">SISTEMA DE EMPLEABILIDAD</h2>
 
-          <p class="card-description">Estimado Davis,</p>
+          <p class="card-description">Estimado Egresado,</p>
           <p class="card-description" style="text-align: justify">Nos complace informarte que tu solicitud de registro en nuestro sistema ha sido recibida y procesada con éxito. Queremos asegurarte que tu solicitud será revisada y confirmada por uno de nuestros administradores.</p>
-          
           <pre class="card-description">Atentamente,
 El equipo de <strong>I.E.S.T. Perú Japón</strong></pre>
-          <a href="http://localhost:8000" class="card-button" target="_blank"> <strong>Ir a nuestra WEB</strong></a>
+          <a href="{{ route('home') }}" class="card-button" target="_blank"> <strong>Ir a nuestra WEB</strong></a>
         </div>
       </div>  
 </body>

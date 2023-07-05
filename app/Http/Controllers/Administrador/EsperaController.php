@@ -131,6 +131,7 @@ class EsperaController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             //throw $th;
+            dd($th->getMessage());
             return Redirect::route('dashboard.administrador.esperas.index')->with('error',$th->getMessage());
         }
         $this->sendReset($request);

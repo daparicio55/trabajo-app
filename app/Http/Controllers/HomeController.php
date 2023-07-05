@@ -93,7 +93,7 @@ class HomeController extends Controller
             return Redirect::route('home')->with('error','no se registro la solicitud correctamente');
         }
         Mail::to($espera->email)->send($correo);
-        return Redirect::route('home')->with('info','se registro la solucitud correctamente');
+        return Redirect::route('home')->with('info','se registro la solucitud correctamente, revisa tu correo electronico con la confirmacion.. ');
     }
     public function bussines_store(EmpresaEsperaStoreRequest $request){
         try {

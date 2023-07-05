@@ -16,6 +16,7 @@
     <script> 
         toastr.options  = {
             "progressBar" : true,
+            "timeOut": 7000,
             }
             toastr.success('{{ $message1 }}');
     </script>

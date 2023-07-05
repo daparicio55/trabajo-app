@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 
-class PutPasswordNotification extends Notification implements ShouldQueue
+class PutPasswordNotification extends Notification
 {
     use Queueable, SerializesModels;
      /**
