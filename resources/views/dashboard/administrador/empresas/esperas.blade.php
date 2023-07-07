@@ -96,8 +96,11 @@
             btn_search.setAttribute('disabled',true);    
             let txt_ruc = document.getElementById("ruc");
             let ruc = txt_ruc.value;
+            
+            console.log(ruc);
             if(ruc.length == 11){
                 let token = '{{ csrf_token() }}';
+                console.log(token);
                 let url = "{{ asset('/dashboard/administrador/empresas/getruc') }}";
                 fetch(url, {
                 method: 'POST',
@@ -109,7 +112,9 @@
                 .then(response => response.json())
                 .then(data => {
                     // Aquí puedes manejar la respuesta recibida desde Laravel
+                    console.log(data);
                     var objeto = JSON.parse(data);
+                    console.log(objeto);
                     let razon = objeto.razonSocial;
                     document.getElementById('razon').value = objeto.razonSocial;
                     document.getElementById('direccion').value = objeto.direccion;
@@ -120,7 +125,7 @@
                 })
                 .catch(error => {
                     // Aquí puedes manejar cualquier error que ocurra durante la petición
-                    console.error(error);
+                    console.log(error);
                 });
             
                 console.log(url);

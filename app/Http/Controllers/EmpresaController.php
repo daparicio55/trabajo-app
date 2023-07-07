@@ -23,10 +23,10 @@ class EmpresaController extends Controller
      * Display a listing of the resource.
      * 
      */
-    public function __construct()
+   /*  public function __construct()
     {
         $this->middleware('auth');
-    }
+    } */
     public function index()
     {
         //
@@ -175,8 +175,15 @@ class EmpresaController extends Controller
         return Redirect::route('dashboard.administrador.empresas.index')->with('infor','el registro se elimino correctamente');
     }
     public function getRuc(Request $request){
-        $consulta = file_get_contents('https://dniruc.apisperu.com/api/v1/ruc/'.$request->ruc.'?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImR3YXBhcmljaWNpb0BnbWFpbC5jb20ifQ.2AdhICiTyw6lpnrxtfK2ajSgfMGiMn-71RvrRGKd8Uk');
-        $consulta=json_encode($consulta);
-        return $consulta;
+        try {
+            $url = "https://dniruc.apisperu.com/api/v1/ruc/" . $request->ruc . "?token=" .env("APIPERUTOKEN");
+            $consulta = file_get_contents($url);
+            $consulta=json_encode($consulta);
+            return $consulta;
+        } catch (\Throwable $th) {
+            //throw $th;
+            return $th->getMessage();
+        }
+        
     }
 }

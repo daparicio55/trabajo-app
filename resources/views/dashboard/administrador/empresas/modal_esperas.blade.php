@@ -1,6 +1,6 @@
 <x-Modal :id="$espera->id.'-show'" title="Mostrando detalles" theme="info" icon="fas fa-eye">
 {!! Form::label('ruc', "RUC", [null]) !!}
-{!! Form::text('ruc', $espera->ruc, ['class'=>'form-control']) !!}
+{!! Form::text('ruc1', $espera->ruc, ['class'=>'form-control']) !!}
 {!! Form::label('contacto', 'Contacto', [null]) !!}
 {!! Form::text('contacto', $espera->contacto, ['class'=>'form-control']) !!}
 {!! Form::label('email', 'Email', [null]) !!}
