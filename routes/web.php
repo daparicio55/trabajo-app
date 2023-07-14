@@ -64,6 +64,10 @@ Route::resource('/dashboard/administrador/sectores',SectoreController::class)->n
 //Bolsa EMPRESA
 Route::resource('/dashboard/empleos', EmpleoController::class)->names('dashboard.empleos');
 Route::resource('/dashboard',DashboardController::class)->names('dashboard');
+Route::get('csv',function(){
+    return view('dashboard.empleos.test');
+})->name('csv.create');
+Route::post('csv',[EmpleoController::class,'csv'])->name('csv.store');
 //
 /* Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); */
 Route::post('/dashboard/administrador/alumnos/reset/{token}',[AdminEstudianteController::class,'resetpassword'])

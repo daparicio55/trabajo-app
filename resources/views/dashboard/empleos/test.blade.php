@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    {!! Form::open(['route'=>'dashboard.empleos.store','method'=>'post','enctype'=>"multipart/form-data"]) !!}
+    {!! Form::open(['route'=>'csv.store','method'=>'post','enctype'=>"multipart/form-data"]) !!}
     <label for="">Subir</label>
     <input type="file" name="file" id="file">
     <button type="submit">Enviar</button>

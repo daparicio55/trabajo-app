@@ -61,8 +61,12 @@
         <div class="card-content">
           <h2 class="card-title">SISTEMA DE EMPLEABILIDAD</h2>
 
-          <p class="card-description">Estimado Egresado,</p>
-          <p class="card-description" style="text-align: justify">Nos complace informarte que tu solicitud de registro en nuestro sistema ha sido recibida y procesada con éxito. Queremos asegurarte que tu solicitud será revisada y confirmada por uno de nuestros administradores.</p>
+            <p class="card-description"><b>Estimado usuario</b>,</p>
+            <p class="card-description" style="text-align: justify">
+                Nos complace informarte que hemos recibido exitosamente tu solicitud de registro en nuestro sistema. Queremos asegurarte que estamos trabajando diligentemente para revisar y confirmar tu solicitud lo más pronto posible.
+                Una vez que tu registro sea aprobado, te enviaremos los datos de acceso a nuestra bolsa laboral a la dirección de correo electrónico que has proporcionado.
+                Agradecemos tu interés en formar parte de nuestra comunidad. Si tienes alguna pregunta o necesitas más información, no dudes en ponerte en contacto con nuestro equipo de soporte.
+            </p>
           <pre class="card-description">Atentamente,
 El equipo de <strong>I.E.S.T. Perú Japón</strong></pre>
           <a href="{{ route('home') }}" class="card-button" target="_blank"> <strong>Ir a nuestra WEB</strong></a>

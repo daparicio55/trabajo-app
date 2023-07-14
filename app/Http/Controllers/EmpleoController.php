@@ -154,7 +154,7 @@ class EmpleoController extends Controller
         }
         return Redirect::route('dashboard.empleos.index')->with('info','Se elimino el empleo correctamente');
     }
-    public function csv(Request $request){
+    public function csv(Request $request){        
         $rows = 0;
         $cells = 0;
         $departamento = "";
