@@ -118,6 +118,8 @@ class EsperaController extends Controller
                 $user->password = bcrypt('12345678');
                 $user->idOficina = 10;
                 $user->save();
+                //le damos permiso de empresa
+                $user->assignRole('Bolsa User');
                 //ahora lo registro en la tabla intermedia
                 $ucliente = new Ucliente();
                 $ucliente->user_id = $user->id;

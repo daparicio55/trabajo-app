@@ -57,28 +57,7 @@
     
 @stop
 
-@if (session('info'))
-    @php
-        $message = session('info');
-    @endphp
-    <script> 
-        toastr.options  = {
-            "progressBar" : true,
-            }
-            toastr.success('{{ $message }}');
-    </script>
-@endif
-@if (session('error'))
-    @php
-        $message = session('error');
-    @endphp
-    <script> 
-        toastr.options  = {
-            "progressBar" : true,
-            }
-            toastr.danger('{{ $message }}');
-    </script>
-@endif
+
 
 
 
@@ -116,5 +95,27 @@
         });
         
     </script>
-    
+    @if (session('info'))
+    @php
+        $message = session('info');
+    @endphp
+    <script> 
+        toastr.options  = {
+            "progressBar" : true,
+        }
+        toastr.success('{{ $message }}');
+    </script>
+    @endif
+    @if (session('error'))
+    @php
+        $message = session('error');
+    @endphp
+    <script> 
+        
+            toastr.options  = {
+            "progressBar" : true,
+        }
+        toastr.danger("{!! $message !!}");
+    </script>
+    @endif
 @stop

@@ -146,6 +146,7 @@ class EmpresaController extends Controller
     public function edit(string $id)
     {
         //
+        
     }
 
     /**
@@ -154,6 +155,31 @@ class EmpresaController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        try {
+            //code...
+            DB::beginTransaction();
+            $empresa = Empresa::findOrFail($id);
+            $empresa->ruc = $request->ruc;
+            $empresa->razonSocial = $request->razon;
+            $empresa->direccion = $request->direccion;
+            $empresa->distrito = $request->distrito;
+            $empresa->provincia = $request->provincia;
+            $empresa->region = $request->region;
+            $empresa->telefono1 = $request->telefono1;
+            $empresa->telefono2 = $request->telefono2;
+            $empresa->contacto1 = $request->contacto;
+            $empresa->contacto2 = $request->contacto;
+            $empresa->email= $request->email;
+            $empresa->rubro_id = $request->rubro;
+            $empresa->sectore_id = $request->sector;
+            $empresa->update();
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            return Redirect::route('dashboard.administrador.empresas.index')->with('error','se producio un error cuando se intento actualizar la empresa');
+        }
+        return Redirect::route('dashboard.administrador.empresas.index')->with('info','se edito correctamente la empresa en el sistema');
     }
 
     /**
@@ -162,6 +188,14 @@ class EmpresaController extends Controller
     public function destroy($id)
     {
         //
+        try {
+            //code...
+            Empresa::findOrFail($id)->delete();
+        } catch (\Throwable $th) {
+            //throw $th;
+            return Redirect::route('dashboard.administrador.empresas.index')->with('error','se producio un error cuando se intento eliminar la empresa');
+        }
+        return Redirect::route('dashboard.administrador.empresas.index')->with('info','se elimino correctamente la empresa en el sistema');
     }
     public function deletewaitings($id){
         try {
