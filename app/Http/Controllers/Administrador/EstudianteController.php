@@ -156,6 +156,9 @@ class EstudianteController extends Controller
             $user->password = bcrypt('Pj'.$cliente->dniRuc);
             $user->idOficina = 10;
             $user->save();
+            //le damos permiso de empresa
+            $user->assignRole('Bolsa User');
+            //creamos la relacion con el cliente
             $ucliente = new Ucliente();
             $ucliente->user_id = $user->id;
             $ucliente->cliente_id = $cliente->idCliente;
