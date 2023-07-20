@@ -18,6 +18,13 @@ class UsersettingController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:dashboard.settings.index')->only('index');
+        $this->middleware('can:dashboard.settings.edit')->only('edit','update');
+        $this->middleware('can:dashboard.settings.create')->only('create','store');
+        $this->middleware('can:dashboard.settings.destroy')->only('destroy');
+        $this->middleware('can:dashboard.settings.show')->only('show');
+        $this->middleware('can:dashboard.settings.edit_password')->only('edit_password');
+        $this->middleware('can:dashboard.settings.update_password')->only('update_password');
     }
     public function index()
     {

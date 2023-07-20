@@ -51,7 +51,10 @@
                     </div>
                     <div class="card-body">
                       <p class="text-black">
-                        <i class="fa fa-building-o" aria-hidden="true"></i> Empresa: {{ $empleo->empresa->razonSocial }}
+                        <strong><i class="fa fa-building-o" aria-hidden="true"></i> Empresa:</strong>
+                      </p>
+                      <p>
+                          {{ $empleo->empresa->razonSocial }}
                       </p>
                       <p>
                         <span class="bg-danger text-white ps-3 pe-3 rounded">

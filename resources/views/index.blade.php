@@ -8,7 +8,6 @@
     @include('layouts.portal.footer')
 @stop
 @section('js')
-
     @if(session('info'))
     @php
         $message1 = session('info');

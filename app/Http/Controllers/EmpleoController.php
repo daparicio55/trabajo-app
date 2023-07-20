@@ -7,10 +7,8 @@ use App\Models\Empleo;
 use App\Models\Empleoturno;
 use App\Models\Empresa;
 use App\Models\Ubicacione;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use SplFileObject;
 
@@ -22,6 +20,11 @@ class EmpleoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:dashboard.empleos.index')->only('index');
+        $this->middleware('can:dashboard.empleos.create')->only('create','store');
+        $this->middleware('can:dashboard.empleos.edit')->only('edit','update');
+        $this->middleware('can:dashboard.empleos.destroy')->only('destroy');
+        $this->middleware('can:dashboard.empleos.show')->only('show');
     }
     public function index()
     {

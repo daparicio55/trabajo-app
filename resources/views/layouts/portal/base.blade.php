@@ -23,10 +23,6 @@
 <body>
   @include('layouts.portal.spiner')
   @yield('contenido')
-  
-
-
-
   <!-- Scripts -->
   <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -36,7 +32,5 @@
   <script src="{{ asset('assets/js/custom.js') }}"></script>
   <script src="{{ asset('vendor/toastr/toastr.min.js') }}"></script>
   @yield('js')
-  
-
 </body>
 </html>

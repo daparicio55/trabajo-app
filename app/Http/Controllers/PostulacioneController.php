@@ -18,6 +18,8 @@ class PostulacioneController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:dashboard.postulaciones.index')->only('index');
+        $this->middleware('can:dashboard.postulaciones.destroy')->only('destroy');
     }
     public function index()
     {

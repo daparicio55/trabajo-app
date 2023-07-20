@@ -12,13 +12,13 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:dashboard.index')->only('index');
     }
     public function index()
     {
         //
         return view('dashboard.index');
     }
-
     /**
      * Show the form for creating a new resource.
      */

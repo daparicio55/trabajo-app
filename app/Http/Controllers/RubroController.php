@@ -13,6 +13,11 @@ class RubroController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:dashboard.administrador.rubros.index')->only('index');
+        $this->middleware('can:dashboard.administrador.rubros.create')->only('create','store');
+        $this->middleware('can:dashboard.administrador.rubros.edit')->only('edit','update');
+        $this->middleware('can:dashboard.administrador.rubros.destroy')->only('destroy');
+        $this->middleware('can:dashboard.administrador.rubros.show')->only('show');
     }
     public function index()
     {

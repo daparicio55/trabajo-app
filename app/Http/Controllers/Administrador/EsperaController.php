@@ -27,6 +27,11 @@ class EsperaController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:dashboard.administrador.esperas.index')->only('index');
+        $this->middleware('can:dashboard.administrador.esperas.create')->only('create','store');
+        $this->middleware('can:dashboard.administrador.esperas.edit')->only('edit','update');
+        $this->middleware('can:dashboard.administrador.esperas.destroy')->only('destroy');
+        $this->middleware('can:dashboard.administrador.esperas.show')->only('show');
     }
     public function index()
     {

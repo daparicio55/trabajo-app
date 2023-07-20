@@ -23,10 +23,18 @@ class EmpresaController extends Controller
      * Display a listing of the resource.
      * 
      */
-   /*  public function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
-    } */
+        $this->middleware('can:dashboard.administrador.empresas.index')->only('index');
+        $this->middleware('can:dashboard.administrador.empresas.create')->only('create','store');
+        $this->middleware('can:dashboard.administrador.empresas.edit')->only('edit','update');
+        $this->middleware('can:dashboard.administrador.empresas.show')->only('show');
+        $this->middleware('can:dashboard.administrador.empresas.destroy')->only('destroy');
+        $this->middleware('can:dashboard.administrador.empresas.showwaitings')->only('showwaitings');
+        $this->middleware('can:dashboard.administrador.empresas.make')->only('make');
+        $this->middleware('can:dashboard.administrador.empresas.getruc')->only('getRuc');
+    }
     public function index()
     {
         //

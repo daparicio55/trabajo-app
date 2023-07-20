@@ -1624,18 +1624,6 @@ Blog
 --------------------------------------------- 
 */
 
-.blog:before {
-  content: '';
-  /* background-image: url(../images/blog-left-dec.jpg); */
-  background-repeat: no-repeat;
-  position: absolute;
-  left: 0;
-  top: 0px;
-  width: 961px;
-  height: 1020px;
-  z-index: 0;
-}
-
 .blog {
   position: relative;
   padding-top: 50px;

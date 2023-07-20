@@ -8,7 +8,6 @@
           <div class="line-dec"></div>
         </div>
       </div>
-      
       <div class="col-lg-12 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
         <div class="blog-posts">
           <div class="row">
@@ -22,7 +21,6 @@
                     <a href="{{ route('empleo',$empleo->id) }}"><h4>{{ $empleo->titulo }}</h4></a>
                     <span class="category"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $empleo->ubicacione->nombre  }} - {{ $empleo->ubicacione->padre->nombre }} - {{ $empleo->ubicacione->padre->padre->nombre }}</span>
                     <span class="date"><i class="fa fa-calendar" aria-hidden="true"></i> {{ date('d - M - Y',strtotime($empleo->fecha_registro)) }}</span>
-                    
                   </div>
                 </div>
               </div>

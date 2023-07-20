@@ -20,8 +20,13 @@ class EstudianteController extends Controller
      * Display a listing of the resource.
      */
     public function __construct()
-    {  
+    {          
        $this->middleware('auth');
+       $this->middleware('can:dashboard.administrador.alumnos.index')->only('index');
+       $this->middleware('can:dashboard.administrador.alumnos.create')->only('create','store');
+       $this->middleware('can:dashboard.administrador.alumnos.edit')->only('edit','update');
+       $this->middleware('can:dashboard.administrador.alumnos.destroy')->only('destroy');
+       $this->middleware('can:dashboard.administrador.alumnos.show')->only('show');
     }
     public function index()
     {

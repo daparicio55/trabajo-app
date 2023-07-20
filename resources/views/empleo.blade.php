@@ -2,8 +2,7 @@
 @section('titulo','Mostrando Oferta Laboral')
 @section('contenido')
     @include('layouts.portal.preheader')
-    @include('layouts.portal.header')
-      
+    @include('layouts.portal.header')      
     <div id="about" class="about section">
       <div class="container">
         <div class="row">
@@ -44,7 +43,15 @@
                       Cierre: {{date('d M Y',strtotime($empleo->fecha_postulacion)) }}
                     </div>
                     <div class="card-body mt-3 text-center">
-                      <a href="{{ route('empleo_postular',$empleo->id) }}" class="btn btn-success"> <i class="fa fa-share-square-o" aria-hidden="true"></i> Postularme</a>
+                      @if(auth()->id() !== null)
+                          @if(count($empleo->postulaciones()->where('user_id',auth()->id())->get()) > 0)
+                              <a class="btn btn-danger disabled"><i class="fa fa-share-square-o" aria-hidden="true"></i> Postulado</a>
+                          @else
+                              <a href="{{ route('empleo_postular',$empleo->id) }}" id="btn_postularme" class="btn btn-success"><i class="fa fa-share-square-o" aria-hidden="true"></i> Postularme</a>
+                          @endif
+                      @else
+                          <a href="{{ route('empleo_postular',$empleo->id) }}" id="btn_postularme" class="btn btn-success"><i class="fa fa-share-square-o" aria-hidden="true"></i> Postularme</a>
+                      @endif
                     </div>
                   </div>
                 </div>
@@ -56,4 +63,11 @@
       </div>
     </div>
     @include('layouts.portal.footer')
+@stop
+@section('js')
+  <script>
+    document.getElementById('btn_postularme').addEventListener('click',function(){
+        this.classList.add('disabled');
+    });
+  </script>
 @stop

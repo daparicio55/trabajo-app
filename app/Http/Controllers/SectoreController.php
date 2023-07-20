@@ -13,6 +13,11 @@ class SectoreController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:dashboard.administrador.sectores.index')->only('index');
+        $this->middleware('can:dashboard.administrador.sectores.create')->only('create','store');
+        $this->middleware('can:dashboard.administrador.sectores.edit')->only('edit','update');
+        $this->middleware('can:dashboard.administrador.sectores.destroy')->only('destroy');
+        $this->middleware('can:dashboard.administrador.sectores.show')->only('show');
     }
     public function index()
     {

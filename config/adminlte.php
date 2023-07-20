@@ -305,6 +305,7 @@ return [
             'text'=>'Docentes',
             'icon'=>'fas fa-user-tie',
             'route'=>'dashboard.administrador.docentes.index',
+            'can'=>'dashboard.administrador.docentes.index'
         ],
         [
             'text'=>'Reg. en Espera - Estudiantes',

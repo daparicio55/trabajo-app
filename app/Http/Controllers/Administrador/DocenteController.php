@@ -11,7 +11,8 @@ class DocenteController extends Controller
     //
     public function __construct()
     {
-        
+        $this->middleware('auth');
+        $this->middleware(('can:dashboard.administrador.docentes.index'))->only('index');
     }
     public function index(){
         $docentes = User::role('Docentes')->get();
