@@ -4,7 +4,7 @@
 
 @section('content_header')
 
-    <h1>Lista de Postulantes para el empleo</h1>
+    <h1>Lista de Postulantes a la oferta laboral</h1>
 @stop
 @section('content')
 <div class="card">

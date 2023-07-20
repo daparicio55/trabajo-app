@@ -3,18 +3,18 @@
 @section('title', 'Reg. en Espera')
 
 @section('content_header')
-    <h1>Empleos Registrados</h1>
+    <h1>Ofertas Laborales Registradas</h1>
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
             <a class="btn btn-outline-success" href="{{ route('dashboard.empleos.create') }}">
-                <i class="fas fa-marker"></i> Registrar Nuevo Empleo.
+                <i class="fas fa-marker"></i> Registrar Oferta Laboral
             </a>
         </form>
       </nav>
 @stop
 
 @section('content')
-    <p>Lista de empleos registradas en el sistema.</p>
+    <p>Lista de registros del sistema.</p>
     <div class="card">
         <div class="card-body">
             <table class="table" id="estudiantes">
@@ -35,13 +35,13 @@
                             <td>{{ $empleo->titulo }}</td>
                             <td>{{ $empleo->ubicacione->nombre }}</td>
                             <td>
-                                <a class="btn btn-info" href="{{ route('dashboard.empleos.show',$empleo->id) }}">
-                                    <i class="fas fa-eye"></i>
+                                <a class="btn btn-info" href="{{ route('dashboard.empleos.show',$empleo->id) }}" title="ver postulantes">
+                                    <i class="fas fa-users"></i>
                                 </a>
-                                <a class="btn btn-success" href="{{ route('dashboard.empleos.edit',$empleo->id) }}">
-                                    <i class="fas fa-user-edit"></i>
+                                <a class="btn btn-success" href="{{ route('dashboard.empleos.edit',$empleo->id) }}" title="editar datos de la oferta laboral">
+                                    <i class="far fa-edit"></i>
                                 </a>
-                                <a data-toggle="modal" data-target="#modal-{{ $empleo->id }}-delete" class="btn btn-danger">
+                                <a data-toggle="modal" data-target="#modal-{{ $empleo->id }}-delete" class="btn btn-danger" title="eliminar oferta">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                                 @include('dashboard.empleos.modal')

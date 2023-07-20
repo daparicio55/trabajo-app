@@ -5,7 +5,7 @@
 @stop
 @section('content')
     
-    <p>Lista de nuevas solicitudes en espera.</p>
+    <p>Lista de nuevas solicitudes en espera (Egresados).</p>
     <div class="card">
         <div class="card-body">
             <table class="table table-striped">

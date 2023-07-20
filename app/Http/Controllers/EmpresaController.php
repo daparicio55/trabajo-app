@@ -68,6 +68,7 @@ class EmpresaController extends Controller
             $empresa->contacto2=$request->contacto2;
             $empresa->rubro_id=$request->rubro;
             $empresa->sectore_id=$request->sector;
+            $empresa->email=$request->email;
             $empresa->save();
         } catch (\Throwable $th) {
             //throw $th;
@@ -126,7 +127,7 @@ class EmpresaController extends Controller
             //ahora creamos la empresa
             $uempresa  = new Uempresa();
             $uempresa->user_id = $user->id;
-            $uempresa->empresa_id = $empresa->id;
+            $uempresa->empresa_id = $empresa->idEmpresa;
             $uempresa->save();
             DB::commit();
             
@@ -204,9 +205,9 @@ class EmpresaController extends Controller
             $empresaespera->delete();
         } catch (\Throwable $th) {
             //throw $th;
-            return Redirect::route('dashboard.administrador.empresas.index')->with('error',$th->getMessage());
+            return Redirect::route('dashboard.administrador.empresas.showwaitings')->with('error',"no se logro borrar la espera");
         }
-        return Redirect::route('dashboard.administrador.empresas.index')->with('infor','el registro se elimino correctamente');
+        return Redirect::route('dashboard.administrador.empresas.showwaitings')->with('info','el registro se elimino correctamente la empresa en espera');
     }
     public function getRuc(Request $request){
         try {
@@ -219,5 +220,33 @@ class EmpresaController extends Controller
             return $th->getMessage();
         }
         
+    }
+    public function make(Request $request){
+        try {
+            DB::beginTransaction();
+            //code...
+            //tenemos que actualizar el correo de la empresa por si cambio
+            $empresa = Empresa::findOrFail($request->empresa);
+            $empresa->email = $request->email;
+            $empresa->update();
+            //ahora creamos el usuario;
+            $user = new User();
+            $user->name = $empresa->razonSocial;
+            $user->email = $empresa->email;
+            $user->password = bcrypt("Pj".$request->ruc);
+            $user->idOficina = 11;
+            $user->save();
+            $uempresa = new Uempresa();
+            $uempresa->user_id = $user->id;
+            $uempresa->empresa_id = $empresa->idEmpresa;
+            $uempresa->save();
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            dd($th->getMessage());
+            return Redirect::route('dashboard.administrador.empresas.index')->with('error','no se registro a la empresa como usuario');
+        }
+        return Redirect::route('dashboard.administrador.empresas.index')->with('info','se registro la empresa como usuario correctamente, envie el correo de recuperacion a la empresa');
     }
 }

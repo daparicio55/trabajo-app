@@ -296,10 +296,15 @@ return [
             'can'=>'dashboard.administrador.alumnos.index'
         ],
         [
-            'text'=>'Estudiantes',
+            'text'=>'Estudiantes y Egresados',
             'icon'=>'fas fa-user-graduate',
             'route'=>'dashboard.administrador.alumnos.index',
             'can'=>'dashboard.administrador.alumnos.index'
+        ],
+        [
+            'text'=>'Docentes',
+            'icon'=>'fas fa-user-tie',
+            'route'=>'dashboard.administrador.docentes.index',
         ],
         [
             'text'=>'Reg. en Espera - Estudiantes',
@@ -320,7 +325,7 @@ return [
             'can'=>'dashboard.administrador.empresas.index'
         ],
         [
-            'text'=>'Empleos',
+            'text'=>'Oferta Laboral',
             'icon'=>'fas fa-briefcase',
             'route'=>'dashboard.empleos.index',
             'can'=>'dashboard.empleos.index'

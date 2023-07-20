@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Administrador\DocenteController;
 use App\Http\Controllers\Administrador\EsperaController as AdminEsperaController;
 use App\Http\Controllers\Administrador\EstudianteController as AdminEstudianteController;
 use App\Http\Controllers\DashboardController;
@@ -52,12 +53,14 @@ Route::post('/dashboard/administrador/alumnos/{id}/email/',[AdminEstudianteContr
 ->name('dashboard.administrador.updateemail');
 Route::get('/dashboard/administrador/alumnos/{id}/make/',[AdminEstudianteController::class,'makeaccount'])
 ->name('dashboard.administrador.makeaccount');
+Route::resource('/dashboard/administrador/docentes',DocenteController::class)->names('dashboard.administrador.docentes');
     //EMPRESAS
 Route::resource('/dashboard/administrador/esperas',AdminEsperaController::class)->names('dashboard.administrador.esperas');
 Route::post('/dashboard/administrador/empresas/getruc',[EmpresaController::class,'getRuc'])->name('dashboard.administrador.empresas.getruc');
 Route::get('/dashboard/administrador/empresas/showwaitings',[EmpresaController::class,'showwaitings'])->name('dashboard.administrador.empresas.showwaitings');
 Route::post('/dashboard/administrador/empresas/storewaiting',[EmpresaController::class,'storewaiting'])->name('dashboard.administrador.empresas.storewaiting');
 Route::delete('/dashboard/administrador/empresas/destroywaiting/{id}',[EmpresaController::class,'deletewaitings'])->name('dashboard.administrador.empresas.destroywaitings');
+Route::post('/dashboard/administrador/empresas/make',[EmpresaController::class,'make'])->name('dashboard.administrador.empresas.make');
 Route::resource('/dashboard/administrador/empresas',EmpresaController::class)->names('dashboard.administrador.empresas');
 Route::resource('/dashboard/administrador/rubros',RubroController::class)->names('dashboard.administrador.rubros');
 Route::resource('/dashboard/administrador/sectores',SectoreController::class)->names('dashboard.administrador.sectores');

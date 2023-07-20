@@ -3,7 +3,7 @@
 @section('title', 'Registrar Empleo')
 
 @section('content_header')
-    <h1>Registrar Empleo</h1>
+    <h1>Registrar Oferta Laboral</h1>
 @stop
 @section('content')
     {{-- {!! Form::open(['route'=>'dashboard.administrador.empresas.store','method'=>'post','id'=>'frm']) !!} --}}
@@ -13,7 +13,7 @@
             <a href="{{ route('dashboard.administrador.empresas.index') }}" class="btn btn-danger">
                 <i class="fas fa-backward" title="regresar"></i>
             </a> 
-                <h4 class="d-inline p-2">Datos del Empleo</h4>
+                <h4 class="d-inline p-2">Datos de la oferta laboral</h4>
         </div>
         <div class="card-body">
             <div class="row">

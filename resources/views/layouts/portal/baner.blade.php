@@ -8,12 +8,14 @@
                 <div class="row">
                   <div class="col-lg-12">
                     <h6>Empleabilidad</h6>
-                    <h2>BOLSA DE TRABAJO</h2>
-                    <p>¡Encuentra el trabajo perfecto mientras estudias! Nuestra página te ofrece una amplia gama de empleos diseñados especialmente para estudiantes</p>
+                    <h2>OFERTAS LABORALES</h2>
+                    <p>¡Encuentra el trabajo perfecto mientras estudias! Nuestra página te ofrece una amplia gama de empleos diseñados especialmente para estudiantes y egresados</p>
                   </div>
                   <div class="col-lg-12">
                     <div class="border-first-button scroll-to-section">
-                      <a href="{{ route('dashboard.index') }}">Ingresar</a>
+                      <a href="{{ route('dashboard.index') }}" class="mt-2"><i class="fa fa-user" aria-hidden="true"></i> Estudiantes</a>
+                      <a href="{{ route('dashboard.index') }}" class="mt-2"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Egresados</a>
+                      <a href="{{ route('dashboard.index') }}" class="mt-2"><i class="fa fa-book" aria-hidden="true"></i> Docentes</a>
                     </div>
                   </div>
                 </div>

@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Lista de Empresas')
+@section('title', 'Lista de Docentes')
 
 @section('content_header')
-    <h1>Empresas Registradas</h1>
+    <h1>Docentes Registrados</h1>
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-            <a class="btn btn-outline-success" href="{{ route('dashboard.administrador.empresas.create') }}">
-                <i class="fas fa-marker"></i> Registrar Empresa.
+            <a class="btn btn-outline-success" href="{{ route('dashboard.administrador.docentes.create') }}">
+                <i class="fas fa-marker"></i> Registrar Docente.
             </a>
         </form>
       </nav>
@@ -17,41 +17,29 @@
     <p>Lista de empresas registradas en el sistema.</p>
     <div class="card">
         <div class="card-body">
-            <table class="table" id="estudiantes">
+            <table class="table" id="docentes">
                 <thead>
                     <tr>
-                        <th>RUC</th>
-                        <th>Razón Social</th>
-                        <th>Dirección</th>
+                        <th>Nombres</th>
+                        <th>Email</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($empresas as $empresa)
+                    @foreach ($docentes as $docente)
                         <tr>
-                            <td>{{ $empresa->ruc }}</td>
-                            <td>{{ Str::upper($empresa->razonSocial) }}</td>
-                            <td>{{ $empresa->direccion }}</td>                            
+                            <td>{{ $docente->name }}</td>
+                            <td>{{ $docente->email }}</td>
                             <td>
-                                <a data-toggle="modal" data-target="#modal-{{ $empresa->idEmpresa }}-show" title="mostrar detalles" class="mt-2 btn btn-info">
+                                <a data-toggle="modal" data-target="#modal-{{ $docente->id }}-show" class="btn btn-info">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a data-toggle="modal" data-target="#modal-{{ $empresa->idEmpresa }}-edit" title="editar empresa" class="mt-2 btn btn-success">
-                                    <i class="far fa-edit"></i>
+                                <a data-toggle="modal" data-target="#modal-{{ $docente->id }}-edit" class="btn btn-success">
+                                    <i class="fas fa-user-edit"></i>
                                 </a>
-                                @if(isset($empresa->usuario[0]->id))
-                                    <a data-toggle="modal" data-target="#modal-{{ $empresa->idEmpresa }}-email" class="mt-2 btn btn-warning" title="enviar correo de recuperacion">
-                                        <i class="fas fa-envelope"></i>                              
-                                    </a>
-                                @else
-                                    <a data-toggle="modal" data-target="#modal-{{ $empresa->idEmpresa }}-make" class="mt-2 btn btn-primary" title="crear usuario del sistema">
-                                        <i class="fas fa-user-edit"></i>
-                                    </a>
-                                @endif
-                                <a data-toggle="modal" data-target="#modal-{{ $empresa->idEmpresa }}-delete" title="eliminar empresa" class="mt-2 btn btn-danger">
-                                    <i class="fas fa-trash"></i>
+                                <a data-toggle="modal" data-target="#modal-{{ $docente->id }}-delete" class="btn btn-danger">
+                                    <i class="fas fa-trash-alt"></i>
                                 </a>
-                                @include('dashboard.administrador.empresas.modal')
                             </td>
                         </tr>
                     @endforeach
@@ -62,17 +50,9 @@
     
 @stop
 
-@section('css')
-    
-@stop
-
-
-
-
-
 @section('js')
     <script> 
-        $('#estudiantes').DataTable({
+        $('#docentes').DataTable({
             responsive: true,
             autoWidth: false,
             /* columnDefs: [{
@@ -104,7 +84,7 @@
         });
         
     </script>
-    @if(session('info')!== null)
+    @if (session('info'))
     @php
         $message = session('info');
     @endphp
@@ -115,7 +95,7 @@
         toastr.success('{{ $message }}');
     </script>
     @endif
-    @if(session('error') !== null)
+    @if (session('error'))
     @php
         $message = session('error');
     @endphp
@@ -124,7 +104,7 @@
             toastr.options  = {
             "progressBar" : true,
         }
-        toastr.error("{{ $message }}");
+        toastr.danger("{!! $message !!}");
     </script>
     @endif
 @stop

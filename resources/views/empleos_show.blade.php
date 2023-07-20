@@ -40,7 +40,7 @@
     @include('layouts.portal.preheader')
     @include('layouts.portal.header')
     <div class="container">
-        <h1 class="text-center my-5">Resultados de Búsqueda de Empleos</h1>
+        <h1 class="text-center my-5">Resultados de Búsqueda de Ofertas Laborales</h1>
         <div class="row">
 
             @foreach ($empleos as $empleo)

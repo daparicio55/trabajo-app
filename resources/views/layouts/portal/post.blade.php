@@ -4,7 +4,7 @@
       <div class="col-lg-12 offset-lg-12  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.3s">
         <div class="section-heading">
           <h6>revisa lo nuevo</h6>
-          <h4>Nuevos Empleos</h4>
+          <h4>Nuevas Ofertas Laborales</h4>
           <div class="line-dec"></div>
         </div>
       </div>

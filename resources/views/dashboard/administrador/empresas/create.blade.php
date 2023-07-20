@@ -51,6 +51,11 @@
                     @error('region')
                         <small class="text-danger"><i class="fas fa-exclamation-circle"></i> {{ $message }}</small>
                     @enderror
+                    {!! Form::label('email', "Email", [null]) !!}
+                    {!! Form::email('email', null, ['class'=>'form-control']) !!}
+                    @error('email')
+                        <small class="text-danger"><i class="fas fa-exclamation-circle"></i> {{ $message }}</small>
+                    @enderror
                     {!! Form::label('telefono1', "Telefono 1", [null]) !!}
                     {!! Form::text('telefono1', null, ['class'=>'form-control']) !!}
                     @error('telefono1')
@@ -65,6 +70,32 @@
                     @enderror
                     {!! Form::label('contacto2', "Contacto 2", [null]) !!}
                     {!! Form::text('contacto2', null, ['class'=>'form-control']) !!}
+                    <!--- sectores -->
+                    {!! Form::label('sectores', "Sector", ['class'=>'mt-3']) !!}
+                    <a class="btn btn-info" id="btn_sectore">+</a>
+                    <div class="row mt-2" style="display: none" id="card_sectore">
+                        <div class="col-sm-12 col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <input type="text" id="txt_sectore" class="form-control">
+                                </div>
+                                <div class="card-footer">
+                                    <a class="btn btn-primary" id="send_sectore">
+                                        <i class="far fa-save"></i> Guardar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <select name="sector" id="sector" class="form-control mt-2">
+                        <option value="0" >Seleccione</option>
+                        @foreach ($sectores as $sectore)
+                            <option value="{{ $sectore->id }}">{{ $sectore->nombre }}</option>            
+                        @endforeach
+                    </select>
+                    @error('sector')
+                        <small class="text-danger d-block"><i class="fas fa-exclamation-circle"></i> {{ $message }}</small>
+                    @enderror
                     {{-- rubros y sector --}}
                     {!! Form::label('rubro', "Rubro", ['class'=>'mt-3']) !!}
                     <a class="btn btn-info" id="btn_rubro">+</a>
@@ -92,32 +123,7 @@
                     @error('rubro')
                         <small class="text-danger d-block"><i class="fas fa-exclamation-circle"></i> {{ $message }}</small>
                     @enderror
-                    <!--- sectores -->
-                    {!! Form::label('sectores', "Sector", ['class'=>'mt-3']) !!}
-                    <a class="btn btn-info" id="btn_sectore">+</a>
-                    <div class="row mt-2" style="display: none" id="card_sectore">
-                        <div class="col-sm-12 col-md-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <input type="text" id="txt_sectore" class="form-control">
-                                </div>
-                                <div class="card-footer">
-                                    <a class="btn btn-primary" id="send_sectore">
-                                        <i class="far fa-save"></i> Guardar
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <select name="sector" id="sector" class="form-control mt-2">
-                        <option value="0" >Seleccione</option>
-                        @foreach ($sectores as $sectore)
-                            <option value="{{ $sectore->id }}">{{ $sectore->nombre }}</option>            
-                        @endforeach
-                    </select>
-                    @error('sector')
-                        <small class="text-danger d-block"><i class="fas fa-exclamation-circle"></i> {{ $message }}</small>
-                    @enderror
+                    
                 </div>
             </div>
             
@@ -153,6 +159,7 @@
                     // Aquí puedes manejar la respuesta recibida desde Laravel
                     var objeto = JSON.parse(data);
                     let razon = objeto.razonSocial;
+                    console.log(objeto);
                     document.getElementById('razon').value = objeto.razonSocial;
                     document.getElementById('direccion').value = objeto.direccion;
                     document.getElementById('distrito').value = objeto.distrito;
@@ -281,15 +288,5 @@
                 });
             }
         });
-
-
-
-
-
-
-
-
-
-
     </script>  
 @stop

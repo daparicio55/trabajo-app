@@ -21,7 +21,7 @@
                 @if(null !== auth()->id())
                 <div class="border-first-button">
                   <a href="{{ route('dashboard.index') }}">
-                    <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
+                    <i class="fa fa-tachometer" aria-hidden="true"></i> Panel
                   </a>
                 </div>
                 @else

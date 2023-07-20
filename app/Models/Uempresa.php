@@ -9,4 +9,8 @@ class Uempresa extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    public $fillable = [
+        'empresa_id',
+        'user_id'
+    ];
 }
