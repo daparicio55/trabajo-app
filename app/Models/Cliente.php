@@ -25,4 +25,7 @@ class Cliente extends Model
     public function ucliente(){
         return $this->hasOne(Ucliente::class,'cliente_id');
     }
+    public function postulaciones(){
+        return $this->hasMany(AdmisionePostulante::class,'idCliente');
+    }
 }

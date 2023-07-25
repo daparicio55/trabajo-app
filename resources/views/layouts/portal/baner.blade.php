@@ -13,9 +13,10 @@
                   </div>
                   <div class="col-lg-12">
                     <div class="border-first-button scroll-to-section">
-                      <a href="{{ route('dashboard.index') }}" class="mt-2"><i class="fa fa-user" aria-hidden="true"></i> Estudiantes</a>
-                      <a href="{{ route('dashboard.index') }}" class="mt-2"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Egresados</a>
+                      <a href="{{ route('dashboard.index') }}" class="mt-2"><i class="fa fa-user" aria-hidden="true"></i> Estudiantes / <i class="fa fa-graduation-cap" aria-hidden="true"></i> Egresados</a>
                       <a href="{{ route('dashboard.index') }}" class="mt-2"><i class="fa fa-book" aria-hidden="true"></i> Docentes</a>
+                      <a href="{{ route('dashboard.index') }}" class="mt-2"><i class="fas fa-user-cog"></i> Administrador</a>
+                      
                     </div>
                   </div>
                 </div>

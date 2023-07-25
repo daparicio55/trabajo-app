@@ -3,6 +3,7 @@
 use App\Http\Controllers\Administrador\DocenteController;
 use App\Http\Controllers\Administrador\EsperaController as AdminEsperaController;
 use App\Http\Controllers\Administrador\EstudianteController as AdminEstudianteController;
+use App\Http\Controllers\Administrador\ReporteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmpleoController;
 use App\Http\Controllers\EmpresaController;
@@ -54,6 +55,12 @@ Route::post('/dashboard/administrador/alumnos/{id}/email/',[AdminEstudianteContr
 Route::get('/dashboard/administrador/alumnos/{id}/make/',[AdminEstudianteController::class,'makeaccount'])
 ->name('dashboard.administrador.makeaccount');
 Route::resource('/dashboard/administrador/docentes',DocenteController::class)->names('dashboard.administrador.docentes');
+Route::get('/dashboard/administrador/reportes', [ReporteController::class,'index'])->name('dashboard.administrador.reportes.index');
+Route::get('/dashboard/administrador/reportes/empleos',[ReporteController::class,'reporte_empleo'])->name('dashboard.administrador.reportes.reporte_empleo');
+Route::get('/dashboard/administrador/reportes/postulaciones',[ReporteController::class,'reporte_postulaciones'])->name('dashboard.administrador.reportes.reporte_postulaciones');
+Route::get('/dashboard/administrador/reportes/empleos/excel/{string}',[ReporteController::class,'reporte_empleo_excel'])->name('dashboard.administrador.reportes.reporte_empleo.excel');
+Route::get('/dashboard/administrador/reportes/postulaciones/excel/{string}',[ReporteController::class,'reporte_postulaciones_excel'])->name('dashboard.administrador.reportes.reporte_postulaciones.excel');
+
     //EMPRESAS
 Route::resource('/dashboard/administrador/esperas',AdminEsperaController::class)->names('dashboard.administrador.esperas');
 Route::post('/dashboard/administrador/empresas/getruc',[EmpresaController::class,'getRuc'])->name('dashboard.administrador.empresas.getruc');

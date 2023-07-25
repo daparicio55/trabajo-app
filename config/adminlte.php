@@ -332,6 +332,12 @@ return [
             'can'=>'dashboard.empleos.index'
         ],
         [
+            'text'=>'Reportes',
+            'icon'=>'far fa-chart-bar',
+            'route'=>'dashboard.administrador.reportes.index',
+            'can'=>'dashboard.administrador.reportes.index'
+        ],
+        [
             'text'=>'Postulaciones',
             'icon'=>'fas fa-building',
             'route'=>'dashboard.postulaciones.index',
