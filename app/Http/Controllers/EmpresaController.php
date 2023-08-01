@@ -244,6 +244,7 @@ class EmpresaController extends Controller
             $user->password = bcrypt("Pj".$request->ruc);
             $user->idOficina = 11;
             $user->save();
+            $user->assignRole('Bolsa Empresa');
             $uempresa = new Uempresa();
             $uempresa->user_id = $user->id;
             $uempresa->empresa_id = $empresa->idEmpresa;

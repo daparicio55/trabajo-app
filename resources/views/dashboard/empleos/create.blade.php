@@ -10,7 +10,7 @@
     {!! Form::open(['route'=>'dashboard.empleos.store','method'=>'post','id'=>'frm']) !!}
     <div class="card">
         <div class="card-header bg bg-info">
-            <a href="{{ route('dashboard.administrador.empresas.index') }}" class="btn btn-danger">
+            <a href="{{ route('dashboard.empleos.index') }}" class="btn btn-danger">
                 <i class="fas fa-backward" title="regresar"></i>
             </a> 
                 <h4 class="d-inline p-2">Datos de la oferta laboral</h4>
@@ -52,6 +52,25 @@
 
                     {!! Form::label('experiencia', 'Experiencia', [null]) !!}
                     <x-adminlte-input-switch name="experiencia" data-on-text="SI" data-off-text="NO" data-on-color="teal" checked/>
+                    {!! Form::label('carreras', 'Carreras', [null]) !!}
+                    {{-- With prepend slot, lg size, and label --}}
+                    @php
+                        $config = [
+                            "placeholder" => "Seleccione Programas de Estudios...",
+                            "allowClear" => false,
+                        ];
+                    @endphp
+                    <x-adminlte-select2 id="carreras" name="carreras[]" label-class="text-danger" igroup-size="md" :config="$config" multiple>
+                    <x-slot name="prependSlot">
+                        <div class="input-group-text bg-gradient-red">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                    </x-slot>
+                        @foreach ($carreras as $carrera)
+                            <option value="{{ $carrera->idCarrera }}">{{ $carrera->nombreCarrera }}</option>
+                        @endforeach
+                    </x-adminlte-select2>
+
                     {!! Form::label('turno', 'Turno', [null]) !!}
                     {!! Form::select('turno', $turnos, null, ['class'=>'form-control selectpicker','data-live-search'=>'true','data-size'=>'5']) !!}
                     {!! Form::label('cierre', 'Fecha de cierre', ['class'=>'mt-3']) !!}

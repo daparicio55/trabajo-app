@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <p>En este panel encontraras toda la informacion que necesitas.</p>
+    <p>Bienvenido a tu área personal.</p>
     
 @stop
 

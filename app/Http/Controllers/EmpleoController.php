@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EmpleoStoreFrmRequest;
+use App\Models\Carrera;
+use App\Models\CarreraEmpleo;
 use App\Models\Empleo;
 use App\Models\Empleoturno;
 use App\Models\Empresa;
 use App\Models\Ubicacione;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use SplFileObject;
 
@@ -28,7 +31,8 @@ class EmpleoController extends Controller
     }
     public function index()
     {
-        //
+        
+        
         //si es un usuario Docente
         //rezamos si el usuario logeao es empresa o administrador
         if(auth()->user()->hasRole('Bolsa Empresa')){
@@ -47,12 +51,14 @@ class EmpleoController extends Controller
      */
     public function create()
     {
-        //
-        
+        //verificamos si el usuario tiene empresa
+        //carreras;
+        $carreras = Carrera::orderBy('nombreCarrera','asc')->where('ccarrera_id',"<>",null)->get();
+        //dd($carreras);
         $empresas = Empresa::selectRaw('CONCAT(ruc," - ",razonSocial) AS Empresa, idEmpresa AS id')->pluck('Empresa','id')->toArray();
         $turnos = Empleoturno::pluck('nombre','id')->toArray();
         $ubicaciones = json_encode(Ubicacione::get()->toArray());
-        return view('dashboard.empleos.create',compact('empresas','turnos','ubicaciones'));
+        return view('dashboard.empleos.create',compact('empresas','turnos','ubicaciones','carreras'));
         //return view('dashboard.empleos.test');
     }
 
@@ -64,6 +70,7 @@ class EmpleoController extends Controller
         try {
             //code...
             //dd($request);
+            DB::beginTransaction();
             if(isset($request->experiencia)){
                 $experiencia = 1;
             }else{
@@ -80,11 +87,14 @@ class EmpleoController extends Controller
             $empleo->empleoturno_id=$request->turno;
             $empleo->ubicacione_id=$request->distritos;
             $empleo->save();
-
+            $empleo->synccarreras($request->carreras);
+            //vamos a guardar las carreras
+            DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
+            DB::rollBack();
             dd($th->getMessage());
-            return Redirect::route('dashboard.empleos.index')->with('error',$th->getMessage());    
+            return Redirect::route('dashboard.empleos.index')->with('error','no se guardo la informacion correctamente');    
         }
         return Redirect::route('dashboard.empleos.index')->with('info','Se registro el empleo correctamente');
     }

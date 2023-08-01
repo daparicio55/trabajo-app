@@ -25,4 +25,18 @@ class Empleo extends Model
     public function postulaciones(){
         return $this->hasMany(Postulacione::class);
     }
+    public function synccarreras($carreras){
+        try {
+            for ($i=0; $i < count($carreras) ; $i++) { 
+                # code...
+                $carreraempleos = new CarreraEmpleo();
+                $carreraempleos->carrera_id = $carreras[$i];
+                $carreraempleos->empleo_id = $this->id;
+                $carreraempleos->save();
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            return $th->getMessage();
+        }
+    }
 }

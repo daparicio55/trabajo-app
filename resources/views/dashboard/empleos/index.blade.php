@@ -4,13 +4,16 @@
 
 @section('content_header')
     <h1>Ofertas Laborales Registradas</h1>
-    <nav class="navbar navbar-light bg-light">
-        <form class="form-inline">
-            <a class="btn btn-outline-success" href="{{ route('dashboard.empleos.create') }}">
-                <i class="fas fa-marker"></i> Registrar Oferta Laboral
-            </a>
-        </form>
-      </nav>
+    @can('dashboard.empleos.create')
+        <nav class="navbar navbar-light bg-light">
+            <form class="form-inline">
+                <a class="btn btn-outline-success" href="{{ route('dashboard.empleos.create') }}">
+                    <i class="fas fa-marker"></i> Registrar Oferta Laboral
+                </a>
+            </form>
+        </nav>
+    @endcan
+    
 @stop
 
 @section('content')
@@ -38,12 +41,16 @@
                                 <a class="btn btn-info" href="{{ route('dashboard.empleos.show',$empleo->id) }}" title="ver postulantes">
                                     <i class="fas fa-users"></i>
                                 </a>
-                                <a class="btn btn-success" href="{{ route('dashboard.empleos.edit',$empleo->id) }}" title="editar datos de la oferta laboral">
-                                    <i class="far fa-edit"></i>
-                                </a>
-                                <a data-toggle="modal" data-target="#modal-{{ $empleo->id }}-delete" class="btn btn-danger" title="eliminar oferta">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
+                                @can('dashboard.empleos.edit')
+                                    <a class="btn btn-success" href="{{ route('dashboard.empleos.edit',$empleo->id) }}" title="editar datos de la oferta laboral">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                @endcan
+                                @can('dashboard.empleos.destroy')
+                                    <a data-toggle="modal" data-target="#modal-{{ $empleo->id }}-delete" class="btn btn-danger" title="eliminar oferta">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                @endcan
                                 @include('dashboard.empleos.modal')
                             </td>
                         </tr>
