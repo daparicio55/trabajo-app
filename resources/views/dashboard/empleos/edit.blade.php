@@ -57,6 +57,34 @@
                     @else
                         <x-adminlte-input-switch name="experiencia" data-on-text="SI" data-off-text="NO" data-on-color="teal"/>
                     @endif
+
+                    {!! Form::label('carreras', 'Carreras', [null]) !!}
+                    {{-- With prepend slot, lg size, and label --}}
+                    @php
+                        $config = [
+                            "placeholder" => "Seleccione Programas de Estudios...",
+                            "allowClear" => false,
+                        ];
+                    @endphp
+                    <x-adminlte-select2 id="carreras" name="carreras[]" label-class="text-danger" igroup-size="md" :config="$config" multiple>
+                    <x-slot name="prependSlot">
+                        <div class="input-group-text bg-gradient-red">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                    </x-slot>
+                        @php
+                            $cars = $empleo->carreras;
+                            $array = [];
+                            foreach ($cars as $car) {
+                                # code...
+                                array_push($array,$car->carrera_id);
+                            }
+                        @endphp
+                        @foreach ($carreras as $carrera)
+                            <option value="{{ $carrera->idCarrera }}" @if(in_array($carrera->idCarrera,$array)) selected @endif>{{ $carrera->nombreCarrera }}</option>
+                        @endforeach
+                    </x-adminlte-select2>
+                    
                     {!! Form::label('empleoturno_id', 'Turno', [null]) !!}
                     {!! Form::select('empleoturno_id', $turnos, null, ['class'=>'form-control selectpicker','data-live-search'=>'true','data-size'=>'5']) !!}
                     {!! Form::label('fecha_postulacion', 'Fecha de cierre', ['class'=>'mt-3']) !!}

@@ -27,6 +27,8 @@ class Empleo extends Model
     }
     public function synccarreras($carreras){
         try {
+            //primero borramos las carreras anteriores si es que hay
+            CarreraEmpleo::where('empleo_id','=',$this->id)->delete();
             for ($i=0; $i < count($carreras) ; $i++) { 
                 # code...
                 $carreraempleos = new CarreraEmpleo();
@@ -38,5 +40,8 @@ class Empleo extends Model
             //throw $th;
             return $th->getMessage();
         }
+    }
+    public function carreras(){
+        return $this->hasMany(CarreraEmpleo::class);
     }
 }

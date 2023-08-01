@@ -115,11 +115,12 @@ class EmpleoController extends Controller
     public function edit(string $id)
     {
         //
+        $carreras = Carrera::orderBy('nombreCarrera','asc')->where('ccarrera_id',"<>",null)->get();
         $empresas = Empresa::selectRaw('CONCAT(ruc," - ",razonSocial) AS Empresa, idEmpresa AS id')->pluck('Empresa','id')->toArray();
         $turnos = Empleoturno::pluck('nombre','id')->toArray();
         $ubicaciones = json_encode(Ubicacione::get()->toArray());
         $empleo = Empleo::findOrFail($id);
-        return view('dashboard.empleos.edit',compact('empresas','turnos','ubicaciones','empleo'));
+        return view('dashboard.empleos.edit',compact('empresas','turnos','ubicaciones','empleo','carreras'));
     }
 
     /**
@@ -144,11 +145,11 @@ class EmpleoController extends Controller
             $empleo->fecha_postulacion=$request->fecha_postulacion;
             $empleo->ubicacione_id=$request->distritos;
             $empleo->update();
-
+            $empleo->synccarreras($request->carreras);
         } catch (\Throwable $th) {
             //throw $th;
             dd($th->getMessage());
-            return Redirect::route('dashboard.empleos.index')->with('error',$th->getMessage());    
+            return Redirect::route('dashboard.empleos.index')->with('error','no se pudo completar la accion de actualizacion');    
         }
         return Redirect::route('dashboard.empleos.index')->with('info','Se actualizo el empleo correctamente');
     }
