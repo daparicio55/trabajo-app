@@ -11,7 +11,7 @@
     {!! Form::model($empleo, ['route'=>['dashboard.empleos.update',$empleo->id],'method'=>'put','id'=>'frm']) !!}
     <div class="card">
         <div class="card-header bg bg-info">
-            <a href="{{ route('dashboard.administrador.empresas.index') }}" class="btn btn-danger">
+            <a href="{{ route('dashboard.empleos.index') }}" class="btn btn-danger">
                 <i class="fas fa-backward" title="regresar"></i>
             </a> 
                 <h4 class="d-inline p-2">Datos del Empleo</h4>
@@ -19,8 +19,16 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-12 col-md-8 col-lg-10">
-                    {!! Form::label('empresa_id', 'Empresa', [null]) !!}
-                    {!! Form::select('empresa_id', $empresas, null, ['class'=>'form-control selectpicker','data-live-search'=>"true",'data-size'=>"5"]) !!}
+                    @role('Bolsa Administrador')
+                        {!! Form::label('empresa', 'Empresa', [null]) !!}
+                        {!! Form::select('empresa', $empresas, null, ['class'=>'form-control selectpicker','data-live-search'=>"true",'data-size'=>"5"]) !!}    
+                    @endrole
+                    @role('Bolsa Empresa')
+                        @php
+                            $user = App\Models\User::findOrFail(auth()->id());
+                        @endphp
+                        <input type="hidden" name="empresa" value="{{ $user->uempresa->empresa->idEmpresa }}">
+                    @endrole
                     @error('empresa')
                         <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</p>
                     @enderror
