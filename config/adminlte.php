@@ -131,11 +131,11 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => false,
-    'usermenu_header_class' => 'bg-info',
+    'usermenu_header_class' => 'bg-success',
     'usermenu_image' => false,
-    'usermenu_desc' => false,
+    'usermenu_desc' => true,
     'usermenu_profile_url' => false,
-
+    'logout_url'=>'/',
     /*
     |--------------------------------------------------------------------------
     | Layout
@@ -149,10 +149,10 @@ return [
     */
 
     'layout_topnav' => null,
-    'layout_boxed' => null,
+    'layout_boxed' => false,
     'layout_fixed_sidebar' => null,
     'layout_fixed_navbar' => null,
-    'layout_fixed_footer' => true,
+    'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
     /*
@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -279,7 +279,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Menu Items
+    | Menu Items 
     |--------------------------------------------------------------------------
     |
     | Here we can modify the sidebar/top navigation of the admin panel.
@@ -291,6 +291,11 @@ return [
 
     'menu' => [
         // Navbar items:
+        [
+            'text'=>'INICIO',
+            'route'=>'dashboard.index',
+            'icon'=>'fas fa-home'
+        ],
         [
             'header' => 'ADMINISTRADOR',
             'can'=>'dashboard.administrador.alumnos.index'
@@ -344,14 +349,21 @@ return [
             'can'=>'dashboard.postulaciones.index'
         ],
         [
-            'type'         => 'navbar-search',
-            'text'         => 'search',
-            'topnav_right' => true,
+            'text'=>'Ofertas L. Sugeridas',
+            'icon'=>'fas fa-briefcase',
+            'route'=>'dashboard.ofertas.index'
         ],
-        [
+        /* [
+            'text'=>'',
+            'icon'=>'fas fa-arrow-circle-down',
+            'url'=>'#',
+            'icon_color'=>'info',
+            'topnav_right' => true,
+        ], */
+        /* [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
-        ],
+        ], */
 
         // Sidebar items:
         /* [
@@ -370,13 +382,13 @@ return [
             'label'       => 4,
             'label_color' => 'danger',
         ], */
-        ['header' => 'account_settings'],
+        ['header' => 'AJUSTES DE PERFIL'],
         [
             'text' => 'profile',
             'route' => 'dashboard.settings.index',
             /* 'url'  => 'admin/settings', */
             'icon' => 'fas fa-fw fa-user',
-            'can'=>'dashboard.settings',
+            'can'=>'dashboard.settings.index',
         ],
         [
             'text' => 'change_password',

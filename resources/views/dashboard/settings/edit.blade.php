@@ -18,6 +18,8 @@
             <div class="card-body">
                 {!! Form::label('name', 'Nombres y Apellidos', [null]) !!}
                 {!! Form::text('name', $user->name, ['class'=>'form-control']) !!}
+                {!! Form::label('email', 'Correo', ['class'=>'mt-2']) !!}
+                {!! Form::text('email', $user->email, ['class'=>'form-control']) !!}
                 {!! Form::label('telefono1', 'Telefono 1', ['class'=>'mt-2']) !!}
                 {!! Form::text('telefono1', $user->ucliente->cliente->telefono, ['class'=>'form-control']) !!}
                 {!! Form::label('telefono2', 'Telefono 2', ['class'=>'mt-2']) !!}

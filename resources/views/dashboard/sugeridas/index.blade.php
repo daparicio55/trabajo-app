@@ -1,19 +1,20 @@
 @extends('adminlte::page')
 
-@section('title', 'Reg. de Postulaciones')
+@section('title', 'Ofertas laborales sugeridas')
 
 @section('content_header')
-    <h1>Postulaciones Realizadas</h1>
+    <h1>Ofertas Laborales Sugeridas</h1>
 @stop
 
 @section('content')
-    <p>Lista postulaciones a empleos en la plataforma.</p>
+    <p>revisa las nuevas ofertas laborales orientadas a tu programa de estudios. Las ofertas en <span class="text-danger">rojo</span> estan fuera de fecha de postulacion.</p>
     <div class="card">
         <div class="card-body">
-            <table class="table" id="postulaciones">
+            <table class="table" id="estudiantes">
                 <thead>
                     <tr>
-                        <th>Registro</th>
+                        <th>F. Registro</th>
+                        <th>F. Cierre</th>
                         <th>Empresa</th>
                         <th>Titulo</th>
                         <th>Ubicacion</th>
@@ -21,42 +22,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($postulaciones as $postulacione)
-                        <tr>
-                            <td>{{ date('d-m-Y',strtotime($postulacione->fecha)) }}</td>
-                            <td>{{ $postulacione->empleo->empresa->razonSocial }}</td>
-                            <td>{{ $postulacione->empleo->titulo }}</td>
-                            <td>{{ $postulacione->empleo->ubicacione->nombre }}</td>
-                            <td>
-                                <a data-toggle="modal" class="btn btn-info" data-target="#modal-{{ $postulacione->id }}-detalles" title="detalles">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a data-toggle="modal" data-target="#modal-{{ $postulacione->id }}-eliminar" class="btn btn-danger" title="eliminar mi postulacion">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </td>
-                            @include('dashboard.user.modal')
-                        </tr>
-                    @endforeach
-                    {{-- @foreach ($empleos as $empleo)
-                        <tr>
-                            <td>{{ $empleo->fecha_registro }}</td>
+                    
+                    @foreach ($empleos as $empleo)
+                        @php
+                            $fecha = Carbon\Carbon::parse($empleo->fecha_postulacion);
+                        @endphp
+                        <tr @if($fecha->isPast()) class="text-danger" @endif>
+                            <td>{{ date('d-m-Y',strtotime($empleo->fecha_registro)) }}</td>
+                            <td @if($fecha->isPast()) class="font-weight-bold" @endif>{{ date('d-m-Y',strtotime($empleo->fecha_postulacion)) }}</td>
                             <td>{{ $empleo->empresa->razonSocial }}</td>
                             <td>{{ $empleo->titulo }}</td>
                             <td>{{ $empleo->ubicacione->nombre }}</td>
                             <td>
-                                <a data-toggle="modal" data-target="#modal-{{ $empleo->id }}-show" class="btn btn-info">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a data-toggle="modal" data-target="#modal-{{ $empleo->id }}-edit" class="btn btn-success">
-                                    <i class="fas fa-user-edit"></i>
-                                </a>
-                                <a data-toggle="modal" data-target="#modal-{{ $empleo->id }}-delete" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
+                                <a href="{{ route('empleo',$empleo->id) }}" class="btn btn-info" title="ver oferta laboral">
+                                    <i class="far fa-eye"></i>
                                 </a>
                             </td>
                         </tr>
-                    @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -65,14 +48,14 @@
 @stop
 @section('js')
     <script> 
-        $('#postulaciones').DataTable({
+        $('#estudiantes').DataTable({
             responsive: true,
             autoWidth: false,
-            /* columnDefs: [{
+            columnDefs: [{
                 orderable: false,
                 width: '100px',
-                targets: [2]
-            }], */
+                targets: [4]
+            }],
             language: {
                 "decimal":        ".",
                 "emptyTable":     "No hay datos disponibles en la tabla",

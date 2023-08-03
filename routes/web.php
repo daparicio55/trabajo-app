@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmpleoController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OfertaController;
 use App\Http\Controllers\PostulacioneController;
 use App\Http\Controllers\RubroController;
 use App\Http\Controllers\SectoreController;
@@ -46,6 +47,7 @@ Route::resource('/dashboard/settings',UsersettingController::class)->names('dash
 Route::get('/dashboard/password',[UsersettingController::class,'edit_password'])->name('dashboard.edit_password');
 Route::put('/dashboard/password',[UsersettingController::class,'update_password'])->name('dashboard.update_password');
 Route::resource('/dashboard/postulaciones',PostulacioneController::class)->names('dashboard.postulaciones');
+Route::resource('/dashboard/ofertas', OfertaController::class)->names('dashboard.ofertas');
 //Bolsa ADMINISTRADOR
 Route::get('/dashboard/administrador/alumnos/makeaccountmassive',[AdminEstudianteController::class,'makeaccountmassive'])
 ->name('dashboard.administrador.makeaccountmassive');
