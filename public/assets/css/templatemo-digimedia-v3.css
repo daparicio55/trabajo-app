@@ -222,7 +222,7 @@ body {
   display: inline-block !important;
   padding: 10px 20px !important;
   color: #4da6e7 !important;
-  border: 1px solid #4da6e7 !important;
+  border: 1px solid #ced6db !important;
   border-radius: 23px;
   font-weight: 500 !important;
   letter-spacing: 0.3px !important;
@@ -234,7 +234,7 @@ body {
   color: #fff !important;
 }
 .border-first-button button:hover {
-  background-color: #4da6e7;
+  background-color: #e77e4d;
   color: #fff !important;
 }
 
@@ -1233,7 +1233,7 @@ Services Style
 
 .services:after {
   content: '';
-  background-image: url(../images/services-left-dec.jpg);
+  /* background-image: url(../images/services-left-dec.jpg); */
   background-repeat: no-repeat;
   position: absolute;
   left: 0;
@@ -1245,7 +1245,7 @@ Services Style
 
 .services:before {
   content: '';
-  background-image: url(../images/services-right-dec.jpg);
+  /* background-image: url(../images/services-right-dec.jpg); */
   background-repeat: no-repeat;
   position: absolute;
   right: 0;
@@ -1345,7 +1345,7 @@ Services Style
   box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
   background-color: #fff;
   border-radius: 15px;
-  padding: 80px 120px 50px 120px;
+  padding: 80px 60px 50px 60px;
 }
 
 .services ul.nacc li {
@@ -1724,6 +1724,7 @@ Blog
   display: inline-block;
   float: left;
   margin-right: 30px;
+  max-width: 100px;
 }
 
 .post-item .thumb img {
@@ -1759,7 +1760,7 @@ Blog
   color: #2a2a2a;
   margin-top: 10px;
   margin-bottom: 10px;
-  line-height: 10px;
+  /* line-height: 10px; */
 }
 
 
@@ -2132,4 +2133,7 @@ responsive
   form#contact {
     padding: 30px;
   }
+}
+.container-reset{
+  all: initial;
 }

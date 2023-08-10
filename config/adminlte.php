@@ -351,7 +351,8 @@ return [
         [
             'text'=>'Ofertas L. Sugeridas',
             'icon'=>'fas fa-briefcase',
-            'route'=>'dashboard.ofertas.index'
+            'route'=>'dashboard.ofertas.index',
+            'can'=>'dashboard.ofertas.index'
         ],
         /* [
             'text'=>'',

@@ -7,19 +7,20 @@
 @stop
 @section('content')
     {{-- {!! Form::open(['route'=>'dashboard.administrador.empresas.store','method'=>'post','id'=>'frm']) !!} --}}
-    {!! Form::open(['route'=>'dashboard.empleos.store','method'=>'post','id'=>'frm']) !!}
+    {!! Form::open(['route'=>'dashboard.empleos.store','method'=>'post','id'=>'frm','enctype'=>'multipart/form-data']) !!}
     <div class="card">
         <div class="card-header bg bg-info">
             <a href="{{ route('dashboard.empleos.index') }}" class="btn btn-danger">
                 <i class="fas fa-backward" title="regresar"></i>
             </a> 
                 <h4 class="d-inline p-2">Datos de la oferta laboral</h4>
+                <p class="mt-3">(*) los campos son requeridos</p>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-12 col-md-8 col-lg-10">
                     @role('Bolsa Administrador')
-                        {!! Form::label('empresa', 'Empresa', [null]) !!}
+                        {!! Form::label('empresa', 'Empresa(*)', [null]) !!}
                         {!! Form::select('empresa', $empresas, null, ['class'=>'form-control selectpicker','data-live-search'=>"true",'data-size'=>"5"]) !!}    
                     @endrole
                     @role('Bolsa Empresa')
@@ -33,12 +34,12 @@
                     @enderror
 
 
-                    {!! Form::label('titulo', 'Titulo', ['class'=>'mt-4']) !!}
+                    {!! Form::label('titulo', 'Titulo(*)', ['class'=>'mt-4']) !!}
                     {!! Form::textarea('titulo', old('titulo'), ['class'=>'form-control','rows'=>'3']) !!}
                     @error('titulo')
                         <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</p>
                     @enderror
-                    {!! Form::label('descripcion', 'Descripcion', ['class'=>'mt-4']) !!}
+                    {!! Form::label('descripcion', 'Descripcion(*)', ['class'=>'mt-4']) !!}
                     @php
                     $config = [
                         "height" => "200",
@@ -60,9 +61,9 @@
                         {{ old('descripcion') }}
                     </x-adminlte-text-editor>
 
-                    {!! Form::label('experiencia', 'Experiencia', [null]) !!}
+                    {!! Form::label('experiencia', 'Experiencia(*)', [null]) !!}
                     <x-adminlte-input-switch name="experiencia" data-on-text="SI" data-off-text="NO" data-on-color="teal" checked/>
-                    {!! Form::label('carreras', 'Carreras', [null]) !!}
+                    {!! Form::label('carreras', 'Carreras(*)', [null]) !!}
                     {{-- With prepend slot, lg size, and label --}}
                     @php
                         $config = [
@@ -81,28 +82,33 @@
                         @endforeach
                     </x-adminlte-select2>
 
-                    {!! Form::label('turno', 'Turno', [null]) !!}
+                    {!! Form::label('turno', 'Turno(*)', [null]) !!}
                     {!! Form::select('turno', $turnos, null, ['class'=>'form-control selectpicker','data-live-search'=>'true','data-size'=>'5']) !!}
-                    {!! Form::label('cierre', 'Fecha de cierre', ['class'=>'mt-3']) !!}
+                    {!! Form::label('cierre', 'Fecha de cierre(*)', ['class'=>'mt-3']) !!}
                     {!! Form::date('cierre', old('cierre'), ['class'=>'form-control']) !!}
                     @error('cierre')
                         <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</p>
                     @enderror
-                    {!! Form::label('departamentos', 'Departamento', ['class'=>'mt-3']) !!}
+                    {!! Form::label('foto', 'Foto referencial(*)', ['class'=>'mt-3']) !!}
+                    {!! Form::file('foto', ['class'=>'form-control']) !!}
+                    @error('foto')
+                        <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</p>
+                    @enderror
+                    {!! Form::label('departamentos', 'Departamento(*)', ['class'=>'mt-3']) !!}
                     <select name="departamentos" id="departamentos" class="form-control">
                         <option value="{{ 0 }}">Seleccione</option>
                     </select>
                     @error('departamentos')
                         <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</p>
                     @enderror
-                    {!! Form::label('provincias', 'Provincia', ['class'=>'mt-3']) !!}
+                    {!! Form::label('provincias', 'Provincia(*)', ['class'=>'mt-3']) !!}
                     <select name="provincias" id="provincias" class="form-control">
                         <option value="{{ 0 }}">Seleccione</option>
                     </select>
                     @error('provincias')
                         <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</p>
                     @enderror
-                    {!! Form::label('distritos', 'Distrito', ['class'=>'mt-3']) !!}
+                    {!! Form::label('distritos', 'Distrito(*)', ['class'=>'mt-3']) !!}
                     <select name="distritos" id="distritos" class="form-control">
                         <option value="0">Seleccione</option>
                     </select>

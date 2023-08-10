@@ -5,9 +5,9 @@
       <div class="modal-content">
         <div class="modal-header bg-{{ $theme }}">
           <h5 class="modal-title" id="exampleModalLabel"><i class="{{ $icon }}"></i> {{ $title }}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
+          </button> --}}
         </div>
         @if ($send == true)
           @if(isset($parameter))
@@ -22,9 +22,9 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="far fa-times-circle"></i> Cerrar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times-circle"></i> Cerrar</button>
           @if ($send == true)
-            <button type="submit" class="btn btn-{{ $theme }}"><i class="fas fa-share-square"></i> Enviar</button>
+            <button type="submit" class="btn btn-{{ $theme }}"><i class="fa fa-share-square-o"></i> Enviar</button>
           @endif
         </div>
         @if ($send == true)

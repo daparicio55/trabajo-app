@@ -46,6 +46,11 @@ class ReporteController extends Controller
     }
     public function reporte_postulaciones(Request $request){
         $request->validate([
+            'carrera_id'=>['required',function($attribute,$value,$fail){
+                if($value == 0){
+                    $fail('debe seleccionar un programa de estudios');
+                }
+            }],
             'finicio_postulaciones'=>'required',
             'ffin_postulaciones'=>'required|date|after_or_equal:finicio_postulaciones'
         ]);

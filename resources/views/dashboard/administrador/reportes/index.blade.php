@@ -57,7 +57,7 @@
                     <input type="text" name="criterio_empleo" class="form-control" @isset($_GET['criterio_empleo']) value="{{ $_GET['criterio_empleo'] }}" @endisset>
                 </div>
                 <div class="col-sm-12 col-md-3">
-                    {!! Form::label('finicio_empleo', 'Fecha Inicio', [null]) !!}
+                    {!! Form::label('finicio_empleo', 'Fecha Inicio(*)', [null]) !!}
                     <input type="date" name="finicio_empleo" id="finicio_empleo" class="form-control" @isset($_GET['finicio_empleo']) value="{{ $_GET['finicio_empleo'] }}" @endisset>
                     @error('finicio_empleo')    
                         <div class="alert alert-danger mt-2" role="alert">
@@ -68,7 +68,7 @@
                     @enderror
                 </div>
                 <div class="col-sm-12 col-md-3">
-                    {!! Form::label('ffin_empleo', 'Fecha Fin', [null]) !!}
+                    {!! Form::label('ffin_empleo', 'Fecha Fin(*)', [null]) !!}
                     <input type="date" name="ffin_empleo" id="ffin_empleo" class="form-control" @isset($_GET['ffin_empleo']) value="{{ $_GET['ffin_empleo'] }}" @endisset>
                     @error('ffin_empleo')    
                         <div class="alert alert-danger mt-2" role="alert">
@@ -78,6 +78,7 @@
                         </div>
                     @enderror
                 </div>
+                <p>(*) los campos son obligarios</p>
             </div>
             <div class="row mt-2">
                 <div class="col-sm-12">
@@ -136,15 +137,23 @@
             {!! Form::open(['route'=>'dashboard.administrador.reportes.reporte_postulaciones','method'=>'get','id'=>'frm_publicaciones']) !!}
             <div class="row">
                 <div class="col-sm-12 col-md-6">
-                    {!! Form::label('criterio_empleo', 'Criterio de busqueda', [null]) !!}
+                    {!! Form::label('criterio_empleo', 'Criterio de busqueda(*)', [null]) !!}
                     <select name="carrera_id" class="form-control selectpicker" data-live-search = true>
+                        <option value="0">Seleccione programa de estudios</option>
                         @foreach ($carreras as $carrera)
                             <option value="{{ $carrera->idCarrera }}" @isset($_GET['carrera_id']) @if($carrera->idCarrera == $_GET['carrera_id']) selected @endif @endisset>{{ $carrera->nombreCarrera }}</option>
                         @endforeach
                     </select>
+                    @error('carrera_id')
+                        <div class="alert alert-danger mt-2" role="alert">
+                            <small>
+                                {{ $message }}
+                            </small>
+                        </div>
+                    @enderror
                 </div>
                 <div class="col-sm-12 col-md-3">
-                    {!! Form::label('finicio_postulaciones', 'Fecha Inicio', [null]) !!}
+                    {!! Form::label('finicio_postulaciones', 'Fecha Inicio(*)', [null]) !!}
                     <input type="date" name="finicio_postulaciones" id="finicio_postulaciones" class="form-control" @isset($_GET['finicio_postulaciones']) value="{{ $_GET['finicio_postulaciones'] }}" @endisset>
                     @error('finicio_postulaciones')    
                         <div class="alert alert-danger mt-2" role="alert">
@@ -155,7 +164,7 @@
                     @enderror
                 </div>
                 <div class="col-sm-12 col-md-3">
-                    {!! Form::label('ffin_postulaciones', 'Fecha Fin', [null]) !!}
+                    {!! Form::label('ffin_postulaciones', 'Fecha Fin(*)', [null]) !!}
                     <input type="date" name="ffin_postulaciones" id="ffin_postulaciones" class="form-control" @isset($_GET['ffin_postulaciones']) value="{{ $_GET['ffin_postulaciones'] }}" @endisset>
                     @error('ffin_postulaciones')    
                         <div class="alert alert-danger mt-2" role="alert">
@@ -166,6 +175,7 @@
                     @enderror
                 </div>
             </div>
+            <p>(*) los campos son obligarios</p>
             <div class="row mt-2">
                 <div class="col-sm-12">
                     <button type="submit" id="btn-empleo-search" class="btn btn-primary" title="buscar ofertas laborales">

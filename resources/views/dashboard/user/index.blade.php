@@ -38,25 +38,6 @@
                             @include('dashboard.user.modal')
                         </tr>
                     @endforeach
-                    {{-- @foreach ($empleos as $empleo)
-                        <tr>
-                            <td>{{ $empleo->fecha_registro }}</td>
-                            <td>{{ $empleo->empresa->razonSocial }}</td>
-                            <td>{{ $empleo->titulo }}</td>
-                            <td>{{ $empleo->ubicacione->nombre }}</td>
-                            <td>
-                                <a data-toggle="modal" data-target="#modal-{{ $empleo->id }}-show" class="btn btn-info">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a data-toggle="modal" data-target="#modal-{{ $empleo->id }}-edit" class="btn btn-success">
-                                    <i class="fas fa-user-edit"></i>
-                                </a>
-                                <a data-toggle="modal" data-target="#modal-{{ $empleo->id }}-delete" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach --}}
                 </tbody>
             </table>
         </div>

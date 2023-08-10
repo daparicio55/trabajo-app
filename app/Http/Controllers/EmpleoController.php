@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use SplFileObject;
 
 class EmpleoController extends Controller
@@ -31,8 +32,6 @@ class EmpleoController extends Controller
     }
     public function index()
     {
-        
-        
         //si es un usuario Docente
         //rezamos si el usuario logeao es empresa o administrador
         if(auth()->user()->hasRole('Bolsa Empresa')){
@@ -86,6 +85,15 @@ class EmpleoController extends Controller
             $empleo->experiencia=$experiencia;
             $empleo->empleoturno_id=$request->turno;
             $empleo->ubicacione_id=$request->distritos;
+            $carpetaGuardado = 'img';
+            // Obtenemos el archivo PDF
+            $imgFile = $request->file('foto');
+            // Generamos un nombre único para el archivo
+            $nombreArchivo = uniqid() . '.' . $imgFile->getClientOriginalExtension();
+            // Almacenamos el archivo en la carpeta especificada utilizando Storage::put()
+            Storage::disk('public')->put($carpetaGuardado . '/' . $nombreArchivo, file_get_contents($imgFile));
+            //vamos a poner la foto.
+            $empleo->pic = $carpetaGuardado . '/' . $nombreArchivo;
             $empleo->save();
             $empleo->synccarreras($request->carreras);
             //vamos a guardar las carreras
@@ -129,6 +137,9 @@ class EmpleoController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $request->validate([
+            'foto'=>'required|file|mimes:jpg,jpeg,png,gif|max:200',
+        ]);
         try {
             //code...
             $experiencia = null;
@@ -142,8 +153,17 @@ class EmpleoController extends Controller
             $empleo->descripcion=$request->descripcion;
             $empleo->experiencia=$experiencia;
             $empleo->empleoturno_id=$request->empleoturno_id;
-            $empleo->fecha_postulacion=$request->fecha_postulacion;
+            $empleo->fecha_postulacion=$request->cierre;
             $empleo->ubicacione_id=$request->distritos;
+            $carpetaGuardado = 'img';
+            // Obtenemos el archivo PDF
+            $imgFile = $request->file('foto');
+            // Generamos un nombre único para el archivo
+            $nombreArchivo = uniqid() . '.' . $imgFile->getClientOriginalExtension();
+            // Almacenamos el archivo en la carpeta especificada utilizando Storage::put()
+            Storage::disk('public')->put($carpetaGuardado . '/' . $nombreArchivo, file_get_contents($imgFile));
+            //vamos a poner la foto.
+            $empleo->pic = $carpetaGuardado . '/' . $nombreArchivo;
             $empleo->update();
             $empleo->synccarreras($request->carreras);
         } catch (\Throwable $th) {

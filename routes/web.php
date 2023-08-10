@@ -12,6 +12,7 @@ use App\Http\Controllers\OfertaController;
 use App\Http\Controllers\PostulacioneController;
 use App\Http\Controllers\RubroController;
 use App\Http\Controllers\SectoreController;
+use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UsersettingController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,7 @@ Route::get('/home', function () {
     return Redirect::route('dashboard.index');
 });
 Route::get('/',[HomeController::class,'index'])->name('home');
-
+Route::resource('/user_dashboard',UserDashboardController::class)->names('user_dashboard');
 Route::get('/user_create',[HomeController::class,'create'])->name('user_create');
 Route::get('/bussines_create',[HomeController::class,'bussines_create'])->name('bussines_create');
 Route::post('/bussines_store',[HomeController::class,'bussines_store'])->name('bussines_store');

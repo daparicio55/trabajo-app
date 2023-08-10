@@ -25,7 +25,7 @@ class EmpleoStoreFrmRequest extends FormRequest
             'empresa'=>'required',
             'titulo'=>'required',
             'descripcion'=>'required',
-            
+            'foto'=>'required|file|mimes:jpg,jpeg,png,gif|max:200',
             'turno'=>'required',
             'cierre'=>'required',
             'departamentos'=>[

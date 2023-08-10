@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class DashboardController extends Controller
 {
@@ -12,11 +14,15 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:dashboard.index')->only('index');
+        //$this->middleware('can:dashboard.index')->only('index');
     }
     public function index()
     {
         //
+        $user = User::findOrFail(auth()->id());
+        if($user->hasRole('Bolsa User')){
+            return Redirect::route('home');
+        }
         return view('dashboard.index');
     }
     /**

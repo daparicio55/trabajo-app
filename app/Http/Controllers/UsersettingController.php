@@ -87,7 +87,7 @@ class UsersettingController extends Controller
             //throw $th;
             dd($th->getMessage());
         }
-        return Redirect::route('dashboard.settings.index');
+        return Redirect::route('user_dashboard.index');
     }
 
     /**
@@ -105,6 +105,6 @@ class UsersettingController extends Controller
         $user = User::findOrFail(auth()->id());
         $user->password = bcrypt($request->password1);
         $user->update();
-        return Redirect::route('dashboard.index');
+        return Redirect::route('user_dashboard.index');
     }
 }

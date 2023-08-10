@@ -3,8 +3,10 @@
     @include('layouts.portal.preheader')
     @include('layouts.portal.header')
     @include('layouts.portal.baner')
-    @include('layouts.portal.search')
-    @include('layouts.portal.post')
+    @if (auth()->id() !== null)
+        @include('layouts.portal.search')
+        @include('layouts.portal.post')
+    @endif
     @include('layouts.portal.footer')
 @stop
 @section('js')

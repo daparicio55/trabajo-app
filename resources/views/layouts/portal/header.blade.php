@@ -20,9 +20,20 @@
               <li class="scroll-to-section">
                 @if(null !== auth()->id())
                 <div class="border-first-button">
-                  <a href="{{ route('dashboard.index') }}">
-                    <i class="fa fa-tachometer" aria-hidden="true"></i> Panel
-                  </a>
+                  {!! Form::open(['route'=>'logout','method'=>'post']) !!}
+                    @if (Auth::user()->hasRole('Bolsa User') == TRUE)
+                      <a href="{{ route('user_dashboard.index') }}">
+                        <i class="fa fa-tachometer" aria-hidden="true"></i> Panel
+                      </a>
+                    @else
+                      <a href="{{ route('dashboard.index') }}">
+                        <i class="fa fa-tachometer" aria-hidden="true"></i> Panel
+                      </a>
+                    @endif
+                    <button type="submit" class="btn btn-danger" title="cerrar sesión">
+                      <i class="fa fa-power-off text-white" aria-hidden="true"></i>
+                    </button>
+                  {!! Form::close() !!}
                 </div>
                 @else
                   <div class="border-first-button">
