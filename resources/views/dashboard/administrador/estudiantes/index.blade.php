@@ -3,11 +3,11 @@
 @section('title', 'Reg. en Espera')
 
 @section('content_header')
-    <h1>Alumnos Registrados</h1>
+    <h1>Alumnos y Egresados Registrados</h1>
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-            <a class="btn btn-outline-success">
-                <i class="fas fa-marker"></i> Crear cuentas
+            <a href="{{ route('dashboard.administrador.alumnos.create') }}" class="btn btn-outline-success">
+                <i class="fas fa-marker"></i> Nuevo Registro
             </a>
           {{-- <button class="btn btn-sm btn-outline-secondary" type="button">Smaller button</button> --}}
         </form>

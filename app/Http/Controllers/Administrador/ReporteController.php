@@ -27,7 +27,10 @@ class ReporteController extends Controller
         $carreras = Carrera::get();
         return view('dashboard.administrador.reportes.index',compact('carreras'));
     }
-
+    public function index2(){
+        $carreras = Carrera::get();
+        return view('dashboard.administrador.reportes.index2',compact('carreras'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -60,7 +63,7 @@ class ReporteController extends Controller
             $query->where('idCarrera','=',$request->carrera_id);
         })->whereBetween('fecha',[$request->finicio_postulaciones,$request->ffin_postulaciones])->get();
         $carreras = Carrera::get();
-        return view('dashboard.administrador.reportes.index',compact('postulaciones','carreras'));
+        return view('dashboard.administrador.reportes.index2',compact('postulaciones','carreras'));
     }
     public function reporte_postulaciones_excel($string){
         $file = str_replace(':','-',$string);

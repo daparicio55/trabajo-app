@@ -6,7 +6,7 @@
     <h1>Docentes Registrados</h1>
     <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
-            <a class="btn btn-outline-success" href="{{ route('dashboard.administrador.docentes.create') }}">
+            <a class="btn btn-outline-success" href="#">
                 <i class="fas fa-marker"></i> Registrar Docente.
             </a>
         </form>
@@ -31,7 +31,11 @@
                             <td>{{ $docente->name }}</td>
                             <td>{{ $docente->email }}</td>
                             <td>
-                                <a data-toggle="modal" data-target="#modal-{{ $docente->id }}-show" class="btn btn-info">
+                                <a data-toggle="modal" data-target="#modal-{{ $docente->id }}-email" class="btn btn-warning" title="enviar correo de restablecimiento">
+                                    <i class="fas fa-mail-bulk"></i>
+                                </a>
+                                @include('dashboard.administrador.docentes.modal')
+                                {{-- <a data-toggle="modal" data-target="#modal-{{ $docente->id }}-show" class="btn btn-info">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <a data-toggle="modal" data-target="#modal-{{ $docente->id }}-edit" class="btn btn-success">
@@ -39,7 +43,7 @@
                                 </a>
                                 <a data-toggle="modal" data-target="#modal-{{ $docente->id }}-delete" class="btn btn-danger">
                                     <i class="fas fa-trash-alt"></i>
-                                </a>
+                                </a> --}}
                             </td>
                         </tr>
                     @endforeach

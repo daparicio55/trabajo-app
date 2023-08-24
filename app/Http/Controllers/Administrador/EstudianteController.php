@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Administrador;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admisione;
+use App\Models\AdmisionePostulante;
+use App\Models\Carrera;
 use App\Models\Cliente;
 use App\Models\Estudiante;
+use App\Models\Postulacione;
 use App\Models\Ucliente;
 use App\Models\User;
 use App\Traits\MailTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -46,6 +51,25 @@ class EstudianteController extends Controller
     public function create()
     {
         //
+        $sexos = ['Masculino'=>'Masculino','Femenino'=>'Femenino'];
+        $modalidadTipo = ['Ordinario'=>'Ordinario','Exonerado'=>'Exonerado'];
+        $modalidad = [
+            'Ordinario'=>'Ordinario',
+            'Artista Calificado'=>'Artista Calificado',
+            'Comunidades Nativas y Campesinas'=>'Comunidades Nativas y Campesinas',
+            'Desplazados Terrorismo y combatientes del Cenepa'=>'Desplazados Terrorismo y combatientes del Cenepa',
+            'Personas con Discapacidad'=>'Personas con Discapacidad',
+            '1er y 2do Puesto EBR - EBA'=>'1er y 2do Puesto EBR - EBA',
+            '1er y 2do Puesto Cepre IDEX Perú Japón'=>'1er y 2do Puesto Cepre IDEX Perú Japón',
+            'Servicio Militar'=>'Servicio Militar',
+            'Deportistas Calificados'=>'Deportistas Calificados',
+            'Traslado Interno'=>'Traslado Interno',
+            'Titulados'=>'Titulados',
+            'Reingresantes'=>'Reingresantes'
+        ];
+        $admisiones = Admisione::orderby('periodo','desc')->pluck('periodo','id')->toArray();
+        $carreras = Carrera::pluck('nombreCarrera','idCarrera')->toArray();
+        return view('dashboard.administrador.estudiantes.create',compact('sexos','modalidadTipo','modalidad','carreras','admisiones'));
     }
 
     /**
@@ -54,6 +78,70 @@ class EstudianteController extends Controller
     public function store(Request $request)
     {
         //
+        try {
+            DB::beginTransaction();
+            //creamos o actualizamos el cliente
+            if($request->cliente == 0){
+                $cliente = new Cliente();
+                $cliente->dniRuc = $request->searchText;
+                $cliente->apellido = $request->apellido;
+                $cliente->nombre = $request->nombre;
+                $cliente->telefono = $request->telefono;
+                $cliente->telefono2 = $request->telefono2;
+                $cliente->email = $request->email;
+                $cliente->direccion = $request->direccion;
+                $cliente->save();
+            }else{
+                $cliente = Cliente::findOrFail($request->cliente);
+                $cliente->apellido = $request->apellido;
+                $cliente->nombre = $request->nombre;
+                $cliente->telefono = $request->telefono;
+                $cliente->telefono2 = $request->telefono2;
+                $cliente->email = $request->email;
+                $cliente->direccion = $request->direccion;
+                $cliente->update();
+            }
+            $numero = DB::table('admisione_postulantes')
+            ->orderBy('expediente','desc')
+            ->where('admisione_id',$request->admisione_id)
+            ->first();
+            if(isset($numero)){
+                $expediente = $numero->expediente + 1;
+            }else{
+                $expediente = 1;
+            }
+            $hora = Carbon::now()->toTimeString();
+            $fecha = Carbon::now()->toDateString();
+            //ingresamos la postulacion
+            $postulante = new AdmisionePostulante;
+            $postulante->fecha = $fecha;
+            $postulante->hora = $hora;
+            $postulante->expediente = $expediente;
+            $postulante->sexo = $request->sexo;
+            $postulante->discapacidad = $request->discapacidad;
+            $postulante->discapacidadNombre = $request->discapacidadNombre;
+            $postulante->modalidadTipo = 'Exonerado';
+            $postulante->modalidad = 'Historico';
+            $postulante->url = 'noimagen';
+            $postulante->fechaNacimiento = $request->fechaNacimiento;
+            $postulante->idCliente = $cliente->idCliente;
+            $postulante->idCarrera = $request->idCarrera;
+            $postulante->admisione_id = $request->admisione_id;
+            $postulante->colegio_id = 102;
+            $postulante->boleta = $request->boleta;
+            $postulante->user_id = auth()->user()->id;
+            $postulante->save();
+            //registro de estudiante
+            $estudiante = new Estudiante;
+            $estudiante->admisione_postulante_id = $postulante->id;
+            $estudiante->save();
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            return $th->getMessage();
+            return Redirect::route('dashboard.administrador.alumnos.index')->with('error','ocurrio un error al guardar al estudiante');
+        }
+        return Redirect::route('dashboard.administrador.alumnos.index')->with('info','se guardo el estudiante correctamente');
     }
 
     /**

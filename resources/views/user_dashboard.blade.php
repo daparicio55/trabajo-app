@@ -19,9 +19,9 @@
                     <div class="col-lg-12">
                       <div class="menu">
                         <div class="first-thumb active">
-                          <div class="thumb">
-                            <span class="icon"><img src="{{ asset('assets/images/panel-de-administrador.png') }}" alt=""></span>
-                            Datos
+                          <div class="thumb">                 
+                            <span class="icon"><img src="{{ asset('assets/images/demandante-de-empleo.png') }}" alt=""></span>
+                            Ofertas
                           </div>
                         </div>
                         <div>
@@ -30,17 +30,115 @@
                             Postulaciones
                           </div>
                         </div>
-                        <div>
-                          <div class="thumb">                 
-                            <span class="icon"><img src="{{ asset('assets/images/demandante-de-empleo.png') }}" alt=""></span>
-                            Ofertas
+                        <div >
+                          <div class="thumb">
+                            <span class="icon"><img src="{{ asset('assets/images/panel-de-administrador.png') }}" alt=""></span>
+                            Datos
                           </div>
                         </div>
                       </div>
                     </div> 
                     <div class="col-lg-12">
                       <ul class="nacc">
+                        <!-- ofertas segun programa de estudios -->
                         <li class="active">
+                          <div>
+                            <div class="thumb">
+                              <div class="row">
+                                <div class=" col-md-12 col-lg-12 align-self-center">
+                                  <div class="left-text">
+                                    <h4>Ofertas Laborales Sugeridas</h4>
+                                    <p>revisa las nuevas ofertas laborales orientadas a tu programa de estudios. Las ofertas en rojo estan fuera de fecha de postulacion.</p>
+                                    <div class="ticks-list">
+                                      <div class="table-responsive">
+                                        <table class="table" id="ofertas">
+                                            <thead>
+                                                <tr>
+                                                    <th>Registro</th>
+                                                    <th>Cierre</th>
+                                                    <th>Empresa</th>
+                                                    <th>Titulo</th>
+                                                    <th>Ubicacion</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($empleos as $empleo)
+                                                    @php
+                                                        $fecha = Carbon\Carbon::parse($empleo->fecha_postulacion);
+                                                    @endphp
+                                                    <tr @if($fecha->isPast()) class="text-danger" @endif>
+                                                        <td>{{ date('d-m-Y',strtotime($empleo->fecha_registro)) }}</td>
+                                                        <td @if($fecha->isPast()) class="font-weight-bold" @endif>{{ date('d-m-Y',strtotime($empleo->fecha_postulacion)) }}</td>
+                                                        <td>{{ $empleo->empresa->razonSocial }}</td>
+                                                        <td>{{ $empleo->titulo }}</td>
+                                                        <td>{{ $empleo->ubicacione->nombre }}</td>
+                                                        <td>
+                                                            <a href="{{ route('empleo',$empleo->id) }}" class="btn btn-info btn-lg" title="ver oferta laboral">
+                                                                <i class="fa fa-eye text-white"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                    <p><span class="text-danger">(*)</span> las ofertas en rojo son con fechas caducadas o vencidas...</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div>
+                            <div class="thumb">
+                              <div class="row">
+                                <div class="col-lg-12 align-self-center">
+                                  <div class="left-text">
+                                    <h4>Lista de Postulaciones </h4>
+                                    <div class="ticks-list">
+                                      <div class="table-responsive">
+                                        <table class="table" id="postulaciones">
+                                            <thead>
+                                                <tr>
+                                                    <th>Registro</th>
+                                                    <th>Empresa</th>
+                                                    <th>Titulo</th>
+                                                    <th>Ubicacion</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($postulaciones as $postulacione)
+                                                    <tr>
+                                                        <td>{{ date('d-m-Y',strtotime($postulacione->fecha)) }}</td>
+                                                        <td>{{ $postulacione->empleo->empresa->razonSocial }}</td>
+                                                        <td>{{ $postulacione->empleo->titulo }}</td>
+                                                        <td>{{ $postulacione->empleo->ubicacione->nombre }}</td>
+                                                        <td>
+                                                            <a class="btn btn-info text-white m-1" href="{{ route('empleo',$postulacione->empleo->id) }}" title="detalles">
+                                                                <i class="fa fa-eye"></i>
+                                                            </a>
+                                                            <a data-toggle="modal" data-target="#modal-{{ $postulacione->id }}-eliminar" class="btn btn-danger m-1" title="eliminar mi postulacion">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                        @include('dashboard.user.modal')
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
                           <div>
                             <div class="thumb">
                               <div class="row d-flex justify-content-center">
@@ -97,100 +195,6 @@
                                             <i class="fa fa-save"></i> Actualizar
                                         </button>
                                     {!! Form::close() !!}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div>
-                            <div class="thumb">
-                              <div class="row">
-                                <div class="col-lg-12 align-self-center">
-                                  <div class="left-text">
-                                    <h4>Lista de Postulaciones </h4>
-                                    <div class="ticks-list">
-                                        <table class="table" id="postulaciones">
-                                            <thead>
-                                                <tr>
-                                                    <th>Registro</th>
-                                                    <th>Empresa</th>
-                                                    <th>Titulo</th>
-                                                    <th>Ubicacion</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($postulaciones as $postulacione)
-                                                    <tr>
-                                                        <td>{{ date('d-m-Y',strtotime($postulacione->fecha)) }}</td>
-                                                        <td>{{ $postulacione->empleo->empresa->razonSocial }}</td>
-                                                        <td>{{ $postulacione->empleo->titulo }}</td>
-                                                        <td>{{ $postulacione->empleo->ubicacione->nombre }}</td>
-                                                        <td>
-                                                            <a class="btn btn-info text-white m-1" href="{{ route('empleo',$postulacione->empleo->id) }}" title="detalles">
-                                                                <i class="fa fa-eye"></i>
-                                                            </a>
-                                                            <a data-toggle="modal" data-target="#modal-{{ $postulacione->id }}-eliminar" class="btn btn-danger m-1" title="eliminar mi postulacion">
-                                                                <i class="fa fa-trash"></i>
-                                                            </a>
-                                                        </td>
-                                                        @include('dashboard.user.modal')
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <!-- ofertas segun programa de estudios -->
-                        <li>
-                          <div>
-                            <div class="thumb">
-                              <div class="row">
-                                <div class=" col-md-12 col-lg-12 align-self-center">
-                                  <div class="left-text">
-                                    <h4>Ofertas Laborales Sugeridas</h4>
-                                    <p>revisa las nuevas ofertas laborales orientadas a tu programa de estudios. Las ofertas en rojo estan fuera de fecha de postulacion.</p>
-                                    <div class="ticks-list">
-                                        <table class="table" id="ofertas">
-                                            <thead>
-                                                <tr>
-                                                    <th>Registro</th>
-                                                    <th>Cierre</th>
-                                                    <th>Empresa</th>
-                                                    <th>Titulo</th>
-                                                    <th>Ubicacion</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($empleos as $empleo)
-                                                    @php
-                                                        $fecha = Carbon\Carbon::parse($empleo->fecha_postulacion);
-                                                    @endphp
-                                                    <tr @if($fecha->isPast()) class="text-danger" @endif>
-                                                        <td>{{ date('d-m-Y',strtotime($empleo->fecha_registro)) }}</td>
-                                                        <td @if($fecha->isPast()) class="font-weight-bold" @endif>{{ date('d-m-Y',strtotime($empleo->fecha_postulacion)) }}</td>
-                                                        <td>{{ $empleo->empresa->razonSocial }}</td>
-                                                        <td>{{ $empleo->titulo }}</td>
-                                                        <td>{{ $empleo->ubicacione->nombre }}</td>
-                                                        <td>
-                                                            <a href="{{ route('empleo',$empleo->id) }}" class="btn btn-info btn-lg" title="ver oferta laboral">
-                                                                <i class="fa fa-eye text-white"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt.</p>
                                   </div>
                                 </div>
                               </div>

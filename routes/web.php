@@ -4,6 +4,7 @@ use App\Http\Controllers\Administrador\DocenteController;
 use App\Http\Controllers\Administrador\EsperaController as AdminEsperaController;
 use App\Http\Controllers\Administrador\EstudianteController as AdminEstudianteController;
 use App\Http\Controllers\Administrador\ReporteController;
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmpleoController;
 use App\Http\Controllers\EmpresaController;
@@ -59,6 +60,8 @@ Route::get('/dashboard/administrador/alumnos/{id}/make/',[AdminEstudianteControl
 ->name('dashboard.administrador.makeaccount');
 Route::resource('/dashboard/administrador/docentes',DocenteController::class)->names('dashboard.administrador.docentes');
 Route::get('/dashboard/administrador/reportes', [ReporteController::class,'index'])->name('dashboard.administrador.reportes.index');
+Route::get('/dashboard/administrador/reportes2', [ReporteController::class,'index2'])->name('dashboard.administrador.reportes.index2');
+
 Route::get('/dashboard/administrador/reportes/empleos',[ReporteController::class,'reporte_empleo'])->name('dashboard.administrador.reportes.reporte_empleo');
 Route::get('/dashboard/administrador/reportes/postulaciones',[ReporteController::class,'reporte_postulaciones'])->name('dashboard.administrador.reportes.reporte_postulaciones');
 Route::get('/dashboard/administrador/reportes/empleos/excel/{string}',[ReporteController::class,'reporte_empleo_excel'])->name('dashboard.administrador.reportes.reporte_empleo.excel');
@@ -104,3 +107,6 @@ Route::get('/clear-cache', function () {
     composer dump-autoload */
 
  })->middleware('auth');
+
+
+ Route::get('/api/getdatos/{dni}',[ApiController::class,'getdatos'])->name('api.getdatos');

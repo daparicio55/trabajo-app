@@ -66,6 +66,9 @@
                                                     aria-hidden="true"></i> Postularme</a>
                                         @endif
                                     </div>
+                                    <div class="card-footer text-center">
+                                        <a href="javascript:history.back()" class="btn btn-secondary">Regresar</a>
+                                    </div>
                                 </div>
                             </div>
                             @if (auth()->id() !== null)

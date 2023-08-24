@@ -307,28 +307,16 @@ return [
             'can'=>'dashboard.administrador.alumnos.index'
         ],
         [
-            'text'=>'Docentes',
-            'icon'=>'fas fa-user-tie',
-            'route'=>'dashboard.administrador.docentes.index',
-            'can'=>'dashboard.administrador.docentes.index'
-        ],
-        [
             'text'=>'Reg. en Espera - Estudiantes',
             'icon'=>'fas fa-hourglass-half',
             'route'=>'dashboard.administrador.esperas.index',
             'can'=>'dashboard.administrador.esperas.index'
         ],
         [
-            'text'=>'Reg. en Espera - Empresas',
-            'icon'=>'fas fa-hourglass-half',
-            'route'=>'dashboard.administrador.empresas.showwaitings',
-            'can'=>'dashboard.administrador.empresas.showwaitings'
-        ],
-        [
-            'text'=>'Empresas',
-            'icon'=>'fas fa-building',
-            'route'=>'dashboard.administrador.empresas.index',
-            'can'=>'dashboard.administrador.empresas.index'
+            'text'=>'Docentes',
+            'icon'=>'fas fa-user-tie',
+            'route'=>'dashboard.administrador.docentes.index',
+            'can'=>'dashboard.administrador.docentes.index'
         ],
         [
             'text'=>'Oferta Laboral',
@@ -339,8 +327,21 @@ return [
         [
             'text'=>'Reportes',
             'icon'=>'far fa-chart-bar',
-            'route'=>'dashboard.administrador.reportes.index',
-            'can'=>'dashboard.administrador.reportes.index'
+            'can'=>'dashboard.administrador.reportes.index',
+            'submenu'=>[
+                [
+                    'text'=>'Ofertas Laborales',
+                    'icon'=>'fas fa-play-circle',
+                    'icon_color'=>'info',
+                    'route'=>'dashboard.administrador.reportes.index',
+                ],
+                [
+                    'text'=>'Postulaciones',
+                    'icon'=>'fas fa-play-circle',
+                    'icon_color'=>'primary',
+                    'route'=>'dashboard.administrador.reportes.index2',
+                ]
+            ]
         ],
         [
             'text'=>'Postulaciones',
@@ -354,6 +355,24 @@ return [
             'route'=>'dashboard.ofertas.index',
             'can'=>'dashboard.ofertas.index'
         ],
+        [
+            'header' => 'EMPRESAS',
+            'can'=>'dashboard.administrador.alumnos.index'
+        ],
+        [
+            'text'=>'Reg. en Espera - Empresas',
+            'icon'=>'fas fa-hourglass-half',
+            'route'=>'dashboard.administrador.empresas.showwaitings',
+            'can'=>'dashboard.administrador.empresas.showwaitings'
+        ],
+        [
+            'text'=>'Empresas',
+            'icon'=>'fas fa-building',
+            'route'=>'dashboard.administrador.empresas.index',
+            'can'=>'dashboard.administrador.empresas.index'
+        ],
+
+
         /* [
             'text'=>'',
             'icon'=>'fas fa-arrow-circle-down',

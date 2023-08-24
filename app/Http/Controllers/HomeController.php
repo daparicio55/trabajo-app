@@ -34,8 +34,72 @@ class HomeController extends Controller
 
     }
     public function empleo_search(Request $request){
-        $empleos = Empleo::where('ubicacione_id','=',$request->location)->where('descripcion','like','%'.$request->searchText.'%')->get();
-        return view('empleos_show',compact('empleos'));
+        //aca buscamos segun el criterio ingresado en el formulario.
+        $request->validate([
+            'location'=>[
+                'required', function($attribute,$value,$fail){
+                    if($value == 0){
+                        $fail('seleccione una ubicación');
+                    }
+                }
+            ],
+            'carrera'=>[
+                'required',function($attribute,$value,$fail){
+                    if($value == 0){
+                        $fail('seleccione un programa');
+                    }
+                }
+            ]
+        ]);
+        try {
+            $array_ubicaciones = [];
+            //code...
+            /* $empleos = Empleo::where('ubicacione_id','=',$request->location)->where('descripcion','like','%'.$request->searchText.'%')->get(); */
+            $carrera = Carrera::where('idCarrera','=',$request->carrera)->first();
+            if($carrera->ccarrera_id == null){
+                //buscamos una nueva
+                $carrera_id = Carrera::where('ccarrera_id','=',$carrera->idCarrera)->first()->idCarrera;
+            }else{
+                $carrera_id = $carrera->idCarrera;
+            }
+            $ubicacion = Ubicacione::findOrFail($request->location);
+            //dd(isset($ubicacion->padre->padre->id));
+            if(isset($ubicacion->padre->id)){
+                if(isset($ubicacion->padre->padre->id)){
+                    //ciudad nivel
+                    $ubicaciones = Ubicacione::where('id','=',$request->location)->get();
+                    foreach($ubicaciones as $ubicacione){
+                        array_push($array_ubicaciones,$ubicacione->id);
+                    }
+                }else{
+                    //distrito
+                    $ubicaciones = Ubicacione::where('ubicacione_id','=',$request->location)->get();
+                    foreach($ubicaciones as $ubicacione){
+                        array_push($array_ubicaciones,$ubicacione->id);
+                    }
+                }
+            }else{
+                //departamento
+                $provincias = Ubicacione::where('ubicacione_id','=',$request->location)->get();
+                foreach ($provincias as $key => $provincia) {
+                    # code...
+                    $distritos = Ubicacione::where('ubicacione_id','=',$provincia->id)->get();
+                    //tengo los distritos
+                    foreach ($distritos as $key => $distrito) {
+                        # code...
+                        array_push($array_ubicaciones,$distrito->id);
+                    }
+                }
+            }
+            $empleos = Empleo::whereHas('carreras',function($query) use($carrera_id) {
+                $query->where('carrera_id','=',$carrera_id);
+            })->whereIn('ubicacione_id',$array_ubicaciones)->get();
+            return view('empleos_show',compact('empleos'));
+        } catch (\Throwable $th) {
+            //throw $th;
+            dd($th->getMessage());
+        }
+        
     }
     /**
      * Show the application dashboard.
@@ -54,7 +118,8 @@ class HomeController extends Controller
         $user = User::where('email','=','daparicio@idexperujapon.edu.pe')->first();
         $ubicaciones = Ubicacione::get();
         $empleos = Empleo::orderBy('fecha_registro','desc')->take(5)->get();
-        return view('index',compact('empleos','user','ubicaciones'));
+        $carreras = Carrera::get();
+        return view('index',compact('empleos','user','ubicaciones','carreras'));
     }
     public function create()
     {

@@ -12,12 +12,15 @@
                     <p>¡Encuentra el trabajo perfecto mientras estudias! Nuestra página te ofrece una amplia gama de empleos diseñados especialmente para estudiantes y egresados</p>
                   </div>
                   <div class="col-lg-12">
+                    @if(null == auth()->id())
                     <div class="border-first-button scroll-to-section">
                       <a href="{{ route('dashboard.index') }}" class="mt-2"><i class="fa fa-user" aria-hidden="true"></i> Estudiantes / <i class="fa fa-graduation-cap" aria-hidden="true"></i> Egresados</a>
                       <a href="{{ route('dashboard.index') }}" class="mt-2"><i class="fa fa-book" aria-hidden="true"></i> Docentes</a>
                       <a href="{{ route('dashboard.index') }}" class="mt-2"><i class="fas fa-user-cog"></i> Administrador</a>
-                      
                     </div>
+                    @else
+                      <p><a href="#blog">mira nuestras ultimas ofertas laborales</a></p>
+                    @endif
                   </div>
                 </div>
               </div>
