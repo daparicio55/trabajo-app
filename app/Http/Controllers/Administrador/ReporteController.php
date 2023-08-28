@@ -49,19 +49,19 @@ class ReporteController extends Controller
     }
     public function reporte_postulaciones(Request $request){
         $request->validate([
-            'carrera_id'=>['required',function($attribute,$value,$fail){
-                if($value == 0){
-                    $fail('debe seleccionar un programa de estudios');
-                }
-            }],
             'finicio_postulaciones'=>'required',
             'ffin_postulaciones'=>'required|date|after_or_equal:finicio_postulaciones'
         ]);
         /* $postulaciones = Postulacione::whereBetween('fecha',[$request->finicio_postulaciones,$request->ffin_postulaciones])
         ->get(); */
-        $postulaciones = Postulacione::whereHas('user.ucliente.cliente.postulaciones',function($query) use ($request){
-            $query->where('idCarrera','=',$request->carrera_id);
-        })->whereBetween('fecha',[$request->finicio_postulaciones,$request->ffin_postulaciones])->get();
+        if($request->carrera_id != 0){
+            $postulaciones = Postulacione::whereHas('user.ucliente.cliente.postulaciones',function($query) use ($request){
+                $query->where('idCarrera','=',$request->carrera_id);
+            })->whereBetween('fecha',[$request->finicio_postulaciones,$request->ffin_postulaciones])->get();
+        }else{
+            $postulaciones = Postulacione::whereBetween('fecha',[$request->finicio_postulaciones,$request->ffin_postulaciones])->get();
+        }
+        
         $carreras = Carrera::get();
         return view('dashboard.administrador.reportes.index2',compact('postulaciones','carreras'));
     }
