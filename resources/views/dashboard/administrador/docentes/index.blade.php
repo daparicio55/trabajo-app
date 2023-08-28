@@ -4,17 +4,17 @@
 
 @section('content_header')
     <h1>Docentes Registrados</h1>
-    <nav class="navbar navbar-light bg-light">
+    {{-- <nav class="navbar navbar-light bg-light">
         <form class="form-inline">
             <a class="btn btn-outline-success" href="#">
                 <i class="fas fa-marker"></i> Registrar Docente.
             </a>
         </form>
-      </nav>
+    </nav> --}}
+    <p class="mt-3 text-primary">(*)Los usuarios docentes son responsabilidad de un <b>Super Administrador</b>, en esta sección solo le puede enviar correos de recuperación de contraseñas</p>
 @stop
 
 @section('content')
-    <p>Lista de empresas registradas en el sistema.</p>
     <div class="card">
         <div class="card-body">
             <table class="table" id="docentes">

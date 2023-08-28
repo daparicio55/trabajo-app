@@ -49,6 +49,7 @@
         $('#postulaciones').DataTable({
             responsive: true,
             autoWidth: false,
+            order: false,
             /* columnDefs: [{
                 orderable: false,
                 width: '100px',

@@ -81,7 +81,9 @@
                             <option value="{{ $carrera->idCarrera }}">{{ $carrera->nombreCarrera }}</option>
                         @endforeach
                     </x-adminlte-select2>
-
+                    @error('carreras')
+                        <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</p>
+                    @enderror
                     {!! Form::label('turno', 'Turno(*)', [null]) !!}
                     {!! Form::select('turno', $turnos, null, ['class'=>'form-control selectpicker','data-live-search'=>'true','data-size'=>'5']) !!}
                     {!! Form::label('cierre', 'Fecha de cierre(*)', ['class'=>'mt-3']) !!}

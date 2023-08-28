@@ -41,6 +41,9 @@
                                 <a class="btn btn-info mt-1" href="{{ route('dashboard.empleos.show',$empleo->id) }}" title="ver postulantes">
                                     <i class="fas fa-users"></i>
                                 </a>
+                                <a data-toggle="modal" data-target="#modal-{{ $empleo->id }}-detalles" class="btn btn-warning mt-1" title="mostrar detalles de la oferta laboral">
+                                    <i class="fas fa-eye"></i>
+                                </a>
                                 @can('dashboard.empleos.edit')
                                     <a class="btn btn-success mt-1" href="{{ route('dashboard.empleos.edit',$empleo->id) }}" title="editar datos de la oferta laboral">
                                         <i class="far fa-edit"></i>
@@ -66,6 +69,7 @@
         $('#estudiantes').DataTable({
             responsive: true,
             autoWidth: false,
+            order: false,
             /* columnDefs: [{
                 orderable: false,
                 width: '100px',

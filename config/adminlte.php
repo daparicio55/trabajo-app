@@ -307,12 +307,6 @@ return [
             'can'=>'dashboard.administrador.alumnos.index'
         ],
         [
-            'text'=>'Reg. en Espera - Estudiantes',
-            'icon'=>'fas fa-hourglass-half',
-            'route'=>'dashboard.administrador.esperas.index',
-            'can'=>'dashboard.administrador.esperas.index'
-        ],
-        [
             'text'=>'Docentes',
             'icon'=>'fas fa-user-tie',
             'route'=>'dashboard.administrador.docentes.index',
@@ -364,6 +358,12 @@ return [
             'icon'=>'fas fa-hourglass-half',
             'route'=>'dashboard.administrador.empresas.showwaitings',
             'can'=>'dashboard.administrador.empresas.showwaitings'
+        ],
+        [
+            'text'=>'Reg. en Espera - Estudiantes',
+            'icon'=>'fas fa-hourglass-half',
+            'route'=>'dashboard.administrador.esperas.index',
+            'can'=>'dashboard.administrador.esperas.index'
         ],
         [
             'text'=>'Empresas',

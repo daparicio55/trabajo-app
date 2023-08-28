@@ -41,7 +41,7 @@ class EstudianteController extends Controller
         ->join('admisione_postulantes','estudiantes.admisione_postulante_id','=','admisione_postulantes.id')
         ->join('clientes','clientes.idCliente','=','admisione_postulantes.idCliente')
         ->get(); */
-        $estudiantes = Estudiante::get();
+        $estudiantes = Estudiante::orderBy('id','desc')->get();
         return view('dashboard.administrador.estudiantes.index',compact('estudiantes'));
     }
 

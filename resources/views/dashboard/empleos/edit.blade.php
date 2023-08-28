@@ -21,7 +21,7 @@
                 <div class="col-sm-12 col-md-8 col-lg-10">
                     @role('Bolsa Administrador')
                         {!! Form::label('empresa', 'Empresa(*)', [null]) !!}
-                        {!! Form::select('empresa', $empresas, null, ['class'=>'form-control selectpicker','data-live-search'=>"true",'data-size'=>"5"]) !!}    
+                        {!! Form::select('empresa', $empresas, $empleo->empresa->idEmpresa, ['class'=>'form-control selectpicker','data-live-search'=>"true",'data-size'=>"5"]) !!}    
                     @endrole
                     @role('Bolsa Empresa')
                         @php
@@ -92,7 +92,9 @@
                             <option value="{{ $carrera->idCarrera }}" @if(in_array($carrera->idCarrera,$array)) selected @endif>{{ $carrera->nombreCarrera }}</option>
                         @endforeach
                     </x-adminlte-select2>
-                    
+                    @error('carreras')
+                        <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> {{ $message }}</p>
+                    @enderror
                     {!! Form::label('empleoturno_id', 'Turno(*)', [null]) !!}
                     {!! Form::select('empleoturno_id', $turnos, null, ['class'=>'form-control selectpicker','data-live-search'=>'true','data-size'=>'5']) !!}
                     {!! Form::label('cierre', 'Fecha de cierre(*)', ['class'=>'mt-3']) !!}

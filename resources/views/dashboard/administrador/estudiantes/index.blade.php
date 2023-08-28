@@ -24,6 +24,7 @@
                         <th>APELLIDOS, Nombres</th>
                         <th>Programa de Estudios</th>
                         <th>A. Ingreso</th>
+                        <th>Egresado</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -33,6 +34,14 @@
                             <td>{{ Str::upper($estudiante->postulante->cliente->apellido) }}, {{ Str::title($estudiante->postulante->cliente->nombre) }}</td>
                             <td>{{ $estudiante->postulante->carrera->nombreCarrera }}</td>
                             <td>{{ $estudiante->postulante->admisione->periodo }}</td>
+                            <td>
+                                {{-- {{ egresado($estudiante->id) }} --}}
+                                @if(egresado($estudiante->id))
+                                    SI
+                                @else
+                                    NO
+                                @endif
+                            </td>
                             <td>
                                 @if(isset($estudiante->postulante->cliente->ucliente->user_id))
                                     <a data-toggle="modal" data-target="#modal-{{ $estudiante->id }}-email" class="btn btn-warning" title="enviar correo de restablecimiento">
@@ -88,11 +97,7 @@
         $('#estudiantes').DataTable({
             responsive: true,
             autoWidth: false,
-            /* columnDefs: [{
-                orderable: false,
-                width: '100px',
-                targets: [2]
-            }], */
+            order: false,
             language: {
                 "decimal":        ".",
                 "emptyTable":     "No hay datos disponibles en la tabla",

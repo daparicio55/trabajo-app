@@ -14,4 +14,7 @@ class Carrera extends Model
     public function clientes(){
         return $this->hasMany(Espera::class);
     }
+    public function mformativos(){
+        return $this->hasMany(Mformativo::class,'carrera_id','idCarrera');
+    }
 }

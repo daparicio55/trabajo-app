@@ -1,4 +1,4 @@
-<x-Modal :id="$postulacione->id.'-show'" title="Mostrando Detalles">
+<x-Modal :id="$postulacione->id.'-show'" title="Mostrando Postulantes">
     @foreach ($postulacione->user->ucliente->cliente->postulantes as $postulante)
         @if(isset($postulante->estudiante->id))
            {!! Form::label(null, 'Programa de Estudios', [null]) !!}

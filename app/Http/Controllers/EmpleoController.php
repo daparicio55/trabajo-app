@@ -37,10 +37,10 @@ class EmpleoController extends Controller
         if(auth()->user()->hasRole('Bolsa Empresa')){
             //es una empresa entonces solo le mostramos los empleos de su empresa
             //recuperamos la empresa relacionada al usuario;
-            $empleos = Empleo::where('empresa_id','=',auth()->user()->uempresa->empresa_id)->orderBy('fecha_registro','desc')->get();
+            $empleos = Empleo::where('empresa_id','=',auth()->user()->uempresa->empresa_id)->orderBy('id','desc')->get();
         }
         if(auth()->user()->hasRole('Bolsa Administrador') || auth()->user()->hasRole('Docentes')){
-            $empleos = Empleo::orderBy('fecha_registro','desc')->get();
+            $empleos = Empleo::orderBy('id','desc')->get();
         }
         return view('dashboard.empleos.index',compact('empleos'));
     }
