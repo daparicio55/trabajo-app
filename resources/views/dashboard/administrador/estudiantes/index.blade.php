@@ -28,14 +28,13 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                {{-- <tbody>
                     @foreach ($estudiantes as $estudiante)
                         <tr>
                             <td>{{ Str::upper($estudiante->postulante->cliente->apellido) }}, {{ Str::title($estudiante->postulante->cliente->nombre) }}</td>
                             <td>{{ $estudiante->postulante->carrera->nombreCarrera }}</td>
                             <td>{{ $estudiante->postulante->admisione->periodo }}</td>
                             <td>
-                                {{-- {{ egresado($estudiante->id) }} --}}
                                 @if(egresado($estudiante->id))
                                     SI
                                 @else
@@ -56,7 +55,7 @@
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
+                </tbody> --}}
             </table>
         </div>
     </div>
@@ -119,6 +118,14 @@
                     "sortDescending": ": activar para ordenar columna descendente"
                 }
             },
+            ajax: 'http://localhost:8000/dashboard/administrador/alumnos/ajax/',
+            columns:[
+            {data:0},
+            {data:1},
+            {data:2},
+            {data:3},
+            {defaultContent: "<button>Editar</button>"}
+            ],
         });
         
     </script>

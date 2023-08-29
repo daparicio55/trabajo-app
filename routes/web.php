@@ -15,6 +15,7 @@ use App\Http\Controllers\RubroController;
 use App\Http\Controllers\SectoreController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UsersettingController;
+use App\Models\Estudiante;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -53,6 +54,28 @@ Route::resource('/dashboard/ofertas', OfertaController::class)->names('dashboard
 //Bolsa ADMINISTRADOR
 Route::get('/dashboard/administrador/alumnos/makeaccountmassive',[AdminEstudianteController::class,'makeaccountmassive'])
 ->name('dashboard.administrador.makeaccountmassive');
+Route::get('/dashboard/administrador/alumnos/ajax',function(){
+    $estudiantes = Estudiante::get();
+    $array = [];
+    foreach ($estudiantes as $estudiante){
+        $egresado = "NO";
+        /* if(egresado(($estudiante->id))){
+            $egresado = "SI";
+        } */
+        array_push($array,[
+            $estudiante->postulante->cliente->apellido.', '.$estudiante->postulante->cliente->nombre,
+            $estudiante->postulante->carrera->nombreCarrera,
+            $estudiante->postulante->admisione->periodo,
+            $egresado,
+            $estudiante->id
+        ]);
+    }
+
+    $jsonArray=[
+        'data'=>$array
+    ];
+    return json_encode($jsonArray,JSON_PRETTY_PRINT);
+})->name('dashboard.administrador.alumnos');
 Route::resource('/dashboard/administrador/alumnos',AdminEstudianteController::class)->names('dashboard.administrador.alumnos');
 Route::post('/dashboard/administrador/alumnos/{id}/email/',[AdminEstudianteController::class,'updateemail'])
 ->name('dashboard.administrador.updateemail');
