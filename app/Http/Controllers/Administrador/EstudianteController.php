@@ -67,8 +67,8 @@ class EstudianteController extends Controller
             'Titulados'=>'Titulados',
             'Reingresantes'=>'Reingresantes'
         ];
-        $admisiones = Admisione::orderby('periodo','desc')->pluck('periodo','id')->toArray();
-        $carreras = Carrera::pluck('nombreCarrera','idCarrera')->toArray();
+        $admisiones = Admisione::orderby('periodo','asc')->take(37)->pluck('periodo','id')->toArray();
+        $carreras = Carrera::whereNull('ccarrera_id')->pluck('nombreCarrera','idCarrera')->toArray();
         return view('dashboard.administrador.estudiantes.create',compact('sexos','modalidadTipo','modalidad','carreras','admisiones'));
     }
 

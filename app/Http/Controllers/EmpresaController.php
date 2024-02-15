@@ -91,13 +91,17 @@ class EmpresaController extends Controller
     public function show(string $id)
     {
         //
+        $rubros = Rubro::get();
+        $sectores = Sectore::get();
+        $empresa = Empresa::findOrFail($id);
+        return view('dashboard.administrador.empresas.show',compact('empresa','rubros','sectores'));
     }
     public function showwaitings(){
         //mostar empresas en espera.
         $esperas = Esperaempresa::get();
         $rubros = Rubro::pluck('nombre','id')->toArray();
         $sectores = Sectore::pluck('nombre','id')->toArray();
-        return view("dashboard.administrador.empresas.esperas",compact("esperas",'rubros','sectores'));
+        return view("dashboard.administrador.empresas.esperas",compact('esperas','rubros','sectores'));
     }
     public function storewaiting(Request $request){
         
@@ -113,8 +117,8 @@ class EmpresaController extends Controller
             $empresa->region = $request->region;
             $empresa->telefono1 = $request->telefono1;
             $empresa->telefono2 = $request->telefono2;
-            $empresa->contacto1 = $request->contacto;
-            $empresa->contacto2 = $request->contacto;
+            $empresa->contacto1 = $request->contacto1;
+            $empresa->contacto2 = $request->contacto2;
             $empresa->email= $request->email;
             $empresa->rubro_id = $request->rubro;
             $empresa->sectore_id = $request->sector;
@@ -155,7 +159,10 @@ class EmpresaController extends Controller
     public function edit(string $id)
     {
         //
-        
+        $rubros = Rubro::get();
+        $sectores = Sectore::get();
+        $empresa = Empresa::findOrFail($id);
+        return view('dashboard.administrador.empresas.edit',compact('empresa','rubros','sectores'));
     }
 
     /**
@@ -168,7 +175,7 @@ class EmpresaController extends Controller
             //code...
             DB::beginTransaction();
             $empresa = Empresa::findOrFail($id);
-            $empresa->ruc = $request->ruc;
+/*             $empresa->ruc = $request->ruc; */
             $empresa->razonSocial = $request->razon;
             $empresa->direccion = $request->direccion;
             $empresa->distrito = $request->distrito;
@@ -176,8 +183,8 @@ class EmpresaController extends Controller
             $empresa->region = $request->region;
             $empresa->telefono1 = $request->telefono1;
             $empresa->telefono2 = $request->telefono2;
-            $empresa->contacto1 = $request->contacto;
-            $empresa->contacto2 = $request->contacto;
+            $empresa->contacto1 = $request->contacto1;
+            $empresa->contacto2 = $request->contacto2;
             $empresa->email= $request->email;
             $empresa->rubro_id = $request->rubro;
             $empresa->sectore_id = $request->sector;
@@ -186,6 +193,7 @@ class EmpresaController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollBack();
+            dd($th->getMessage());
             return Redirect::route('dashboard.administrador.empresas.index')->with('error','se producio un error cuando se intento actualizar la empresa');
         }
         return Redirect::route('dashboard.administrador.empresas.index')->with('info','se edito correctamente la empresa en el sistema');

@@ -30,10 +30,16 @@
                             Postulaciones
                           </div>
                         </div>
-                        <div >
+                        <div>
                           <div class="thumb">
                             <span class="icon"><img src="{{ asset('assets/images/panel-de-administrador.png') }}" alt=""></span>
                             Datos
+                          </div>
+                        </div>
+                        <div>
+                          <div class="thumb">
+                            <span class="icon"><img src="{{ asset('assets/images/cv.png') }}" alt=""></span>
+                            Hoja de Vida
                           </div>
                         </div>
                       </div>
@@ -42,164 +48,16 @@
                       <ul class="nacc">
                         <!-- ofertas segun programa de estudios -->
                         <li class="active">
-                          <div>
-                            <div class="thumb">
-                              <div class="row">
-                                <div class=" col-md-12 col-lg-12 align-self-center">
-                                  <div class="left-text">
-                                    <h4>Ofertas Laborales Sugeridas</h4>
-                                    <p>revisa las nuevas ofertas laborales orientadas a tu programa de estudios. Las ofertas en rojo estan fuera de fecha de postulacion.</p>
-                                    <div class="ticks-list">
-                                      <div class="table-responsive">
-                                        <table class="table" id="ofertas">
-                                            <thead>
-                                                <tr>
-                                                    <th>Registro</th>
-                                                    <th>Cierre</th>
-                                                    <th>Empresa</th>
-                                                    <th>Titulo</th>
-                                                    <th>Ubicacion</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($empleos as $empleo)
-                                                    @php
-                                                        $fecha = Carbon\Carbon::parse($empleo->fecha_postulacion);
-                                                    @endphp
-                                                    <tr @if($fecha->isPast()) class="text-danger" @endif>
-                                                        <td>{{ date('d-m-Y',strtotime($empleo->fecha_registro)) }}</td>
-                                                        <td @if($fecha->isPast()) class="font-weight-bold" @endif>{{ date('d-m-Y',strtotime($empleo->fecha_postulacion)) }}</td>
-                                                        <td>{{ $empleo->empresa->razonSocial }}</td>
-                                                        <td>{{ $empleo->titulo }}</td>
-                                                        <td>{{ $empleo->ubicacione->nombre }}</td>
-                                                        <td>
-                                                            <a href="{{ route('empleo',$empleo->id) }}" class="btn btn-info btn-lg" title="ver oferta laboral">
-                                                                <i class="fa fa-eye text-white"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                      </div>
-                                    </div>
-                                    <p><span class="text-danger">(*)</span> las ofertas en rojo son con fechas caducadas o vencidas...</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                          @include('partes.user_dashboard.ofertas')
                         </li>
                         <li>
-                          <div>
-                            <div class="thumb">
-                              <div class="row">
-                                <div class="col-lg-12 align-self-center">
-                                  <div class="left-text">
-                                    <h4>Lista de Postulaciones </h4>
-                                    <div class="ticks-list">
-                                      <div class="table-responsive">
-                                        <table class="table" id="postulaciones">
-                                            <thead>
-                                                <tr>
-                                                    <th>Registro</th>
-                                                    <th>Empresa</th>
-                                                    <th>Titulo</th>
-                                                    <th>Ubicacion</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($postulaciones as $postulacione)
-                                                    <tr>
-                                                        <td>{{ date('d-m-Y',strtotime($postulacione->fecha)) }}</td>
-                                                        <td>{{ $postulacione->empleo->empresa->razonSocial }}</td>
-                                                        <td>{{ $postulacione->empleo->titulo }}</td>
-                                                        <td>{{ $postulacione->empleo->ubicacione->nombre }}</td>
-                                                        <td>
-                                                            <a class="btn btn-info text-white m-1" href="{{ route('empleo',$postulacione->empleo->id) }}" title="detalles">
-                                                                <i class="fa fa-eye"></i>
-                                                            </a>
-                                                            <a data-toggle="modal" data-target="#modal-{{ $postulacione->id }}-eliminar" class="btn btn-danger m-1" title="eliminar mi postulacion">
-                                                                <i class="fa fa-trash"></i>
-                                                            </a>
-                                                        </td>
-                                                        @include('dashboard.user.modal')
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                          @include('partes.user_dashboard.postulaciones')
                         </li>
                         <li>
-                          <div>
-                            <div class="thumb">
-                              <div class="row d-flex justify-content-center">
-                                <div class="col-sm-12 col-lg-6">
-                                    <div class="left-text">
-                                        {!! Form::open(['route'=>['dashboard.settings.update',$user->id],'method'=>'put']) !!}
-                                        <h4>Actualizar Datos Personales</h4>
-                                        {!! Form::label('name', 'Nombres y Apellidos', [null]) !!}
-                                        {!! Form::text('name', $user->name, ['class'=>'form-control']) !!}
-                                        {!! Form::label('email', 'Correo', ['class'=>'mt-2']) !!}
-                                        {!! Form::text('email', $user->email, ['class'=>'form-control']) !!}
-                                        {!! Form::label('telefono1', 'Telefono 1', ['class'=>'mt-2']) !!}
-                                        {!! Form::text('telefono1', $user->ucliente->cliente->telefono, ['class'=>'form-control']) !!}
-                                        {!! Form::label('telefono2', 'Telefono 2', ['class'=>'mt-2']) !!}
-                                        {!! Form::text('telefono2', $user->ucliente->cliente->telefono2, ['class'=>'form-control']) !!}
-                                        {!! Form::label('direccion', 'Direccion', ['class'=>'mt-2']) !!}
-                                        {!! Form::text('direccion', $user->ucliente->cliente->direccion, ['class'=>'form-control']) !!}
-                                        @php
-                                            $nacimiento=null;
-                                        @endphp
-                                        @foreach ($user->ucliente->cliente->postulantes as $postulante)                                                
-                                            @php
-                                                $nacimiento = $postulante->fechaNacimiento;
-                                            @endphp
-                                        @endforeach
-                                        {!! Form::label('nacimiento', 'Fecha Nacimiento', ['class'=>'mt-2']) !!}
-                                        {!! Form::date('nacimiento', $nacimiento, ['class'=>'form-control']) !!}
-                                        <button type="submit" class="btn btn-primary text-white mt-3">
-                                            <i class="fa fa-save"></i> Actualizar
-                                        </button>
-                                        {!! Form::close() !!}
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-lg-6">
-                                  <div class="left-text">
-                                    {!! Form::open(['route'=>'dashboard.update_password','method'=>'put']) !!}
-                                        <h4>Actualizar Contraseña</h4>
-                                        {!! Form::label('old', 'Password Anterior', ['class'=>'d-block']) !!}
-                                        <input type="password" name="old" id="old" class="form-control mt-2 mb-2" value="{{ old('old') }}">
-                                        @error('old')
-                                            <small class="text-white bg-danger pl-3 pr-3 pt-1 pb-1 mt-3 rounded">{{ $message }}</small>    
-                                        @enderror
-                                        {!! Form::label('password1', 'Contraseña', ['class'=>'d-block mt-2']) !!}
-                                        <input type="password" name="password1" id="password1" class="form-control mt-2 mb-2" value="{{ old('password1') }}">
-                                        @error('password1')
-                                            <small class="text-white bg-danger pl-3 pr-3 pt-1 pb-1 mt-3 rounded">{{ $message }}</small>
-                                        @enderror
-                                        {!! Form::label('password2', 'Confirmar Contraseña', ['class'=>'d-block mt-2']) !!}
-                                        <input type="password" name="password2" id="password2" class="form-control mt-2 mb-2" value="{{ old('password2') }}">
-                                        @error('password2')
-                                            <small class="text-white bg-danger pl-3 pr-3 pt-1 pb-1 mt-3 rounded">{{ $message }}</small>
-                                        @enderror
-                                        <button type="submit" class="d-block btn btn-primary text-white mt-3">
-                                            <i class="fa fa-save"></i> Actualizar
-                                        </button>
-                                    {!! Form::close() !!}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                          @include('partes.user_dashboard.datos')
+                        </li>
+                        <li>
+                          @include('partes.user_dashboard.cv')
                         </li>
                       </ul>
                     </div>          
@@ -210,8 +68,304 @@
           </div>
         </div>
       </div>
-    
-
-
     @include('layouts.portal.footer')
+@stop
+@section('js')
+    <script>
+      fillex();
+      fillcur();
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      // llenar la tabla de experiencias
+      function fillex(){
+        const url = "{{ route('dashboard.index_experiencia') }}";
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          // agregamos los datos a la tabla
+          data.forEach(element => {
+            let tabla = document.getElementById('table_experiencias');
+            let fila = document.createElement('tr');
+            let c_empresa = document.createElement('td');
+            let c_cargo = document.createElement('td');
+            let c_inicio = document.createElement('td');
+            let c_fin = document.createElement('td');
+            let c_boton = document.createElement('td');
+            let btn = document.createElement('button');
+            //configuramos el boton
+            btn.type = "button";
+            btn.classList.add('btn');
+            btn.classList.add('btn-danger');
+            btn.innerHTML = "<i class='fa fa-trash'></i>";
+            const fun = 'ex_eliminar("'+ element.id +'")';
+            btn.setAttribute('onclick',fun);
+            c_boton.appendChild(btn);
+            //agregamos los valores
+            c_empresa.innerHTML = element.empresa;
+            c_cargo.innerHTML = element.cargo;
+            c_inicio.innerHTML = element.exinicio;
+            if(element.actual == 1){
+              c_fin.innerHTML = "Actual";
+            }else{
+              c_fin.innerHTML = element.exfin;
+            };
+            fila.appendChild(c_empresa);
+            fila.appendChild(c_cargo);
+            fila.appendChild(c_inicio);
+            fila.appendChild(c_fin);
+            fila.appendChild(c_boton);
+            tabla.appendChild(fila);
+          });
+        })
+        .catch(error =>{
+          console.error('error al enviar la solicitud',error);
+        });
+      }
+      function fillcur(){
+        const url = "{{ route('dashboard.index_curso') }}";
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          // agregamos los datos a la tabla
+          data.forEach(element => {
+            let tabla = document.getElementById('table_cursos');
+            let fila = document.createElement('tr');
+            let c_mension = document.createElement('td');
+            let c_institucion = document.createElement('td');
+            let c_inicio = document.createElement('td');
+            let c_fin = document.createElement('td');
+            let c_horas = document.createElement('td');
+            let c_boton = document.createElement('td');
+            let btn = document.createElement('button');
+            //configuramos el boton
+            btn.type = "button";
+            btn.classList.add('btn');
+            btn.classList.add('btn-danger');
+            btn.innerHTML = "<i class='fa fa-trash'></i>";
+            const fun = 'cur_eliminar("'+ element.id +'")';
+            btn.setAttribute('onclick',fun);
+            c_boton.appendChild(btn);
+            //agregamos los valores
+            c_mension.innerHTML = element.mension;
+            c_institucion.innerHTML = element.institucion;
+            c_inicio.innerHTML = element.inicio;
+            c_fin.innerHTML = element.fin;
+            c_horas.innerHTML = element.horas;
+            //agregamos
+            fila.appendChild(c_mension);
+            fila.appendChild(c_institucion);
+            fila.appendChild(c_inicio);
+            fila.appendChild(c_fin);
+            fila.appendChild(c_horas);
+            fila.appendChild(c_boton);
+            tabla.appendChild(fila);
+          });
+        })
+        .catch(error =>{
+          console.error('error al enviar la solicitud',error);
+        });
+      }
+      //funcion para borrar la tabla
+      function cleartable(nombre) {
+        // Obtén la cantidad total de filas en la tabla
+        var tbody = document.getElementById(nombre);
+
+        // Elimina todas las filas del tbody
+        while (tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
+        }
+      }
+      
+      function ex_eliminar(id){
+        $('#js-preloader').removeClass('loaded');
+        //vamos a eliminar
+        const url = '{{ asset('') }}'+'dashboard/experiencia/'+id;
+        const requestOptions = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                // Puedes agregar más encabezados si es necesario
+                'X-CSRF-TOKEN': csrfToken, // Incluir el token CSRF en el encabezado
+            },
+        };
+
+        fetch(url, requestOptions)
+        .then(response => {
+            // Verificar si la respuesta fue exitosa (código 2xx)
+            if (!response.ok) {
+                throw new Error(`Error al eliminar el usuario. Código: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Manejar la respuesta del servidor aquí
+        })
+        .catch(error => {
+            // Manejar errores de la solicitud aquí
+            console.error('Error al enviar la solicitud:', error);
+        })
+        .finally(()=>{
+          cleartable('table_experiencias');
+          fillex();
+          $('#js-preloader').addClass('loaded');
+        });
+
+      }
+      //funcion eliminar
+      function cur_eliminar(id){
+        $('#js-preloader').removeClass('loaded');
+        const url = '{{ asset('') }}'+'dashboard/curso/'+id;
+        const requestOptions = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                // Puedes agregar más encabezados si es necesario
+                'X-CSRF-TOKEN': csrfToken, // Incluir el token CSRF en el encabezado
+            },
+        };
+
+        fetch(url, requestOptions)
+        .then(response => {
+            // Verificar si la respuesta fue exitosa (código 2xx)
+            if (!response.ok) {
+                throw new Error(`Error al eliminar el usuario. Código: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Manejar la respuesta del servidor aquí
+        })
+        .catch(error => {
+            // Manejar errores de la solicitud aquí
+            console.error('Error al enviar la solicitud:', error);
+        })
+        .finally(()=>{
+          cleartable('table_cursos');
+          fillcur();
+          $('#js-preloader').addClass('loaded');
+        });
+      }
+
+      document.getElementById('btn_ex').addEventListener('click',function(){
+        if($('#ex_icon').hasClass('fa-minus')){
+          //ocultamos
+          $('#exbody').addClass('d-none');
+          $('#exfooter').addClass('d-none');
+          $('#ex_icon').removeClass('fa-minus');
+          $('#ex_icon').addClass('fa-plus');
+        }else{
+          $('#exbody').removeClass('d-none');
+          $('#exfooter').removeClass('d-none');
+          $('#ex_icon').removeClass('fa-plus');
+          $('#ex_icon').addClass('fa-minus');
+        }
+      });
+
+      document.getElementById('btn_cu').addEventListener('click',function(){
+        if($('#cu_icon').hasClass('fa-minus')){
+          //ocultamos
+          $('#cubody').addClass('d-none');
+          $('#cufooter').addClass('d-none');
+          $('#cu_icon').removeClass('fa-minus');
+          $('#cu_icon').addClass('fa-plus');
+        }else{
+          $('#cubody').removeClass('d-none');
+          $('#cufooter').removeClass('d-none');
+          $('#cu_icon').removeClass('fa-plus');
+          $('#cu_icon').addClass('fa-minus');
+        }
+      });
+
+      document.getElementById('btn_experiencia').addEventListener('click',function(){
+        $('#js-preloader').removeClass('loaded');
+        const url = "{{ route('dashboard.store_experiencia') }}";
+        
+        let check = false;
+        if (document.getElementById('actual').checked){
+          check = true;
+        }
+        const data = {
+          user: "{{ auth()->user()->id }}",
+          empresa: document.getElementById('empresa').value,
+          xfinicio: document.getElementById('xfinicio').value,
+          xffin: document.getElementById('xffin').value,
+          actual: check,
+          cargo: document.getElementById('cargo').value,
+        };
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken, // Incluir el token CSRF en el encabezado
+                // Puedes agregar más encabezados si es necesario
+            },
+            body: JSON.stringify(data),
+        };
+
+        fetch(url, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            // Manejar la respuesta del servidor aquí
+            cleartable('table_experiencias');
+            fillex();
+        })
+        .catch(error => {
+            // Manejar errores de la solicitud aquí
+            console.error('Error al enviar la solicitud:', error);
+        })
+        .finally(()=>{
+          $('#js-preloader').addClass('loaded');
+          //limpiar las cajas
+          document.getElementById('empresa').value = "";
+          document.getElementById('xfinicio').value = "";
+          document.getElementById('xffin').value = "";
+          document.getElementById('cargo').value = "";
+          document.getElementById('actual').checked = false;
+        });
+      });
+
+      //Botones de CURSOS
+
+      document.getElementById('btn_curso').addEventListener('click',function(){
+        $('#js-preloader').removeClass('loaded');
+        const url = "{{ route('dashboard.store_curso') }}";
+        const data = {
+          institucion: document.getElementById('institucion').value,
+          mension: document.getElementById('mension').value,
+          cuinicio: document.getElementById('cuinicio').value,
+          cufin: document.getElementById('cufin').value,
+          horas: document.getElementById('horas').value,
+        };
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken, // Incluir el token CSRF en el encabezado
+                // Puedes agregar más encabezados si es necesario
+            },
+            body: JSON.stringify(data),
+        };
+
+        fetch(url, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            // Manejar la respuesta del servidor aquí
+            cleartable('table_cursos');
+            fillcur();
+        })
+        .catch(error => {
+            // Manejar errores de la solicitud aquí
+            console.error('Error al enviar la solicitud:', error);
+        })
+        .finally(()=>{
+          $('#js-preloader').addClass('loaded');
+          //limpiar las cajas
+          document.getElementById('institucion').value = "";
+          document.getElementById('mension').value = "";
+          document.getElementById('cuinicio').value = "";
+          document.getElementById('cufin').value = "";
+          document.getElementById('horas').value = "";
+        });
+      });
+
+    </script>
 @stop

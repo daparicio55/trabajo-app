@@ -12,10 +12,10 @@
           {{-- <button class="btn btn-sm btn-outline-secondary" type="button">Smaller button</button> --}}
         </form>
       </nav>
+      <p class="mt-2">(*)Los usuarios alumnos son responsabilidad de un Super Administrador, en esta sección solo le puede enviar correos de recuperación de contraseñas</p>
 @stop
 
 @section('content')
-    <p>Lista de alumnos registrados en el sistema.</p>
     <div class="card">
         <div class="card-body">
             <table class="table" id="estudiantes">
@@ -24,7 +24,7 @@
                         <th>APELLIDOS, Nombres</th>
                         <th>Programa de Estudios</th>
                         <th>A. Ingreso</th>
-                        <th>Egresado</th>
+                        {{-- <th>Egresado</th> --}}
                         <th></th>
                     </tr>
                 </thead>
@@ -34,14 +34,13 @@
                             <td>{{ Str::upper($estudiante->postulante->cliente->apellido) }}, {{ Str::title($estudiante->postulante->cliente->nombre) }}</td>
                             <td>{{ $estudiante->postulante->carrera->nombreCarrera }}</td>
                             <td>{{ $estudiante->postulante->admisione->periodo }}</td>
-                            <td>
-                                {{-- {{ egresado($estudiante->id) }} --}}
+                            {{-- <td>
                                 @if(egresado($estudiante->id))
                                     SI
                                 @else
                                     NO
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>
                                 @if(isset($estudiante->postulante->cliente->ucliente->user_id))
                                     <a data-toggle="modal" data-target="#modal-{{ $estudiante->id }}-email" class="btn btn-warning" title="enviar correo de restablecimiento">

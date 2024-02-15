@@ -63,4 +63,10 @@ class User extends Authenticatable
         $user = User::findOrFail(auth()->id());
         return $user->oficina->nombre;
     }
+    public function experiencias(){
+        return $this->hasMany(Experiencia::class,'user_id','id');
+    }
+    public function cursos(){
+        return $this->hasMany(Curso::class,'user_id','id');
+    }
 }

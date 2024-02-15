@@ -8,7 +8,7 @@
       </div>
       <div class="row">
         <div class="col-sm-12">
-            <p>Personalizado por la Oficina de Soporte Tecnológico de I.E.S.T. Perú Japón - 2023</p>
+            <p>Personalizado por la Oficina de Soporte Tecnológico de I.E.S.T. Perú Japón - <span class="tm-current-year">2018</span></p>
         </div>
       </div>
     </div>

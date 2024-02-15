@@ -21,34 +21,6 @@
                 @endisset  
             </p>
         </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Empresa</th>
-                            <th>Oferta Laboral</th>
-                            <th>Ubicación</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @isset($empleos)
-                            @foreach ($empleos as $key => $empleo)
-                                <tr>
-                                    <td>{{ $key +1 }}</td>
-                                    <td>{{ $empleo->empresa->razonSocial }}</td>
-                                    <td>{{ $empleo->titulo }}</td>
-                                    <td>{{ $empleo->ubicacione->nombre }}</td>
-                                    <td>{{ date('d-m-Y',strtotime($empleo->fecha_registro)) }}</td>
-                                </tr>
-                            @endforeach
-                        @endisset
-                    </tbody>
-                </table>
-            </div>
-        </div>
         <div class="card-footer">
             {!! Form::open(['route'=>'dashboard.administrador.reportes.reporte_empleo','method'=>'get','id'=>'frm']) !!}
             <div class="row">
@@ -89,6 +61,35 @@
             </div>
             {!! Form::close() !!}
         </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Empresa</th>
+                            <th>Oferta Laboral</th>
+                            <th>Ubicación</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @isset($empleos)
+                            @foreach ($empleos as $key => $empleo)
+                                <tr>
+                                    <td>{{ $key +1 }}</td>
+                                    <td>{{ $empleo->empresa->razonSocial }}</td>
+                                    <td>{{ $empleo->titulo }}</td>
+                                    <td>{{ $empleo->ubicacione->nombre }}</td>
+                                    <td>{{ date('d-m-Y',strtotime($empleo->fecha_registro)) }}</td>
+                                </tr>
+                            @endforeach
+                        @endisset
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
     </div>
 @stop
 

@@ -56,7 +56,7 @@
 <body>
     <div class="card">
         <div class="card-header">
-            <img src="https://idexperujapon.edu.pe/wp-content/uploads/2023/04/logo-300x93.png" alt="Imagen del card" class="card-img">
+            <img src="https://idexperujapon.edu.pe/wp-content/uploads/2023/08/cropped-logo-300x93.png" alt="Imagen del card" class="card-img">
         </div>
         <div class="card-content">
           <h2 class="card-title">SISTEMA DE EMPLEABILIDAD</h2>
@@ -68,7 +68,7 @@
                 Agradecemos tu interés en formar parte de nuestra comunidad. Si tienes alguna pregunta o necesitas más información, no dudes en ponerte en contacto con nuestro equipo de soporte.
             </p>
           <pre class="card-description">Atentamente,
-El equipo de <strong>I.E.S.T. Perú Japón</strong></pre>
+El equipo de <strong>IEST Público Perú Japón</strong></pre>
           <a href="{{ route('home') }}" class="card-button" target="_blank"> <strong>Ir a nuestra WEB</strong></a>
         </div>
       </div>  

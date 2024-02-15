@@ -12,5 +12,8 @@ class Estudiante extends Model
     public function postulante(){
         return $this->belongsTo(AdmisionePostulante::class,'admisione_postulante_id');
     }
+    public function practicas(){
+        return $this->hasMany(Practica::class);
+    }
     
 }

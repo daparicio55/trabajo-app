@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Mail\AvisoMailable;
+use App\Mail\NoticeMailable;
 use App\Models\Postulacione;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 
@@ -83,9 +85,9 @@ class PostulacioneController extends Controller
             $postulacione->delete();
         } catch (\Throwable $th) {
             //throw $th;
-            return Redirect::route('dashboard.postulaciones.index')->with('error','no se puede borrar esta postulacion');
+            return Redirect::route('user_dashboard.index')->with('error','no se puede borrar esta postulacion');
         }
-        return Redirect::route('dashboard.postulaciones.index')->with('info','la postulacion se elimino correctamente');
+        return Redirect::route('user_dashboard.index')->with('info','la postulacion se elimino correctamente');
     }
     public function postular($id){
         //verificamos si es un estudiante
@@ -103,22 +105,16 @@ class PostulacioneController extends Controller
                 return Redirect::route('home')->with('error','no se pudo registrar tu postulacion, asegurate de no tener una postulacion activa a este empleo');
                 //return Redirect::route('home')->with('error',$th->getMessage());
             }
+
+            $email = new NoticeMailable($postulacione->id);
             $correo = new AvisoMailable($postulacione->id);
-            //correos a los usuarios Administradores
-            $users = User::whereHas('roles',function($query){
-                $query->where('name','Bolsa Administrador');
-            })->get();
-            foreach ($users as $user) {
-                # code...
-                Mail::to($user->email)->send($correo);
-            }
             //enviar correos de postulacion.
             Mail::to($postulacione->empleo->empresa->email)->send($correo);
-            //correo a los administradores de Empleabilidad
+            Mail::to(auth()->user()->email)->send($email);
 
-            return Redirect::route('home')->with('info','tu postulacion se registro correctamente');
+            return Redirect::route('user_dashboard.index')->with('info','tu postulacion se registro correctamente');
         }else{
-            return Redirect::route('home')->with('error','tu usuario no puedo postular a un puesto');
+            return Redirect::route('user_dashboard.index')->with('error','tu usuario no puedo postular a un puesto');
         }
     }
     public function propiedad($id) : bool

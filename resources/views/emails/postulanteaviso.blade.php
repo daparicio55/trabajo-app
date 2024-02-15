@@ -58,11 +58,16 @@
           <h2>SISTEMA DE EMPLEABILIDAD</h2>
         </div>
         <div class="body">
-          <img src="https://idexperujapon.edu.pe/wp-content/uploads/2023/04/logo-300x93.png" alt="Imagen" />
-          <a href="enlace.html" class="button">Boton</a>
+          <img src="https://idexperujapon.edu.pe/wp-content/uploads/2023/08/cropped-logo-300x93.png" alt="Imagen"/>
+          <p>
+            Se registró de manera satisfactoria tu postulación al empleo: {{ $postulacione->empleo->titulo }} en la empresa: {{ $postulacione->empleo->empresa->razonSocial }} de nuestra bolsa laboral.
+          </p>
+          <p>
+            El empleador revisará tu hoja de vida y de ser el caso te contactará usando tus datos registrados.
+          </p>
         </div>
         <div class="footer">
-          <p>Pie de página del card.</p>
+          <p>IEST Público Perú Japón - Rumbo al Licenciamiento... </p>
         </div>
       </div>
 </body>

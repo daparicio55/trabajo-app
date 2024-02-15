@@ -40,7 +40,9 @@
         .button {
         display: inline-block;
         padding: 8px 16px;
+        margin-left: 5px;
         background-color: #007bff;
+        color: #f1f1f1;
         color: #000000;
         text-decoration: none;
         border-radius: 4px;
@@ -58,12 +60,12 @@
           <h2>SISTEMA DE EMPLEABILIDAD</h2>
         </div>
         <div class="body">
-          <img src="https://idexperujapon.edu.pe/wp-content/uploads/2023/04/logo-300x93.png" alt="Imagen" />
-          <p>Este correo se envia de forma automatica por la reciente postulacion del usuario <strong>{{ Str::upper($postulacione->user->name) }}</strong> a la oferta de empleo llamada <strong>{{ Str::upper($postulacione->empleo->titulo) }}</strong>, en la empresa <strong> {{ $postulacione->empleo->empresa->razonSocial }}</strong></p>
-          <a href="{{ route('dashboard.empleos.index') }}" class="button">Revizar ACA..</a>
+          <img src="https://idexperujapon.edu.pe/wp-content/uploads/2023/08/cropped-logo-300x93.png"alt="Imagen" />
+          <p>Este correo se envia de forma automatica por la reciente postulacion del usuario <strong>{{ Str::upper($postulacione->user->name) }}</strong> a la oferta de empleo llamada <strong>{{ Str::upper($postulacione->empleo->titulo) }}</strong>, en la empresa <strong> {{ $postulacione->empleo->empresa->razonSocial }}</strong></p>          
+          Puedes descargar la hoja de vida del postulante <a class="button" href="{{ route('usuario.pdf',$postulacione->user->id) }}">aquí</a>
         </div>
         <div class="footer">
-          <p>I.E.S.T. Público Perú Japón - Rumbo al Licenciamiento... </p>
+          <p>IEST Público Perú Japón - Rumbo al Licenciamiento... </p>
         </div>
       </div>
 </body>

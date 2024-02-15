@@ -272,7 +272,7 @@ header
 
 .pre-header ul.info li a i {
   font-size: 18px;
-  margin-right: 8px;
+  margin-right: 0px;
 }
 
 .pre-header ul.social-media {
@@ -280,7 +280,7 @@ header
 }
 
 .pre-header ul.social-media li {
-  margin-left: 5px;
+  margin-left: 0px;
 }
 
 .pre-header ul.social-media li a {

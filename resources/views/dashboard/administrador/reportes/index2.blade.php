@@ -24,41 +24,13 @@
                 @endisset  
             </p>
         </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>APELLIDOS, Nombres</th>
-                            <th>Empleo</th>
-                            <th>Ubicación</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @isset($postulaciones)
-                            @foreach ($postulaciones as $key => $postulacione)
-                                <tr>
-                                    <td>{{ $key +1 }}</td>
-                                    <td>{{ $postulacione->user->ucliente->cliente->apellido }}, {{ $postulacione->user->ucliente->cliente->nombre }}</td>
-                                    <td>{{ $postulacione->empleo->titulo }}</td>
-                                    <td>{{ $postulacione->empleo->ubicacione->nombre }}</td>
-                                    <td>{{ date('d-m-Y',strtotime($postulacione->fecha)) }}</td>
-                                </tr>
-                            @endforeach
-                        @endisset
-                    </tbody>
-                </table>
-            </div>
-        </div>
         <div class="card-footer">
             {!! Form::open(['route'=>'dashboard.administrador.reportes.reporte_postulaciones','method'=>'get','id'=>'frm_publicaciones']) !!}
             <div class="row">
                 <div class="col-sm-12 col-md-6">
                     {!! Form::label('criterio_empleo', 'Criterio de busqueda(*)', [null]) !!}
                     <select name="carrera_id" class="form-control selectpicker" data-live-search = true>
-                        <option value="0">Seleccione programa de estudios</option>
+                        <option value="0">Todos los programas de estudios</option>
                         @foreach ($carreras as $carrera)
                             <option value="{{ $carrera->idCarrera }}" @isset($_GET['carrera_id']) @if($carrera->idCarrera == $_GET['carrera_id']) selected @endif @endisset>{{ $carrera->nombreCarrera }}</option>
                         @endforeach
@@ -104,5 +76,34 @@
             </div>
             {!! Form::close() !!}
         </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>APELLIDOS, Nombres</th>
+                            <th>Empleo</th>
+                            <th>Ubicación</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @isset($postulaciones)
+                            @foreach ($postulaciones as $key => $postulacione)
+                                <tr>
+                                    <td>{{ $key +1 }}</td>
+                                    <td>{{ $postulacione->user->ucliente->cliente->apellido }}, {{ $postulacione->user->ucliente->cliente->nombre }}</td>
+                                    <td>{{ $postulacione->empleo->titulo }}</td>
+                                    <td>{{ $postulacione->empleo->ubicacione->nombre }}</td>
+                                    <td>{{ date('d-m-Y',strtotime($postulacione->fecha)) }}</td>
+                                </tr>
+                            @endforeach
+                        @endisset
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
     </div>
 @stop

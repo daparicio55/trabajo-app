@@ -10,11 +10,13 @@ use App\Models\Carrera;
 use App\Models\Empleo;
 use App\Models\Espera;
 use App\Models\Esperaempresa;
+use App\Models\Estudiante;
 use App\Models\Rubro;
 use App\Models\Sectore;
 use App\Models\Ubicacione;
 use App\Models\User;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
@@ -180,5 +182,14 @@ class HomeController extends Controller
         Mail::to($esperaempresa->email)->send($correo);
         return Redirect::route('home')->with('info','se registro la solucitud correctamente');
     }
-    
+    public function userpdf($id){
+        $user = User::findOrFail($id);
+        $estudiantes = Estudiante::whereHas('postulante.cliente',function($query) use ($user){
+            $query->where('idCliente','=',$user->ucliente->cliente_id);
+        })->get();
+        $nombre =  $user->ucliente->cliente->dniRuc;
+        $pdf = Pdf::loadView('pdfs.hojavida',compact('user','estudiantes'));
+        return $pdf->download($nombre.'.pdf');
+        return view('pdfs.hojavida',compact('user','estudiantes'));
+    }
 }

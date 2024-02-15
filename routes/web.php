@@ -15,6 +15,7 @@ use App\Http\Controllers\RubroController;
 use App\Http\Controllers\SectoreController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UsersettingController;
+use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -48,8 +49,20 @@ Route::get('/empleo_postular/{id}',[PostulacioneController::class,'postular'])->
 Route::resource('/dashboard/settings',UsersettingController::class)->names('dashboard.settings');
 Route::get('/dashboard/password',[UsersettingController::class,'edit_password'])->name('dashboard.edit_password');
 Route::put('/dashboard/password',[UsersettingController::class,'update_password'])->name('dashboard.update_password');
+
+Route::post('/dashboard/experiencia',[UsersettingController::class,'store_experiencia'])->name('dashboard.store_experiencia');
+Route::get('/dashboard/experiencia',[UsersettingController::class,'index_experiencia'])->name('dashboard.index_experiencia');
+Route::delete('/dashboard/experiencia/{id}',[UsersettingController::class,'delete_experiencia'])->name('dasboard.delete_experiencia');
+
+Route::post('/dashboard/curso',[UsersettingController::class,'store_curso'])->name('dashboard.store_curso');
+Route::get('/dashboard/curso',[UsersettingController::class,'index_curso'])->name('dashboard.index_curso');
+Route::delete('/dashboard/curso/{id}',[UsersettingController::class,'delete_curso'])->name('dashboard.delete_curso');
+
 Route::resource('/dashboard/postulaciones',PostulacioneController::class)->names('dashboard.postulaciones');
 Route::resource('/dashboard/ofertas', OfertaController::class)->names('dashboard.ofertas');
+
+
+
 //Bolsa ADMINISTRADOR
 Route::get('/dashboard/administrador/alumnos/makeaccountmassive',[AdminEstudianteController::class,'makeaccountmassive'])
 ->name('dashboard.administrador.makeaccountmassive');
@@ -93,7 +106,7 @@ Route::post('/dashboard/administrador/alumnos/reset/{token}',[AdminEstudianteCon
 Route::get('/view',function(){
     return view('emails.postulanteaviso');
 });
-
+Route::get('/userhv/{id}',[HomeController::class,'userpdf'])->name('usuario.pdf');
 
 Route::get('/clear-cache', function () {
     echo Artisan::call('config:cache');

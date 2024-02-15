@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EmpleoStoreFrmRequest;
 use App\Models\Carrera;
+use App\Mail\AvisoMailable;
+use App\Mail\RegistroMailable;
 use App\Models\CarreraEmpleo;
 use App\Models\Empleo;
 use App\Models\Empleoturno;
@@ -14,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 use SplFileObject;
 
 class EmpleoController extends Controller
@@ -97,7 +100,10 @@ class EmpleoController extends Controller
             $empleo->save();
             $empleo->synccarreras($request->carreras);
             //vamos a guardar las carreras
+            //ahora mandamos un correo a la empres para notificar el registro de la oferta
             DB::commit();
+            $correo = new RegistroMailable($empleo->id);
+            Mail::to($empleo->empresa->email)->send($correo);
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollBack();

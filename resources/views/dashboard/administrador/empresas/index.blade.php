@@ -33,10 +33,10 @@
                             <td>{{ Str::upper($empresa->razonSocial) }}</td>
                             <td>{{ $empresa->direccion }}</td>                            
                             <td>
-                                <a data-toggle="modal" data-target="#modal-{{ $empresa->idEmpresa }}-show" title="mostrar detalles" class="mt-2 btn btn-info">
+                                <a href="{{ route('dashboard.administrador.empresas.show',$empresa->idEmpresa) }}" title="mostrar detalles" class="mt-2 btn btn-info">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a data-toggle="modal" data-target="#modal-{{ $empresa->idEmpresa }}-edit" title="editar empresa" class="mt-2 btn btn-success">
+                                <a href="{{ route('dashboard.administrador.empresas.edit',$empresa->idEmpresa) }}" title="editar empresa" class="mt-2 btn btn-success">
                                     <i class="far fa-edit"></i>
                                 </a>
                                 @if(isset($empresa->usuario[0]->id))
