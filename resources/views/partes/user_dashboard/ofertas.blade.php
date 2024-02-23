@@ -10,8 +10,9 @@
                 <table class="table" id="ofertas">
                     <thead>
                         <tr>
-                            <th>Registro</th>
-                            <th>Cierre</th>
+                            <th>Cod</th>
+                            <th style="width: 120px">Registro</th>
+                            <th style="width: 120px">Cierre</th>
                             <th>Empresa</th>
                             <th>Titulo</th>
                             <th>Ubicacion</th>
@@ -22,8 +23,10 @@
                         @foreach ($empleos as $empleo)
                             @php
                                 $fecha = Carbon\Carbon::parse($empleo->fecha_postulacion);
+                                $hoy = Carbon\Carbon::parse(date('Y-m-d',strtotime(Carbon\Carbon::now())));
                             @endphp
-                            <tr @if($fecha->isPast()) class="text-danger" @endif>
+                            <tr @if($hoy->gt($fecha)) class="text-danger" @endif>
+                                <td>{{ $empleo->id }}</td>
                                 <td>{{ date('d-m-Y',strtotime($empleo->fecha_registro)) }}</td>
                                 <td @if($fecha->isPast()) class="font-weight-bold" @endif>{{ date('d-m-Y',strtotime($empleo->fecha_postulacion)) }}</td>
                                 <td>{{ $empleo->empresa->razonSocial }}</td>

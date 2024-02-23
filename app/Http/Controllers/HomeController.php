@@ -31,9 +31,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        /* $this->middleware('auth'); */
-        
-
+        $this->middleware('auth');
     }
     public function empleo_search(Request $request){
         //aca buscamos segun el criterio ingresado en el formulario.
@@ -112,12 +110,13 @@ class HomeController extends Controller
 
     }
     public function empleo_show($id){
+        
         $empleo = Empleo::findOrFail($id);
         return view('empleo',compact('empleo'));
     }
     public function index()
     {
-        $user = User::where('email','=','daparicio@idexperujapon.edu.pe')->first();
+        /* $user = User::where('email','=','daparicio@idexperujapon.edu.pe')->first(); */
         $ubicaciones = Ubicacione::get();
         $empleos = Empleo::orderBy('fecha_registro','desc')->take(5)->get();
         $carreras = Carrera::get();

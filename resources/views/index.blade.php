@@ -1,4 +1,7 @@
 @extends('layouts.portal.base')
+@section('titulo')
+Bolsa Laboral - IEST Público Perú Japón
+@endsection
 @section('contenido')
     @include('layouts.portal.preheader')
     @include('layouts.portal.header')

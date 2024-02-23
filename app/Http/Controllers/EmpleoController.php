@@ -143,9 +143,9 @@ class EmpleoController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $request->validate([
-            'foto'=>'required|file|mimes:jpg,jpeg,png,gif|max:200',
-        ]);
+       /*  $request->validate([
+            'foto'=>'file|mimes:jpg,jpeg,png,gif|max:200',
+        ]); */
         try {
             //code...
             $experiencia = null;
@@ -163,13 +163,13 @@ class EmpleoController extends Controller
             $empleo->ubicacione_id=$request->distritos;
             $carpetaGuardado = 'img';
             // Obtenemos el archivo PDF
-            $imgFile = $request->file('foto');
+           /*  $imgFile = $request->file('foto');
             // Generamos un nombre único para el archivo
             $nombreArchivo = uniqid() . '.' . $imgFile->getClientOriginalExtension();
             // Almacenamos el archivo en la carpeta especificada utilizando Storage::put()
             Storage::disk('public')->put($carpetaGuardado . '/' . $nombreArchivo, file_get_contents($imgFile));
             //vamos a poner la foto.
-            $empleo->pic = $carpetaGuardado . '/' . $nombreArchivo;
+            $empleo->pic = $carpetaGuardado . '/' . $nombreArchivo; */
             $empleo->update();
             $empleo->synccarreras($request->carreras);
         } catch (\Throwable $th) {

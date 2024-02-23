@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\AvisoMailable;
 use App\Mail\NoticeMailable;
+use App\Models\Empleo;
 use App\Models\Postulacione;
 use App\Models\User;
 use Carbon\Carbon;
@@ -93,6 +94,12 @@ class PostulacioneController extends Controller
         //verificamos si es un estudiante
         if(auth()->user()->hasRole('Bolsa User')){
             //logica para grabar su postulacion
+            $empleo = Empleo::findOrFail($id);
+            $f_empleo = Carbon::parse($empleo->fecha_postulacion);
+            $f_hoy = Carbon::parse(date('Y-m-d',strtotime(Carbon::now())));
+            if($f_hoy->gt($f_empleo)){
+                return Redirect::route('home')->with('error','la oferta laboral esta cerrada');
+            }
             try {
                 //code...
                 $postulacione = new Postulacione();

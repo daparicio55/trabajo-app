@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Ubicacione;
-
+use Carbon\Carbon;
+setlocale(LC_TIME, 'es_ES');
+Carbon::setLocale('es');
 class Empleo extends Model
 {
+    
     use HasFactory;
     public $timestamps = false;
     public function user(){

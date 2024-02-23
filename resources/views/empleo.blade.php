@@ -32,7 +32,7 @@
                         <div class="row mt-3">
                             <div class="col-sm-12 col-md-9 align-self-center  wow fadeInRight" data-wow-duration="1s"
                                 data-wow-delay="0.5s">
-                                {!! $empleo->descripcion !!}
+                                    {!! $empleo->descripcion !!}
                             </div>
                             <div class="col-sm-12 col-md-3 wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
                                 <div class="card">

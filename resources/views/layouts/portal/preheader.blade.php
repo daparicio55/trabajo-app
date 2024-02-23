@@ -4,8 +4,9 @@
       <div class="row">
         <div class="col-lg-7 col-sm-7">
           <ul class="info">
-            <li><a href="#"><i class="fa fa-envelope"></i>{{ env('MAIL_FROM_ADDRESS') }}</a></li>
-            <li><a href="#"><i class="fa fa-phone"></i>{{ env('PHONE_NUMBER') }}</a></li>
+            <li><a href="mailto:soporte@idexperujapon.edu.pe"><i class="fa fa-envelope"></i> soporte@idexperujapon.edu.pe</a></li>
+            <li><a href="#"><i class="fa fa-phone"></i> 042-587458</a></li>
+            <li><a href="https://wa.link/8uq9v3"><i class="fa fa-whatsapp" aria-hidden="true"></i> 971724913</a></li>
           </ul>
         </div>
         <div class="col-lg-5 col-sm-5">

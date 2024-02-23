@@ -15,10 +15,11 @@ use App\Http\Controllers\RubroController;
 use App\Http\Controllers\SectoreController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UsersettingController;
-use App\Models\User;
+use App\Models\Carrera;
+use App\Models\Empleo;
+use App\Models\Ubicacione;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,10 +33,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Auth::routes(['register'=>false]);
-Route::get('/home', function () {
+/* Route::get('/home', function () {
     return Redirect::route('dashboard.index');
-});
-Route::get('/',[HomeController::class,'index'])->name('home');
+}); */
+/* Route::get('/',[HomeController::class,'index'])->name('home'); */
+Route::get('/',function(){
+    $ubicaciones = Ubicacione::get();
+    $empleos = Empleo::orderBy('fecha_registro','desc')->take(5)->get();
+    $carreras = Carrera::get();
+    return view('index',compact('empleos','ubicaciones','carreras'));
+})->name('home');
+
 Route::resource('/user_dashboard',UserDashboardController::class)->names('user_dashboard');
 Route::get('/user_create',[HomeController::class,'create'])->name('user_create');
 Route::get('/bussines_create',[HomeController::class,'bussines_create'])->name('bussines_create');

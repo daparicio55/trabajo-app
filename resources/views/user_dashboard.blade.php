@@ -47,7 +47,7 @@
                     <div class="col-lg-12">
                       <ul class="nacc">
                         <!-- ofertas segun programa de estudios -->
-                        <li class="active">
+                        <li class="active" style="padding-left: 25px; padding-right: 25px">
                           @include('partes.user_dashboard.ofertas')
                         </li>
                         <li>
@@ -71,6 +71,29 @@
     @include('layouts.portal.footer')
 @stop
 @section('js')
+@if(session('info'))
+    @php
+        $message1 = session('info');
+    @endphp
+    <script> 
+        toastr.options  = {
+            "progressBar" : true,
+            "timeOut": 7000,
+            }
+            toastr.success('{{ $message1 }}');
+    </script>
+    @endif
+    @if (session('error'))
+    @php
+        $message2 = session('error');
+    @endphp
+    <script> 
+        toastr.options  = {
+            "progressBar" : true,
+            }
+            toastr.error('{{ $message2 }}');
+    </script>
+    @endif
     <script>
       fillex();
       fillcur();

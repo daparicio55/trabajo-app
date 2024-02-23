@@ -1,30 +1,3 @@
-{{-- <div class="col-sm-12 mt-3">
-    <div class="left-text">
-        <h4>CV - Hoja de vida descriptiva</h4>
-    </div>
-    {!! Form::open() !!}
-    <div class="card">
-        <div class="card-header">
-            <h5>Registrar Experiencia Laboral</h5>
-        </div>
-        <div class="card-body">
-
-        </div>
-        <div class="card-footer">
-            <button type="submit" class="btn btn-info">
-                <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar
-            </button>
-        </div>
-    </div>
-    {!! Form::close() !!}
-    <div class="table-responsive">
-        <table class="table">
-            <thead></thead>
-        </table>
-    </div>
-</div>
- --}}
-
  <div>
     <div class="thumb">
       <div class="row">
@@ -90,7 +63,7 @@
                             <input id="institucion" type="text" class="form-control" placeholder="ingrese nombre del centro de estudios" required>
                         </div>
                         <div class="col-sm-12 mt-2">
-                            <label for="">Mension o Tema</label>
+                            <label for="">Mención o Tema</label>
                             <input id="mension" type="text" class="form-control" placeholder="ingrese nombre del tema o la capacitación" required>
                         </div>
                         <div class="col-sm-12 col-md-4">
@@ -138,7 +111,7 @@
                             <th colspan="5">Cursos y Capacitaciones</th>
                         </tr>
                         <tr>
-                            <th>Nombre / Mension</th>
+                            <th>Nombre / Mención</th>
                             <th>Institución Formadora</th>
                             <th>Inicio</th>
                             <th>Fin</th>
