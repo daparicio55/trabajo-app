@@ -23,6 +23,7 @@
             <table class="table" id="estudiantes">
                 <thead>
                     <tr>
+                        <th>COD</th>
                         <th>Registro</th>
                         <th>Empresa</th>
                         <th>Titulo</th>
@@ -33,6 +34,7 @@
                 <tbody>
                     @foreach ($empleos as $empleo)
                         <tr>
+                            <td>{{ $empleo->id }}</td>
                             <td>{{ $empleo->fecha_registro }}</td>
                             <td>{{ $empleo->empresa->razonSocial }}</td>
                             <td>{{ $empleo->titulo }}</td>

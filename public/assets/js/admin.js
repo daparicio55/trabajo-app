@@ -19,9 +19,8 @@ document.getElementById('btn_buscar').addEventListener('click',function(){
             }
             return response.json();
         }).then(data =>{
-            console.log(data);
             if(data.error == "ya es estudiante"){
-                console.log('error');
+                alert("El dni ya esta registrado como estudiante");
             }else{
                 document.getElementById('cliente').value=data.idCliente;
                 document.getElementById('apellido').value=data.apellido;
@@ -31,7 +30,7 @@ document.getElementById('btn_buscar').addEventListener('click',function(){
                 document.getElementById('email').value=data.email;
             }
         }).catch(error =>{
-            console.error('Error',error);
+            console.log("hola3");
         });
     }
 });

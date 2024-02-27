@@ -137,9 +137,9 @@
                 <button type="submit" class="btn btn-info" id="btn_enviar">
                     <i class="far fa-save"></i> Guardar
                 </button>
-                <button type="button" class="btn btn-danger">
+                <a href="{{ route('dashboard.administrador.alumnos.index') }}" class="btn btn-danger">
                     <i class="fas fa-sign-out-alt"></i> Salir
-                </button>
+                </a>
             </div>
         </div>
     </div>

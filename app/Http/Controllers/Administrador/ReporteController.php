@@ -57,16 +57,16 @@ class ReporteController extends Controller
         if($request->carrera_id != 0){
             $postulaciones = Postulacione::whereHas('user.ucliente.cliente.postulaciones',function($query) use ($request){
                 $query->where('idCarrera','=',$request->carrera_id);
-            })->whereBetween('fecha',[$request->finicio_postulaciones,$request->ffin_postulaciones])->get();
+            })->whereBetween('fecha',[$request->finicio_postulaciones,$request->ffin_postulaciones])->withTrashed()->get();
         }else{
-            $postulaciones = Postulacione::whereBetween('fecha',[$request->finicio_postulaciones,$request->ffin_postulaciones])->get();
+            $postulaciones = Postulacione::whereBetween('fecha',[$request->finicio_postulaciones,$request->ffin_postulaciones])->withTrashed()->get();
         }
         
         $carreras = Carrera::get();
         return view('dashboard.administrador.reportes.index2',compact('postulaciones','carreras'));
     }
     public function reporte_postulaciones_excel($string){
-        $file = str_replace(':','-',$string);
+        $file = str_replace(':','-',$string);        
         return Excel::download(new ReportePostulacioneExport($string),$file.'.xlsx');
     }
     public function reporte_empleo_excel($string){

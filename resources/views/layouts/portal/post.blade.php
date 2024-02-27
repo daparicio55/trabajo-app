@@ -16,7 +16,10 @@
                     </div>
                     <div class="down-content">
                         <span class="category">{{ $empleos[0]->empresa->razonSocial }}</span>
-                        <span class="date">{{ date('d - M - Y',strtotime($empleos[0]->fecha_registro)) }}</span>
+                        {{-- <span class="date">{{ date('d - M - Y',strtotime($empleos[0]->fecha_registro)) }}</span> --}}
+                        <span class="date">
+                            {{ date('d', strtotime($empleos[0]->fecha_registro)) }} {{ __(date('F', strtotime($empleos[0]->fecha_registro))) }} {{ date('Y', strtotime($empleos[0]->fecha_registro)) }}
+                        </span>
                         <a href="{{ route('empleo',$empleos[0]->id) }}">
                             <h4>{{ $empleos[0]->titulo }}</h4>
                         </a>
@@ -38,7 +41,10 @@
                                   </div>
                                   <div class="right-content">
                                       <span class="category">{{ Str::limit($empleo->empresa->razonSocial, 30, '...')  }}</span>
-                                      <span class="date">{{ date('d - M - Y',strtotime($empleo->fecha_registro)) }}</span>
+                                      {{-- <span class="date">{{ date('d - M - Y',strtotime($empleo->fecha_registro)) }}</span> --}}
+                                      <span class="date">
+                                        {{ date('d', strtotime($empleo->fecha_registro)) }} {{ __(date('F', strtotime($empleo->fecha_registro))) }} {{ date('Y', strtotime($empleo->fecha_registro)) }}
+                                      </span>
                                       <a href="#">
                                           <h4>{{ $empleo->titulo }}</h4>
                                       </a>

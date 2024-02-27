@@ -47,18 +47,28 @@
                                         Turno: {{ $empleo->turno->nombre }}
                                     </div>
                                     <div class="card-header bg-dark text-white mt-2">
-                                        Cierre: {{ date('d M Y', strtotime($empleo->fecha_postulacion)) }}
+                                        {{-- Cierre: {{ date('d M Y', strtotime($empleo->fecha_postulacion)) }} --}}
+                                        Cierre: {{ date('d', strtotime($empleo->fecha_postulacion)) }} {{ __(date('F', strtotime($empleo->fecha_postulacion))) }} {{ date('Y', strtotime($empleo->fecha_postulacion)) }}
                                     </div>
                                     <div class="card-body mt-3 text-center">
                                         @if (auth()->id() !== null)
-                                            @if (count(
-                                                    $empleo->postulaciones()->where('user_id', auth()->id())->get()) > 0)
+                                            @if (count($empleo->postulaciones()->where('user_id', auth()->id())->get()) > 0)
                                                 <a class="btn btn-danger disabled"><i class="fa fa-share-square-o"
                                                         aria-hidden="true"></i> Postulado</a>
                                             @else
-                                                <a href="{{ route('empleo_postular', $empleo->id) }}" id="btn_postularme"
-                                                    class="btn btn-success"><i class="fa fa-share-square-o"
-                                                        aria-hidden="true"></i> Postularme</a>
+                                                @php
+                                                    $fecha = \Carbon\Carbon::parse(date('Y-m-d',strtotime(\Carbon\Carbon::now())));
+                                                    $fempleo = \Carbon\Carbon::parse($empleo->fecha_postulacion);
+                                                @endphp
+                                                @if($fecha->gt($fempleo))
+                                                    <a href="" class="btn btn-danger">
+                                                       Postulacion Cerrada 
+                                                    </a>        
+                                                @else
+                                                    <a href="{{ route('empleo_postular', $empleo->id) }}" id="btn_postularme"
+                                                        class="btn btn-success"><i class="fa fa-share-square-o"
+                                                    aria-hidden="true"></i> Postularme</a>
+                                                @endif                                                
                                             @endif
                                         @else
                                             <a href="{{ route('empleo_postular', $empleo->id) }}" id="btn_postularme"

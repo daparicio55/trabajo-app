@@ -24,9 +24,13 @@ class ReportePostulacioneExport implements FromView
     }
     public function view() : View
     {        
-        $postulaciones = Postulacione::whereHas('user.ucliente.cliente.postulaciones',function($query){
-            $query->where('idCarrera','=',$this->carrera_id);
-        })->whereBetween('fecha',[$this->finicio_postulaciones,$this->ffin_postulaciones])->get();
+        if($this->carrera_id != 0){
+            $postulaciones = Postulacione::whereHas('user.ucliente.cliente.postulaciones',function($query){
+                $query->where('idCarrera','=',$this->carrera_id);
+            })->whereBetween('fecha',[$this->finicio_postulaciones,$this->ffin_postulaciones])->withTrashed()->get();
+        }else{
+            $postulaciones = Postulacione::whereBetween('fecha',[$this->finicio_postulaciones,$this->ffin_postulaciones])->withTrashed()->get();
+        }
         return view('exports.postulaciones-reporte',compact('postulaciones'));
     }
 }

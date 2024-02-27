@@ -20,6 +20,7 @@ use App\Models\Empleo;
 use App\Models\Ubicacione;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,9 @@ Auth::routes(['register'=>false]);
     return Redirect::route('dashboard.index');
 }); */
 /* Route::get('/',[HomeController::class,'index'])->name('home'); */
+route::get('/home',function(){
+    return Redirect::route('home');
+});
 Route::get('/',function(){
     $ubicaciones = Ubicacione::get();
     $empleos = Empleo::orderBy('fecha_registro','desc')->take(5)->get();

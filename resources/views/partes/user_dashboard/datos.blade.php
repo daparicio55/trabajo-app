@@ -10,9 +10,9 @@
                 {!! Form::label('email', 'Correo', ['class'=>'mt-2']) !!}
                 {!! Form::text('email', $user->email, ['class'=>'form-control']) !!}
                 {!! Form::label('telefono1', 'Telefono 1', ['class'=>'mt-2']) !!}
-                {!! Form::text('telefono1', $user->ucliente->cliente->telefono, ['class'=>'form-control']) !!}
+                {!! Form::text('telefono1', $user->ucliente->cliente->telefono, ['class'=>'form-control','maxlength'=>10]) !!}
                 {!! Form::label('telefono2', 'Telefono 2', ['class'=>'mt-2']) !!}
-                {!! Form::text('telefono2', $user->ucliente->cliente->telefono2, ['class'=>'form-control']) !!}
+                {!! Form::text('telefono2', $user->ucliente->cliente->telefono2, ['class'=>'form-control','maxlength'=>10]) !!}
                 {!! Form::label('direccion', 'Direccion', ['class'=>'mt-2']) !!}
                 {!! Form::text('direccion', $user->ucliente->cliente->direccion, ['class'=>'form-control']) !!}
                 @php

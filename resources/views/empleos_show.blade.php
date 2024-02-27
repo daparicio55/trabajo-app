@@ -39,13 +39,14 @@
 @section('contenido')
     @include('layouts.portal.preheader')
     @include('layouts.portal.header')
-    <div class="container">
-        <h1 class="text-center my-5">Resultados de Búsqueda de Ofertas Laborales</h1>
-        <div class="row">
-
+    <div id="about" class="about section">
+      <div class="container">
+        <h3><i class="fa fa-search" aria-hidden="true"></i> Resultados de la busqueda..</h3>
+        <a href="javascript:history.back()" class="btn btn-danger mt-2"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Regresar</a>        
+        <div class="row">         
             @foreach ($empleos as $empleo)
             <div class="col-md-6">
-                <div class="card">
+                <div class="card mt-3">
                     <div class="card-header bg-info">
                         <h5 class="card-title  text-white pt-2"><i class="fa fa-briefcase" aria-hidden="true"></i> {{ $empleo->titulo }}</h5>
                     </div>
@@ -75,8 +76,6 @@
             @endforeach
         </div>
       </div>
-   
-
-
-    @include('layouts.portal.footer')
+    </div>
+      @include('layouts.portal.footer')
 @stop

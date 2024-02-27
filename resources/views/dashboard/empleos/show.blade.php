@@ -5,6 +5,9 @@
 @section('content_header')
 
     <h1>Lista de Postulantes a la oferta laboral</h1>
+    <a href="{{ route('dashboard.empleos.index') }}" class="btn btn-danger">
+        <i class="fas fa-backward"></i> Regresar
+    </a>
 @stop
 @section('content')
 <div class="card">
@@ -12,6 +15,7 @@
         <table class="table" id="estudiantes">
             <thead>
                 <tr>
+                    <th>Estado</th>
                     <th>Usuario</th>
                     <th>Email</th>
                     <th>Telefonos</th>
@@ -19,8 +23,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($empleo->postulaciones as $postulacione)
+                @foreach ($empleo->postulaciones()->withTrashed()->get() as $postulacione)
                     <tr>
+
+                        <td>
+                            @isset($postulacione->deleted_at)
+                            <span class="text-danger">
+                                Borrado por el usuario
+                            </span>
+                            @endisset
+                        </td>
                         <td>{{ $postulacione->user->ucliente->cliente->apellido }}, {{ $postulacione->user->ucliente->cliente->nombre }}</td>
                         <td>{{ $postulacione->user->email }}</td>
                         <td>{{ $postulacione->user->ucliente->cliente->telefono }} / {{ $postulacione->user->ucliente->cliente->telefono2 }}</td>
@@ -30,18 +42,6 @@
                             </a>
                             @include('dashboard.empleos.modal_show')
                         </td>
-                        {{-- <td>
-                            <a data-toggle="modal" data-target="#modal-{{ $empleo->id }}-show" class="btn btn-info">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                            <a class="btn btn-success" href="{{ route('dashboard.empleos.edit',$empleo->id) }}">
-                                <i class="fas fa-user-edit"></i>
-                            </a>
-                            <a data-toggle="modal" data-target="#modal-{{ $empleo->id }}-delete" class="btn btn-danger">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                            @include('dashboard.empleos.modal')
-                        </td> --}}
                     </tr>
                 @endforeach
             </tbody>

@@ -112,13 +112,27 @@ class PostulacioneController extends Controller
                 return Redirect::route('home')->with('error','no se pudo registrar tu postulacion, asegurate de no tener una postulacion activa a este empleo');
                 //return Redirect::route('home')->with('error',$th->getMessage());
             }
-
             $email = new NoticeMailable($postulacione->id);
             $correo = new AvisoMailable($postulacione->id);
-            //enviar correos de postulacion.
-            Mail::to($postulacione->empleo->empresa->email)->send($correo);
-            Mail::to(auth()->user()->email)->send($email);
-
+            try {
+                Mail::to(auth()->user()->email)->send($email);
+            } catch (\Throwable $th) {
+                //throw $th
+                return Redirect::route('user_dashboard.index')->with('info','tu postulacion se registro correctamente');
+            }
+            try {
+                //code...
+                Mail::to($postulacione->empleo->empresa->email)->send($correo);
+            } catch (\Throwable $th) {
+                //throw $th;
+                //buiscamos a los administradores
+                $administradores = User::whereHas('roles',function($query){
+                    $query->where('name','=','Bolsa Administrador');
+                })->get();
+                //dd($administradores[1]->email);
+                Mail::to($administradores[1]->email)->send($correo);
+                return Redirect::route('user_dashboard.index')->with('info','tu postulacion se registro correctamente');
+            }
             return Redirect::route('user_dashboard.index')->with('info','tu postulacion se registro correctamente');
         }else{
             return Redirect::route('user_dashboard.index')->with('error','tu usuario no puedo postular a un puesto');
