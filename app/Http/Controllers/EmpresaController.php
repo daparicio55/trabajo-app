@@ -189,6 +189,10 @@ class EmpresaController extends Controller
             $empresa->rubro_id = $request->rubro;
             $empresa->sectore_id = $request->sector;
             $empresa->update();
+            //cambiar los datos del usuario de u_empresas
+            $user = User::findOrFail($empresa->usuario[0]->id);
+            $user->email = $request->email;
+            $user->update();
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;

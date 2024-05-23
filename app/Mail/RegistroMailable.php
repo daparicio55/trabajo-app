@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Empleo;
+use App\Models\Postulacione;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -20,6 +21,7 @@ class RegistroMailable extends Mailable
      */
 
     public $empleo;
+    public $postulacione;
     public function __construct($id)
     {
         //

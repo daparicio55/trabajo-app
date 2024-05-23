@@ -15,5 +15,7 @@ class Estudiante extends Model
     public function practicas(){
         return $this->hasMany(Practica::class);
     }
-    
+    public function matriculas(){
+        return $this->hasMany(Ematricula::class,'estudiante_id','id');
+    }
 }

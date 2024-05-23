@@ -60,11 +60,11 @@
         <div class="body">
           <img src="https://idexperujapon.edu.pe/wp-content/uploads/2023/08/cropped-logo-300x93.png"alt="Imagen" />
             <p>
-                Sr(a): <strong> {{ $postulacione->empleo->empresa->razonSocial }}</strong>, este correo se a enviado por que se registró una oportunidad laboral de tu empresa
+                Sr(a): <strong> {{ $empleo->empresa->razonSocial }}</strong>, este correo se a enviado por que se registró una oportunidad laboral de tu empresa
                 en nuestra Bolsa de Empleabilidad. 
             </p>
             <p>
-                Pronto te llegarán nuevos correos con información de los postulantes a <strong>{{ Str::upper($postulacione->empleo->titulo) }}</strong>, agradecemos la confianza depositada en nosotros.
+                Pronto te llegarán nuevos correos con información de los postulantes a <strong>{{ Str::upper($empleo->titulo) }}</strong>, agradecemos la confianza depositada en nosotros.
             </p>
         </div>
         <div class="footer">

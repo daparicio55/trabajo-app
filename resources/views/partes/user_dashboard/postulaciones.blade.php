@@ -9,6 +9,7 @@
                 <table class="table" id="postulaciones">
                     <thead>
                         <tr>
+                            <th>Estado</th>
                             <th>Registro</th>
                             <th>Empresa</th>
                             <th>Titulo</th>
@@ -18,7 +19,14 @@
                     </thead>
                     <tbody>
                         @foreach ($postulaciones as $postulacione)
-                            <tr>
+                            <tr @if(isset($postulacione->deleted_at)) class="text-warning" @endif>
+                                <td>
+                                  @if(isset($postulacione->deleted_at)) 
+                                    Archivado
+                                  @else
+                                    Activo
+                                  @endif
+                                </td>
                                 <td>{{ date('d-m-Y',strtotime($postulacione->fecha)) }}</td>
                                 <td>{{ $postulacione->empleo->empresa->razonSocial }}</td>
                                 <td>{{ $postulacione->empleo->titulo }}</td>

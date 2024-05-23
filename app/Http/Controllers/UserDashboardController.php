@@ -45,6 +45,7 @@ class UserDashboardController extends Controller
                 $query->whereIn('carrera_id',$array);
             })->orderBy('fecha_registro','desc')->get();
             $postulaciones = Postulacione::where('user_id','=',auth()->id())
+            ->withTrashed()
             ->orderBy('fecha','desc')
             ->get();
             return view('user_dashboard',compact('user','postulaciones','empleos'));

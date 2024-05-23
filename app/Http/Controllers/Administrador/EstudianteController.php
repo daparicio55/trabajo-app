@@ -199,7 +199,9 @@ class EstudianteController extends Controller
     public function makeaccountmassive(){
         //vamos
         $request = new Request();
-        $estudiantes = Estudiante::get();
+        $estudiantes = Estudiante::whereHas('matriculas',function($query){
+            $query->where('pmatricula_id','=',100);
+        })->get();
         $count = 0;
         foreach ($estudiantes as $estudiante) {
             # code...
@@ -230,7 +232,7 @@ class EstudianteController extends Controller
                     $ucliente->save();
                 }
                 
-                $this->sendReset($request);
+                //$this->sendReset($request);
             }
             
         }
