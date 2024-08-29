@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Ubicacione;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 setlocale(LC_TIME, 'es_ES');
 Carbon::setLocale('es');
 class Empleo extends Model
 {
     
-    use HasFactory;
-    public $timestamps = false;
+    use HasFactory, SoftDeletes;
+    public $timestamps = false;    
     public function user(){
         return $this->belongsTo(User::class);
     }
