@@ -18,6 +18,7 @@
                         </tr>
                     </thead>
                     <tbody>
+
                         @foreach ($postulaciones as $postulacione)
                             <tr @if(isset($postulacione->deleted_at)) class="text-warning" @endif>
                                 <td>

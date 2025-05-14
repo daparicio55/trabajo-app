@@ -58,7 +58,7 @@
           <h2>SISTEMA DE EMPLEABILIDAD</h2>
         </div>
         <div class="body">
-          <img src="https://idexperujapon.edu.pe/wp-content/uploads/2023/08/cropped-logo-300x93.png"alt="Imagen" />
+          <img src="https://sigad.idexperujapon.edu.pe/img/new-logo-azul.png"alt="Imagen" />
             <p>
                 Sr(a): <strong> {{ $empleo->empresa->razonSocial }}</strong>, este correo se a enviado por que se registró una oportunidad laboral de tu empresa
                 en nuestra Bolsa de Empleabilidad. 

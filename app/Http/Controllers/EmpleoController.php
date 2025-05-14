@@ -107,8 +107,7 @@ class EmpleoController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollBack();
-            dd($th->getMessage());
-            return Redirect::route('dashboard.empleos.index')->with('error','no se guardo la informacion correctamente');    
+            return Redirect::route('dashboard.empleos.index')->with('error','Error al registrar el empleo, intente nuevamente');    
         }
         return Redirect::route('dashboard.empleos.index')->with('info','Se registro el empleo correctamente');
     }

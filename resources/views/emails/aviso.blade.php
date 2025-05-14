@@ -60,7 +60,7 @@
           <h2>SISTEMA DE EMPLEABILIDAD</h2>
         </div>
         <div class="body">
-          <img src="https://idexperujapon.edu.pe/wp-content/uploads/2023/08/cropped-logo-300x93.png"alt="Imagen" />
+          <img src="https://sigad.idexperujapon.edu.pe/img/new-logo-azul.png"alt="Imagen" />
           <p>Este correo se envia de forma automatica por la reciente postulacion del usuario <strong>{{ Str::upper($postulacione->user->name) }}</strong> a la oferta de empleo llamada <strong>{{ Str::upper($postulacione->empleo->titulo) }}</strong>, en la empresa <strong> {{ $postulacione->empleo->empresa->razonSocial }}</strong></p>          
           Puedes descargar la hoja de vida del postulante <a class="button" href="{{ route('usuario.pdf',$postulacione->user->id) }}">aquí</a>
         </div>

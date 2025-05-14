@@ -56,7 +56,7 @@
 <body>
     <div class="card">
         <div class="card-header">
-            <img src="https://idexperujapon.edu.pe/wp-content/uploads/2023/08/cropped-logo-300x93.png" alt="Imagen del card" class="card-img">
+            <img src="https://sigad.idexperujapon.edu.pe/img/new-logo-azul.png" alt="Imagen del card" class="card-img">
         </div>
         <div class="card-content">
           <h2 class="card-title">SISTEMA DE EMPLEABILIDAD</h2>
