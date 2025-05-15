@@ -16,110 +16,107 @@
 @stop
 
 @section('content')
+@include('dashboard.administrador.estudiantes.modal')
     <div class="card">
         <div class="card-body">
             <table class="table" id="estudiantes">
                 <thead>
                     <tr>
+                        <th>DNI</th>
                         <th>APELLIDOS, Nombres</th>
                         <th>Programa de Estudios</th>
                         <th>A. Ingreso</th>
-                        {{-- <th>Egresado</th> --}}
-                        <th></th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($estudiantes as $estudiante)
-                        <tr>
-                            <td>{{ Str::upper($estudiante->postulante->cliente->apellido) }}, {{ Str::title($estudiante->postulante->cliente->nombre) }}</td>
-                            <td>{{ $estudiante->postulante->carrera->nombreCarrera }}</td>
-                            <td>{{ $estudiante->postulante->admisione->periodo }}</td>
-                            {{-- <td>
-                                @if(egresado($estudiante->id))
-                                    SI
-                                @else
-                                    NO
-                                @endif
-                            </td> --}}
-                            <td>
-                                @if(isset($estudiante->postulante->cliente->ucliente->user_id))
-                                    <a data-toggle="modal" data-target="#modal-{{ $estudiante->id }}-email" class="btn btn-warning" title="enviar correo de restablecimiento">
-                                        <i class="fas fa-mail-bulk"></i>
-                                    </a>
-                                @else
-                                    <a data-toggle="modal" data-target="#modal-{{ $estudiante->id }}-create" href="" class="btn btn-info" >
-                                        <i class="fas fa-id-card" title="crear cuenta"></i>
-                                    </a>
-                                @endif
-                                @include('dashboard.administrador.estudiantes.modal')
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
             </table>
         </div>
     </div>
     
 @stop
 
-@section('css')
-    
-@stop
-
-@if (session('info'))
-    @php
-        $message = session('info');
-    @endphp
-    <script> 
-        toastr.options  = {
-            "progressBar" : true,
-            }
-            toastr.success('{{ $message }}');
-    </script>
-@endif
-@if (session('error'))
-    @php
-        $message = session('error');
-    @endphp
-    <script> 
-        toastr.options  = {
-            "progressBar" : true,
-            }
-            toastr.danger('{{ $message }}');
-    </script>
-@endif
-
-
 
 @section('js')
+
+
+    @if (session('info'))
+        @php
+            $message = session('info');
+        @endphp
+    <script> 
+        toastr.options  = {
+            "progressBar" : true,
+            "timeOut": "7000", // en milisegundos
+            "extendedTimeOut": "2000",
+            "positionClass": "toast-top-right"
+        }
+        toastr.success('{{ $message }}');
+    </script>
+    @endif
+    @if (session('error'))
+        @php
+            $message = session('error');
+        @endphp
+        <script> 
+            toastr.options  = {
+                "progressBar" : true,
+                "timeOut": "7000", // en milisegundos
+                "extendedTimeOut": "2000",
+                "positionClass": "toast-top-right"
+            }
+            toastr.danger('{{ $message }}');
+        </script>
+    @endif
+
     <script> 
         $('#estudiantes').DataTable({
             responsive: true,
             autoWidth: false,
             order: false,
+            processing: true,
+            ajax: {
+                url: "{{ route('dashboard.administrador.getEstudiantes') }}",
+            },
+            columns: [
+                { data: 'dni', orderable: false },
+                { data: 'cliente', orderable: false },
+                { data: 'carrera', orderable: false },
+                { data: 'admisione', orderable: false },
+                { data: 'acciones', name: 'acciones', orderable: false, searchable: false }
+            ],
             language: {
-                "decimal":        ".",
-                "emptyTable":     "No hay datos disponibles en la tabla",
-                "info":           "Mostrando _START_ hasta _END_ de _TOTAL_ registros",
-                "infoEmpty":      "Mostrando 0 hasta 0 de 0 registros",
-                "infoFiltered":   "(filtrado de _MAX_ registros totales )",
-                "lengthMenu":     "Mostrar _MENU_ registros por página",
-                "loadingRecords": "Cargando ...",
-                "search":         "Buscar:",
-                "zeroRecords":    "No se encontraron registros coincidentes",
-                "paginate": {
-                    "first":      "Primero",
-                    "last":       "Ultimo",
-                    "next":       "Siguiente",
-                    "previous":   "Anterior"
-                },
-                "aria": {
-                    "sortAscending":  ": activar para ordenar columna ascendente",
-                    "sortDescending": ": activar para ordenar columna descendente"
-                }
+                url: "{{ asset('assets/json/es-ES.json') }}"
             },
         });
         
+        // Manejar el botón de eliminar
+        $('#estudiantes').on('click', '.btn-email', function () {        
+            const id = $(this).data('id');
+            const email = $(this).data('email');
+            $('#email_actualizar').val(email);
+            $('#estudiante_id_email').val(id);            
+        });
+
+        $('#estudiantes').on('click', '.btn-crear', function () {        
+            const id = $(this).data('id');
+            const email = $(this).data('email');
+            $('#email_crear').val(email);
+            $('#estudiante_id_crear').val(id);
+        });
+
+        //desactivar el boton enviar cuando se manda el formulario
+        $('#form-email').on('submit', function () {
+            const button = $(this).find('button[type="submit"]');
+            button.prop('disabled', true);
+            button.html('<i class="fas fa-spinner fa-spin"></i> Enviando...');
+        });
+
+        $('#form-crear').on('submit', function () {
+            const button = $(this).find('button[type="submit"]');
+            button.prop('disabled', true);
+            button.html('<i class="fas fa-spinner fa-spin"></i> Enviando...');
+        });
+
     </script>
     
 @stop

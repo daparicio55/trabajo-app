@@ -76,13 +76,20 @@ Route::resource('/dashboard/ofertas', OfertaController::class)->names('dashboard
 
 
 //Bolsa ADMINISTRADOR
+Route::get('/dashboard/administrador/alumnos/getEstudiantes',[AdminEstudianteController::class,'getEstudiantes'])
+->name('dashboard.administrador.getEstudiantes');
+
+Route::post('/dashboard/administrador/alumnos/email/',[AdminEstudianteController::class,'updateemail'])
+->name('dashboard.administrador.updateemail');
+
+Route::post('/dashboard/administrador/alumnos/make/',[AdminEstudianteController::class,'makeaccount'])
+->name('dashboard.administrador.makeaccount');
+
 Route::get('/dashboard/administrador/alumnos/makeaccountmassive',[AdminEstudianteController::class,'makeaccountmassive'])
 ->name('dashboard.administrador.makeaccountmassive');
+
 Route::resource('/dashboard/administrador/alumnos',AdminEstudianteController::class)->names('dashboard.administrador.alumnos');
-Route::post('/dashboard/administrador/alumnos/{id}/email/',[AdminEstudianteController::class,'updateemail'])
-->name('dashboard.administrador.updateemail');
-Route::get('/dashboard/administrador/alumnos/{id}/make/',[AdminEstudianteController::class,'makeaccount'])
-->name('dashboard.administrador.makeaccount');
+
 Route::resource('/dashboard/administrador/docentes',DocenteController::class)->names('dashboard.administrador.docentes');
 Route::get('/dashboard/administrador/reportes', [ReporteController::class,'index'])->name('dashboard.administrador.reportes.index');
 Route::get('/dashboard/administrador/reportes2', [ReporteController::class,'index2'])->name('dashboard.administrador.reportes.index2');

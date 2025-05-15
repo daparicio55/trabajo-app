@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Cliente extends Model
 {
@@ -27,5 +28,15 @@ class Cliente extends Model
     }
     public function postulaciones(){
         return $this->hasMany(AdmisionePostulante::class,'idCliente');
+    }
+
+    public function getNombreAttribute($value)
+    {
+        return Str::title($value);
+    }
+
+    public function getApellidoAttribute($value)
+    {
+        return Str::upper($value);
     }
 }

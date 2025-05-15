@@ -35,12 +35,6 @@ class EstudianteController extends Controller
     }
     public function index()
     {
-        //
-        //$estudiantes = Estudiante::get();
-        /* $estudiantes = Estudiante::select('*')
-        ->join('admisione_postulantes','estudiantes.admisione_postulante_id','=','admisione_postulantes.id')
-        ->join('clientes','clientes.idCliente','=','admisione_postulantes.idCliente')
-        ->get(); */
         $estudiantes = Estudiante::orderBy('id','desc')->get();
         return view('dashboard.administrador.estudiantes.index',compact('estudiantes'));
     }
@@ -50,7 +44,6 @@ class EstudianteController extends Controller
      */
     public function create()
     {
-        //
         $sexos = ['Masculino'=>'Masculino','Femenino'=>'Femenino'];
         $modalidadTipo = ['Ordinario'=>'Ordinario','Exonerado'=>'Exonerado'];
         $modalidad = [
@@ -143,61 +136,33 @@ class EstudianteController extends Controller
         }
         return Redirect::route('dashboard.administrador.alumnos.index')->with('info','se guardo el estudiante correctamente');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-    public function updateemail($id, Request $request){
-    try {
-        //code...
-        DB::beginTransaction();
-        $estudiante = Estudiante::findOrFail($id);
-        $user = User::findOrFail($estudiante->postulante->cliente->ucliente->user->id);
-        $cliente = Cliente::findOrFail($estudiante->postulante->cliente->idCliente);
-        //actualizar correos
-        $user->email = $request->email;
-        $user->save();
-        $cliente->email = $request->email;
-        $cliente->save();
-        DB::commit();
-    } catch (\Throwable $th) {
-        //throw $th;
-        DB::rollBack();
-        return Redirect::route('dashboard.administrador.alumnos.index')->with('error',$th->getMessage());
-    }
-        $this->sendReset($request);
-        return Redirect::route('dashboard.administrador.alumnos.index')->with('info','se envio el correo con el link de restablecimiento de contraseña a'.$request->email);
-    }
+   
+    public function updateemail(Request $request){
+        $request->validate([
+            'estudiante_id'=>'required|exists:estudiantes,id',
+            'email'=>'required|email',
+        ]);
+        try {
+            //code...
+            DB::beginTransaction();
+            $estudiante = Estudiante::findOrFail($request->estudiante_id);
+            $user = User::findOrFail($estudiante->postulante->cliente->ucliente->user->id);
+            $cliente = Cliente::findOrFail($estudiante->postulante->cliente->idCliente);
+            //actualizar correos
+            $user->email = $request->email;
+            $user->save();
+            $cliente->email = $request->email;
+            $cliente->save();
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            return Redirect::route('dashboard.administrador.alumnos.index')->with('error',$th->getMessage());
+        }
+            $this->sendReset($request);
+            return Redirect::route('dashboard.administrador.alumnos.index')->with('info','se envio el correo con el link de restablecimiento de contraseña a'.$request->email);
+        }
     public function makeaccountmassive(){
-        //vamos
         $request = new Request();
         $estudiantes = Estudiante::whereHas('matriculas',function($query){
             $query->where('pmatricula_id','=',100);
@@ -238,11 +203,15 @@ class EstudianteController extends Controller
         }
         return $count;
     }
-    public function makeaccount($id,Request $request){
+    public function makeaccount(Request $request){
+        $request->validate([
+            'estudiante_id'=>'required|exists:estudiantes,id',
+            'email'=>'required|email',
+        ]);
         try {
             //code...
             DB::beginTransaction();
-            $estudiante = Estudiante::findOrFail($id);
+            $estudiante = Estudiante::findOrFail($request->estudiante_id);
             $cliente = Cliente::findOrFail($estudiante->postulante->cliente->idCliente);
             //creamos la cuenta.
             $user = new User();
@@ -267,22 +236,59 @@ class EstudianteController extends Controller
         $this->sendReset($request);
         return Redirect::route('dashboard.administrador.alumnos.index')->with('info','la cuenta se creo correctamente y la informacion se envio al siguiente correo'.$request->email);
     }
-    public function resetpassword(Request $request,$id){
-        /* $request->validate([
-            'email'=>'required|email',
-        ]);
-        //ahora tenemos que crear la entrada en la base de datos.
-        $user = User::where('email','=',$request->email)->first();
-        dd($user->tokens());
-        $token = Str::random(64);
-        DB::table('password_reset_tokens')->insert([
-            'email' => $request->email,
-            'token' => $token,
-            'created_at' => Carbon::now(),
-        ]);
-        $url = asset('password/reset/'.$token.'?email='.$request->email);
-        //ahora hay que construir el link de reseteo
 
-        dd($url); */
+    public function getEstudiantes(Request $request){
+        $estudiantes = Estudiante::with(([
+            'postulante.cliente',
+            'postulante.carrera',
+            'postulante.admisione'
+        ]));
+        return datatables()->eloquent($estudiantes)
+        ->addColumn('dni',function($query){
+            return $query->postulante->cliente->dniRuc;
+        })
+        ->addColumn('cliente',function($query){
+            return $query->postulante->cliente->apellido.', '.$query->postulante->cliente->nombre;
+        })
+        ->addColumn('carrera',function($query){
+            return $query->postulante->carrera->nombreCarrera;
+        })
+        ->addColumn('admisione',function($query){
+            return $query->postulante->admisione->periodo;
+        })
+        ->addColumn('acciones',function($query){
+                return $this->makeButtonModal($query);
+        })
+        ->rawColumns(['acciones'])
+        ->make(true);
+
     }
+
+    public function makeButtonModal($estudiante){
+        if(isset($estudiante->postulante->cliente->ucliente->id)){
+            $button = '<button
+            type="button"
+            class="btn btn-warning btn-email"
+            data-id="'.$estudiante->id.'"
+            data-email="'.$estudiante->postulante->cliente->email.'"
+            data-toggle="modal"
+            data-target="#modal-email"
+            title="enviar correo de restablecimiento de contraseña">
+            <i class="fas fa-mail-bulk"></i>
+            </button>';
+        }else{
+            $button = '<button
+            type="button"
+            class="btn btn-primary btn-crear"
+            data-id="'.$estudiante->id.'"
+            data-email="'.$estudiante->postulante->cliente->email.'"
+            data-toggle="modal"
+            data-target="#modal-crear"
+            title="crear cuenta">
+            <i class="fas fa-id-card"></i>
+            </button>';
+        }
+        return $button;
+    }
+    
 }
