@@ -122,7 +122,7 @@
             
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-info">
+            <button type="submit" class="btn btn-info" id="btn_guardar">
                 <i class="far fa-save"></i> Guardar
             </button>
         </div>
@@ -131,9 +131,15 @@
 @stop
 @section('js')
     <script>
-        document.getElementById('frm').addEventListener('submit',function(){
-
+        //desabilitar el boton de guardar cuando se envia el formulario
+        const formulario = document.getElementById("frm");
+        const boton = document.getElementById("btn_guardar");
+        formulario.addEventListener("submit", function (e) {
+            boton.disabled = true;
+            boton.textContent = 'Enviando...';
+            // el formulario sigue su curso natural (no se previene el submit)
         });
+        
         let ubicaciones = <?php echo $ubicaciones ?>;
         let departamentos = document.getElementById('departamentos');
         let provincias = document.getElementById('provincias');

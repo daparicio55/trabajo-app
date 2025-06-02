@@ -102,11 +102,12 @@ class EmpleoController extends Controller
             //vamos a guardar las carreras
             //ahora mandamos un correo a la empres para notificar el registro de la oferta
             DB::commit();
-            $correo = new RegistroMailable($empleo->id);
-            Mail::to($empleo->empresa->email)->send($correo);
+            //$correo = new RegistroMailable($empleo->id);
+            //Mail::to($empleo->empresa->email)->send($correo);
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollBack();
+            return $th->getMessage();
             return Redirect::route('dashboard.empleos.index')->with('error','Error al registrar el empleo, intente nuevamente');    
         }
         return Redirect::route('dashboard.empleos.index')->with('info','Se registro el empleo correctamente');

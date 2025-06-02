@@ -1,3 +1,11 @@
+@section('css')
+    <style>
+        .btn-celeste{
+            background-color: rgb(77, 166, 231);
+            color: white;
+        }
+    </style>
+@endsection
 <div id="blog" class="blog">
     <div class="container">
         <div class="row">
@@ -24,7 +32,7 @@
                             <a href="{{ route('empleo',$empleos[0]->id) }}">
                                 <h4>{{ $empleos[0]->titulo }}</h4>
                             </a>
-                            <p>{!! Str::limit($empleos[0]->descripcion, 150, '...')  !!}</p>
+                            {{-- <p>{!! Str::limit($empleos[0]->descripcion, 150, '...')  !!}</p> --}}
                             <span class="author"><img src="assets/images/author-posta.jpg" alt="">Por: {{ $empleos[0]->user->name }}</span>
                             <div class="border-first-button"><a href="{{ route('empleo',$empleos[0]->id) }}">Ver más</a></div>
                         </div>
@@ -35,25 +43,29 @@
                 <div class="blog-posts">
                     <div class="row">
                       @foreach ($empleos as $key=>$empleo)
-                        @if ($key>0)
+                        @if (!$loop->first)
                           <div class="col-lg-12 mb-1">
-                              <div class="post-item">
-                                  <div class="thumb">
-                                      <a href="#"><img src="{{ Storage::url($empleo->pic) }}" alt=""></a>
-                                  </div>
-                                  <div class="right-content">
-                                      <span class="category">{{ Str::limit($empleo->empresa->razonSocial, 30, '...')  }}</span>
-                                      {{-- <span class="date">{{ date('d - M - Y',strtotime($empleo->fecha_registro)) }}</span> --}}
+                              <div class="post-item border rounded-3 p-3 shadow">
+                                  <div class="row">
+                                    <div class="col-sm-12 col-md-4">
+                                        <a href="{{ route('empleo',$empleo->id) }}">
+                                            <img src="{{ Storage::url($empleo->pic) }}" alt="{{ $empleo->pic }}">
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                      <div class="right-content">
+                                      <span class="category">{{ Str::limit($empleo->empresa->razonSocial, 45, '...')  }}</span>
                                       <span class="date">
                                         {{ date('d', strtotime($empleo->fecha_registro)) }} {{ __(date('F', strtotime($empleo->fecha_registro))) }} {{ date('Y', strtotime($empleo->fecha_registro)) }}
                                       </span>
-                                      <a href="#">
+                                      <a href="{{ route('empleo',$empleo->id) }}">
                                           <h4>{{ $empleo->titulo }}</h4>
                                       </a>
-                                      <p>{!! Str::limit($empleos[0]->descripcion, 50, '...')  !!}</p>
-                                      <a class="btn btn-info btn-sm" href="{{ route('empleo',$empleo->id) }}">
+                                      <a class="btn btn-celeste btn-sm" href="{{ route('empleo',$empleo->id) }}">
                                         <i class="fa fa-eye"></i> Ver más ...
                                       </a>
+                                  </div>
+                                    </div>
                                   </div>
                               </div>
                           </div>

@@ -133,7 +133,7 @@
             
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-info" id="btn_submit">
+            <button type="submit" class="btn btn-info" id="btn_guardar">
                 <i class="far fa-save"></i> Guardar
             </button>
         </div>
@@ -142,8 +142,12 @@
 @stop
 @section('js')
     <script>
-        document.getElementById('frm').addEventListener('submit',function(){
-            document.getElementById('btn_submit').disabled = true;
+        const formulario = document.getElementById("frm");
+        const boton = document.getElementById("btn_guardar");
+        formulario.addEventListener("submit", function (e) {
+            boton.disabled = true;
+            boton.textContent = 'Enviando...';
+            // el formulario sigue su curso natural (no se previene el submit)
         });
         let ubicaciones = <?php echo $ubicaciones; ?>;
         let departamentos = document.getElementById('departamentos');

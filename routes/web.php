@@ -43,7 +43,8 @@ route::get('/home',function(){
 });
 Route::get('/',function(){
     $ubicaciones = Ubicacione::get();
-    $empleos = Empleo::orderBy('fecha_registro','desc')->take(5)->get();
+    $empleos = Empleo::orderBy('id','desc')
+    ->take(5)->get();
     $carreras = Carrera::get();
     return view('index',compact('empleos','ubicaciones','carreras'));
 })->name('home');
