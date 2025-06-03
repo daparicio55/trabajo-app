@@ -203,16 +203,18 @@ class EstudianteController extends Controller
         }
         return $count;
     }
-    public function makeaccount(Request $request){
+    public function makeaccount(Request $request){     
         $request->validate([
-            'estudiante_id'=>'required|exists:estudiantes,id',
+            'estudiante_id_crear'=>'required|exists:estudiantes,id',
             'email'=>'required|email',
         ]);
         try {
             //code...
             DB::beginTransaction();
-            $estudiante = Estudiante::findOrFail($request->estudiante_id);
+            $estudiante = Estudiante::findOrFail($request->estudiante_id_crear);
             $cliente = Cliente::findOrFail($estudiante->postulante->cliente->idCliente);
+            $cliente->email = $request->email;
+            $cliente->update();
             //creamos la cuenta.
             $user = new User();
             $user->name = $cliente->nombre.', '.$cliente->apellido;
@@ -233,7 +235,7 @@ class EstudianteController extends Controller
             //throw $th;
             return Redirect::route('dashboard.administrador.alumnos.index')->with('error',$th->getMessage());
         }
-        $this->sendReset($request);
+        $this->sendReset($request);     
         return Redirect::route('dashboard.administrador.alumnos.index')->with('info','la cuenta se creo correctamente y la informacion se envio al siguiente correo'.$request->email);
     }
 

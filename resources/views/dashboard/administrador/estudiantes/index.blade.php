@@ -101,7 +101,7 @@
             const id = $(this).data('id');
             const email = $(this).data('email');
             $('#email_crear').val(email);
-            $('#estudiante_id_crear').val(id);
+            $('#estudiante_id').val(id);
         });
 
         //desactivar el boton enviar cuando se manda el formulario
