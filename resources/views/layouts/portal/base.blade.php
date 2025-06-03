@@ -12,6 +12,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title>@yield('titulo')</title>
+
+    <meta name="description" content="{{ $description ?? 'Descripción por defecto' }}">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ $title ?? 'Título por defecto' }}">
+    <meta property="og:description" content="{{ $description ?? 'Descripción por defecto' }}">
+    <meta property="og:image" content="{{ $image ?? asset('/storage/img/default-img.png') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $title ?? 'Título por defecto' }}">
+    <meta name="twitter:description" content="{{ $description ?? 'Descripción por defecto' }}">
+    <meta name="twitter:image" content="{{ $image ?? asset('/storage/img/default-img.png') }}">
+
+
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{{ asset("vendor/bootstrap/css/bootstrap.min.css") }}">
     <!-- Additional CSS Files -->
