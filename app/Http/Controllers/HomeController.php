@@ -36,13 +36,6 @@ class HomeController extends Controller
     public function empleo_search(Request $request){
         //aca buscamos segun el criterio ingresado en el formulario.
         $request->validate([
-            'location'=>[
-                'required', function($attribute,$value,$fail){
-                    if($value == 0){
-                        $fail('seleccione una ubicación');
-                    }
-                }
-            ],
             'carrera'=>[
                 'required',function($attribute,$value,$fail){
                     if($value == 0){
@@ -52,54 +45,15 @@ class HomeController extends Controller
             ]
         ]);
         try {
-            $array_ubicaciones = [];
-            //code...
-            /* $empleos = Empleo::where('ubicacione_id','=',$request->location)->where('descripcion','like','%'.$request->searchText.'%')->get(); */
-            $carrera = Carrera::where('idCarrera','=',$request->carrera)->first();
-            if($carrera->ccarrera_id == null){
-                //buscamos una nueva
-                $carrera_id = Carrera::where('ccarrera_id','=',$carrera->idCarrera)->first()->idCarrera;
-            }else{
-                $carrera_id = $carrera->idCarrera;
-            }
-            $ubicacion = Ubicacione::findOrFail($request->location);
-            //dd(isset($ubicacion->padre->padre->id));
-            if(isset($ubicacion->padre->id)){
-                if(isset($ubicacion->padre->padre->id)){
-                    //ciudad nivel
-                    $ubicaciones = Ubicacione::where('id','=',$request->location)->get();
-                    foreach($ubicaciones as $ubicacione){
-                        array_push($array_ubicaciones,$ubicacione->id);
-                    }
-                }else{
-                    //distrito
-                    $ubicaciones = Ubicacione::where('ubicacione_id','=',$request->location)->get();
-                    foreach($ubicaciones as $ubicacione){
-                        array_push($array_ubicaciones,$ubicacione->id);
-                    }
-                }
-            }else{
-                //departamento
-                $provincias = Ubicacione::where('ubicacione_id','=',$request->location)->get();
-                foreach ($provincias as $key => $provincia) {
-                    # code...
-                    $distritos = Ubicacione::where('ubicacione_id','=',$provincia->id)->get();
-                    //tengo los distritos
-                    foreach ($distritos as $key => $distrito) {
-                        # code...
-                        array_push($array_ubicaciones,$distrito->id);
-                    }
-                }
-            }
-            $empleos = Empleo::whereHas('carreras',function($query) use($carrera_id) {
-                $query->where('carrera_id','=',$carrera_id);
-            })->whereIn('ubicacione_id',$array_ubicaciones)->get();
+            $ids = Carrera::findOrFail($request->carrera)->arrayIds();
+            $empleos = Empleo::whereHas('carreras',function($query) use ($ids){
+                $query->whereIn('carrera_id',$ids);
+            })->get();
             return view('empleos_show',compact('empleos'));
         } catch (\Throwable $th) {
             //throw $th;
             dd($th->getMessage());
         }
-        
     }
     /**
      * Show the application dashboard.
@@ -112,6 +66,8 @@ class HomeController extends Controller
     public function empleo_show($id){
         
         $empleo = Empleo::findOrFail($id);
+        $empleo->counter = $empleo->counter + 1;
+        $empleo->update();
         return view('empleo',compact('empleo'));
     }
     public function index()

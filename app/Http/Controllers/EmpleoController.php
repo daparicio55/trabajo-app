@@ -55,7 +55,9 @@ class EmpleoController extends Controller
     {
         //verificamos si el usuario tiene empresa
         //carreras;
-        $carreras = Carrera::orderBy('nombreCarrera','asc')->where('ccarrera_id',"<>",null)->get();
+        $carreras = Carrera::orderBy('nombreCarrera','asc')->where('observacionCarrera','visible')
+        ->where('ccarrera_id',"<>",null)
+        ->get();
         //dd($carreras);
         $empresas = Empresa::selectRaw('CONCAT(ruc," - ",razonSocial) AS Empresa, idEmpresa AS id')->pluck('Empresa','id')->toArray();
         $turnos = Empleoturno::pluck('nombre','id')->toArray();

@@ -24,7 +24,8 @@ class ReporteEmpleoExport implements FromView
     }
     public function view() : View
     {
-        $empleos = Empleo::whereBetween('fecha_registro',[$this->finicio_empleo,$this->ffin_empleo])
+        $empleos = Empleo::orderBy('id','desc')
+        ->whereBetween('fecha_registro',[$this->finicio_empleo,$this->ffin_empleo])
         ->where('titulo','like','%'.$this->criterio_empleo.'%')
         ->get();
         return view('exports.empleo-reporte',compact('empleos'));

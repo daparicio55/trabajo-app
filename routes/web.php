@@ -45,7 +45,8 @@ Route::get('/',function(){
     $ubicaciones = Ubicacione::get();
     $empleos = Empleo::orderBy('id','desc')
     ->take(5)->get();
-    $carreras = Carrera::get();
+    $carreras = Carrera::where('observacionCarrera','visible')
+    ->get();
     return view('index',compact('empleos','ubicaciones','carreras'));
 })->name('home');
 

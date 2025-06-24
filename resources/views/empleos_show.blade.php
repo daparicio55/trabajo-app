@@ -47,7 +47,7 @@
             @foreach ($empleos as $empleo)
             <div class="col-md-6">
                 <div class="card mt-3">
-                    <div class="card-header bg-info">
+                    <div class="card-header bg-dark">
                         <h5 class="card-title  text-white pt-2"><i class="fa fa-briefcase" aria-hidden="true"></i> {{ $empleo->titulo }}</h5>
                     </div>
                     <div class="card-body">
@@ -63,7 +63,7 @@
                         </span>
                     </p>
                       <p style="text-align: right">
-                        <a href="{{ route('empleo',$empleo->id) }}" class="btn btn-info btn-sm text-white"> <i class="fa fa-search-plus" aria-hidden="true"></i> detalles</a>
+                        <a href="{{ route('empleo',$empleo->id) }}" class="btn btn-secondary btn-sm text-white"> <i class="fa fa-search-plus" aria-hidden="true"></i> detalles</a>
                       </p>
                     </div>
                     <div class="card-footer bg-secondary">

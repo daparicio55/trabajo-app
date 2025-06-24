@@ -13,6 +13,7 @@
                 <th>#</th>
                 <th>Empresa</th>
                 <th>Oferta Laboral</th>
+                <th>Visitas</th>
                 <th>Ubicación</th>
                 <th>Fecha</th>
             </tr>
@@ -20,9 +21,10 @@
         <tbody>
             @foreach ($empleos as $key=>$empleo)
                 <tr>
-                    <td>{{ $key +1 }}</td>
+                    <td>{{ $key + 1 }}</td>
                     <td>{{ $empleo->empresa->razonSocial }}</td>
                     <td>{{ $empleo->titulo }}</td>
+                    <td>{{ $empleo->counter }}</td>
                     <td>{{ $empleo->ubicacione->nombre }}</td>
                     <td>{{ date('d-m-Y',strtotime($empleo->fecha_registro)) }}</td>
                 </tr>

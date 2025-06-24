@@ -20,7 +20,6 @@
                                     @php
                                         $fecha = Carbon\Carbon::parse($empleo->fecha_registro)->locale('es');
                                     @endphp
-                                    {{-- <h6>{{ $fecha->formatLocalized('%A %d %B %Y') }}</h6> --}}
                                     <h4>{{ $empleo->titulo }}</h4>
                                     <h6>{{ $empleo->empresa->razonSocial }}</h6>
                                     <em><i class="fa fa-map-marker" aria-hidden="true"></i>

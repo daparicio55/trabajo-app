@@ -11,10 +11,10 @@
         <div class="col-lg-12 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.8s">
             {!! Form::open(['route'=>'empleos_search','method'=>'post']) !!}
             <div class="row">
-              <div class="col-sm-4">
+              <div class="col-sm-5">
                 <input type="text" name="searchText" placeholder="Ingrese palabra clave">
               </div>
-              <div class="col-sm-3">
+              {{-- <div class="col-sm-3">
                 <select name="location">
                   <option value="0">Ubicacion</option>
                   @foreach ($ubicaciones as $ubicacione)
@@ -24,8 +24,8 @@
                 @error('location')
                   <small class="text-danger mt-2">{{ $message }}</small>
                 @enderror
-              </div>
-              <div class="col-sm-3">
+              </div> --}}
+              <div class="col-sm-5">
                 <select name="carrera">
                   <option value="0">Programa de Estudios</option>
                   @foreach ($carreras as $carrera)

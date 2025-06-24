@@ -12,7 +12,7 @@ class Postulacione extends Model
     use SoftDeletes;
     public $timestamps = false;
     public function empleo(){
-        return $this->belongsTo(Empleo::class);
+        return $this->belongsTo(Empleo::class)->withTrashed();
     }
     public function user(){
         return $this->belongsTo(User::class);

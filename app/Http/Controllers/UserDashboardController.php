@@ -23,24 +23,29 @@ class UserDashboardController extends Controller
     public function index()
     {
         //
+        //$car = Carrera::find(15);
+
+        //dd($car->arrayIds());
         try {
             //code...
             $user = User::findOrFail(auth()->id());
             $carreras = Estudiante::whereHas('postulante.cliente',function($query) use($user){
                 $query->where('idCliente','=',$user->ucliente->cliente_id);
             })->get();
-            //dd($carreras[0]->postulante->carrera->idCarrera);
-            //armamos el array con las carreras
+
             $array =[];
+
             foreach ($carreras as $carrera) {
                 # code...
-                if($carrera->postulante->carrera->ccarrera_id == null){
-                    $car = Carrera::where('ccarrera_id','=',$carrera->postulante->carrera->idCarrera)->first();
-                    array_push($array,$car->idCarrera);
+                $ids = $carrera->postulante->carrera->arrayIds();
+
+                if(is_array($ids)){
+                    $array = array_merge($array, $ids);
                 }else{
-                    array_push($array,$carrera->postulante->carrera->idCarrera);
+                    $array[] = $ids;
                 }
             }
+
             $empleos = Empleo::whereHas('carreras',function($query) use($array){
                 $query->whereIn('carrera_id',$array);
             })->orderBy('fecha_registro','desc')->get();
